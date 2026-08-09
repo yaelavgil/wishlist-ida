@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>רשימת תאורה · הבית של עידה</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@400;500;600;700;800&family=Frank+Ruhl+Libre:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4f1ea; --paper:#fffdf9; --surface:#ffffff;
+  --ink:#2a2521; --ink-soft:#5c534a; --muted:#9d9184; --faint:#c8bdae;
+  --brass:#a67c46; --brass-d:#8a6437; --brass-soft:#f0e7d8;
+  --line:#ece4d8; --line-2:#e2d8c9;
+  --danger:#bf5136; --ok:#5c8a5c;
+  --shadow:0 1px 2px rgba(60,44,24,.05), 0 8px 24px -12px rgba(60,44,24,.18);
+  --shadow-h:0 4px 10px rgba(60,44,24,.08), 0 20px 40px -16px rgba(60,44,24,.28);
+  --r:16px;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{font-family:"Assistant",-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+  background:var(--bg);color:var(--ink);margin:0;padding:0 clamp(14px,4vw,40px) 72px;line-height:1.45;
+  -webkit-font-smoothing:antialiased}
+a{color:inherit}
+.wrap{max-width:1120px;margin:0 auto}
+
+/* Header */
+header{padding:clamp(26px,5vw,52px) 2px clamp(10px,2vw,18px)}
+.kicker{display:inline-flex;align-items:center;gap:8px;font-size:12px;font-weight:700;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--brass);margin:0 0 12px}
+.kicker::before{content:"";width:26px;height:1px;background:var(--brass);opacity:.6}
+h1{font-family:"Frank Ruhl Libre","Assistant",serif;font-weight:700;font-size:clamp(28px,5vw,44px);
+  letter-spacing:-.01em;margin:0 0 8px;line-height:1.08}
+.sub{color:var(--ink-soft);font-size:clamp(14px,1.6vw,16px);max-width:56ch;margin:0}
+
+/* Who */
+.who{display:flex;align-items:center;gap:10px;margin:20px 0 0;flex-wrap:wrap}
+.who .lab{font-size:13px;color:var(--muted);font-weight:600}
+.who input{border:1px solid var(--line-2);border-radius:11px;padding:10px 13px;font:inherit;background:var(--paper);
+  min-width:210px;transition:.15s}
+.who input:focus{outline:none;border-color:var(--brass);box-shadow:0 0 0 3px var(--brass-soft)}
+
+/* Sticky bar */
+.bar{position:sticky;top:0;z-index:20;margin:18px 0 0;
+  background:color-mix(in srgb,var(--bg) 88%, transparent);backdrop-filter:saturate(1.1) blur(10px);
+  border-top:1px solid transparent;border-bottom:1px solid var(--line);
+  padding:12px 2px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.stats{display:flex;align-items:baseline;gap:18px;flex-wrap:wrap;margin-inline-end:auto}
+.stat{display:flex;align-items:baseline;gap:7px}
+.stat .num{font-family:"Frank Ruhl Libre",serif;font-weight:700;font-size:22px;color:var(--ink);line-height:1}
+.stat .num.money{color:var(--brass-d)}
+.stat .cap{font-size:12.5px;color:var(--muted);font-weight:600}
+.btn{font:inherit;font-weight:600;cursor:pointer;border-radius:12px;border:1px solid var(--line-2);
+  background:var(--paper);color:var(--ink);padding:11px 16px;transition:.15s;white-space:nowrap;
+  display:inline-flex;align-items:center;gap:8px}
+.btn:hover{border-color:var(--faint);transform:translateY(-1px)}
+.btn.primary{background:linear-gradient(180deg,var(--brass),var(--brass-d));color:#fff;border-color:var(--brass-d);
+  box-shadow:0 6px 16px -8px rgba(140,100,55,.7)}
+.btn.primary:hover{filter:brightness(1.04)}
+.btn.ghost{background:transparent;border-color:transparent;color:var(--ink-soft)}
+.btn.ghost:hover{background:var(--brass-soft);color:var(--brass-d)}
+.toggle{display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--ink-soft);cursor:pointer;user-select:none}
+.toggle input{accent-color:var(--brass);width:16px;height:16px}
+
+/* Grid */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(236px,1fr));gap:clamp(14px,1.8vw,22px);margin:24px 0 0}
+.card{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;
+  display:flex;flex-direction:column;box-shadow:var(--shadow);transition:transform .18s ease, box-shadow .18s ease, opacity .2s}
+.card:hover{transform:translateY(-4px);box-shadow:var(--shadow-h)}
+.thumb{position:relative;aspect-ratio:1/1;overflow:hidden;background:#efe9e0;display:block}
+.thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+.card:hover .thumb img{transform:scale(1.05)}
+.idx{position:absolute;top:10px;inset-inline-end:10px;background:rgba(255,255,255,.82);backdrop-filter:blur(4px);
+  color:var(--ink-soft);font-size:11px;font-weight:700;padding:3px 8px;border-radius:999px;letter-spacing:.02em}
+.rm{position:absolute;top:9px;inset-inline-start:9px;z-index:3;width:34px;height:34px;padding:0;border-radius:50%;
+  border:1px solid var(--line);background:rgba(255,255,255,.9);backdrop-filter:blur(6px);color:var(--danger);
+  font-size:15px;cursor:pointer;line-height:1;display:flex;align-items:center;justify-content:center;
+  box-shadow:0 2px 6px rgba(0,0,0,.08);transition:.15s}
+.rm:hover{transform:scale(1.08);background:#fff}
+.body{padding:13px 14px 15px;display:flex;flex-direction:column;gap:9px;flex:1}
+.name{font-size:15.5px;font-weight:700;text-decoration:none;line-height:1.28;color:var(--ink)}
+.name:hover{color:var(--brass-d);text-decoration:underline;text-underline-offset:2px}
+.price{font-family:"Frank Ruhl Libre",serif;font-weight:700;font-size:18px;color:var(--brass-d)}
+.ctl{margin-top:auto;display:flex;flex-direction:column;gap:9px}
+.qrow{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.qrow .l{font-size:12.5px;font-weight:600;color:var(--muted)}
+.stepper{display:inline-flex;align-items:center;border:1px solid var(--line-2);border-radius:10px;overflow:hidden;background:var(--paper)}
+.stepper button{border:0;background:transparent;padding:6px 12px;font-size:16px;cursor:pointer;color:var(--ink-soft);line-height:1}
+.stepper button:hover{background:var(--brass-soft);color:var(--brass-d)}
+.stepper .v{min-width:30px;text-align:center;font-weight:700;font-size:14px}
+.note{position:relative}
+.note textarea{width:100%;border:1px solid var(--line-2);border-radius:11px;padding:8px 11px 8px 11px;font:inherit;font-size:13px;
+  background:var(--paper);resize:vertical;min-height:40px;color:var(--ink);transition:.15s}
+.note textarea::placeholder{color:var(--faint)}
+.note textarea:focus{outline:none;border-color:var(--brass);box-shadow:0 0 0 3px var(--brass-soft);background:#fff}
+
+/* Removed state */
+.card.removed{opacity:.55}
+.card.removed .thumb img{filter:grayscale(1) contrast(.95)}
+.card.removed .name,.card.removed .price{color:var(--muted)}
+.card.removed .name{text-decoration:line-through}
+.card.removed .rm{color:var(--ok)}
+.ribbon{display:none;position:absolute;top:12px;inset-inline-start:-34px;transform:rotate(-45deg);
+  background:var(--danger);color:#fff;font-size:11px;font-weight:700;letter-spacing:.08em;padding:3px 40px;z-index:2}
+.card.removed .ribbon{display:block}
+body.hide-removed .card.removed{display:none}
+
+.foot{margin:22px auto 0;color:var(--muted);font-size:12.5px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.foot .dot{width:4px;height:4px;border-radius:50%;background:var(--faint)}
+
+/* Dialog */
+dialog{border:0;border-radius:18px;padding:0;max-width:580px;width:92%;box-shadow:0 30px 80px -20px rgba(40,30,15,.5)}
+dialog::backdrop{background:rgba(40,32,22,.4);backdrop-filter:blur(2px)}
+.dh{padding:16px 18px 14px;border-bottom:1px solid var(--line);font-weight:700;font-size:16px;display:flex;align-items:center;gap:9px}
+.db{padding:16px 18px}
+.db p{margin:0 0 10px;font-size:13px;color:var(--ink-soft)}
+.db textarea{width:100%;border:1px solid var(--line-2);border-radius:12px;padding:12px;font:inherit;font-size:13px;
+  min-height:240px;background:var(--paper);line-height:1.5}
+.df{padding:12px 18px 16px;display:flex;gap:9px}
+.toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(20px);opacity:0;
+  background:var(--ink);color:#fff;padding:11px 20px;border-radius:999px;font-weight:600;font-size:14px;
+  transition:.25s;z-index:60;pointer-events:none;box-shadow:0 10px 30px -8px rgba(0,0,0,.4)}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+@media(max-width:520px){.grid{grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+  .body{padding:11px 11px 13px}.name{font-size:14px}.bar{gap:8px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="kicker">הבית של עידה · רשימת תאורה</div>
+  <h1>רשימת המשאלות שלי</h1>
+  <p class="sub">אפשר להסיר פריטים, לעדכן כמות ולהוסיף הערות — אורך חוט, עוצמת אור או העדפה. בסיום לוחצים <b>“העתק סיכום”</b> ושולחים לי בחזרה בוואטסאפ.</p>
+  <div class="who"><span class="lab">ממלא/ת:</span><input id="who" placeholder="השם שלך (למשל: בעל / מעצבת)" oninput="save()"></div>
+</header>
+
+<div class="bar">
+  <div class="stats">
+    <span class="stat"><span class="num" id="cnt">0</span><span class="cap">מתוך <span id="total">0</span> פריטים</span></span>
+    <span class="stat"><span class="num money" id="sum">₪0</span><span class="cap">סה״כ</span></span>
+  </div>
+  <label class="toggle"><input type="checkbox" id="hide" onchange="document.body.classList.toggle('hide-removed',this.checked)"> הסתר שהוסרו</label>
+  <button class="btn ghost" onclick="resetAll()">איפוס</button>
+  <button class="btn primary" onclick="doSummary()">📋 העתק סיכום לשליחה</button>
+</div>
+
+<div id="grid" class="grid"></div>
+
+<div class="foot"><span>ההסרות וההערות נשמרות במכשיר שלך בלבד</span><span class="dot"></span><span>פרטי — נשלח רק כשלוחצים “העתק סיכום”</span></div>
+</div>
+
+<dialog id="dlg">
+  <div class="dh">📋 סיכום לשליחה</div>
+  <div class="db"><p>מוכן להעתקה ולשליחה בוואטסאפ. אפשר לערוך לפני:</p><textarea id="out"></textarea></div>
+  <div class="df"><button class="btn primary" onclick="copyOut()">העתק ללוח</button><button class="btn" onclick="dlg.close()">סגור</button></div>
+</dialog>
+<div class="toast" id="toast">✓ הועתק</div>
+
+<script>
+const ITEMS=[{"name": "גוף תאורה שניקה", "price": 299, "link": "https://store.ida-home.co.il/product/%d7%92%d7%95%d7%a3-%d7%aa%d7%90%d7%95%d7%a8%d7%94-%d7%a9%d7%a0%d7%99%d7%a7%d7%94", "img": "img/product-2419.jpg"}, {"name": "מנורת קיר פאולינה", "price": 383, "link": "https://store.ida-home.co.il/product/wall-light-paulina", "img": "img/k2.webp"}, {"name": "מנורת קיר סילו", "price": 263, "link": "https://store.ida-home.co.il/product/wall-light-silo", "img": "img/silo_1.webp"}, {"name": "גוף תאורה אניקה", "price": 306, "link": "https://store.ida-home.co.il/product/%d7%92%d7%95%d7%a3-%d7%aa%d7%90%d7%95%d7%a8%d7%94-%d7%90%d7%a0%d7%99%d7%a7%d7%94", "img": "img/product-2415.jpg"}, {"name": "מנורת קיר מריסה", "price": 273, "link": "https://store.ida-home.co.il/product/%d7%9b%d7%95%d7%91%d7%a2-%d7%a0%d7%96%d7%99%d7%a8-%d7%a9%d7%97%d7%95%d7%a8-5", "img": "img/product-5954.jpg"}, {"name": "גוף תאורה פרנסי", "price": 372, "link": "https://store.ida-home.co.il/product/%d7%92%d7%95%d7%a3-%d7%aa%d7%90%d7%95%d7%a8%d7%94-%d7%a4%d7%a8%d7%a0%d7%a1%d7%99", "img": "img/product-2411.jpg"}, {"name": "מנורת קיר מיכאלה", "price": 273, "link": "https://store.ida-home.co.il/product/%d7%9b%d7%95%d7%91%d7%a2-%d7%a0%d7%96%d7%99%d7%a8-%d7%a9%d7%97%d7%95%d7%a8-2", "img": "img/product-5949.jpg"}, {"name": "גוף תאורה פלורה", "price": 306, "link": "https://store.ida-home.co.il/product/%d7%92%d7%95%d7%a3-%d7%aa%d7%90%d7%95%d7%a8%d7%94-%d7%a4%d7%9c%d7%95%d7%a8%d7%94", "img": "img/product-2412.jpg"}, {"name": "גוף תאורה יוהנה", "price": 238, "link": "https://store.ida-home.co.il/product/%d7%92%d7%95%d7%a3-%d7%aa%d7%90%d7%95%d7%a8%d7%94-%d7%99%d7%95%d7%94%d7%a0%d7%94", "img": "img/light_4.webp"}, {"name": "גוף תאורה מארס", "price": 533, "link": "https://store.ida-home.co.il/product/%d7%92%d7%95%d7%a3-%d7%aa%d7%90%d7%95%d7%a8%d7%94-%d7%9e%d7%90%d7%a8%d7%a1", "img": "img/product-2046.jpg"}, {"name": "גוף תאורה טומאזו", "price": 382, "link": "https://store.ida-home.co.il/product/tomazzo-lamp", "img": "img/tomazo-1.webp"}, {"name": "גוף תאורה בריאן", "price": 263, "link": "https://store.ida-home.co.il/product/%d7%92%d7%95%d7%a3-%d7%aa%d7%90%d7%95%d7%a8%d7%94-%d7%91%d7%a8%d7%99%d7%90%d7%9f", "img": "img/product-2098.jpg"}, {"name": "גוף תאורה אלי", "price": 351, "link": "https://store.ida-home.co.il/product/%d7%92%d7%95%d7%a3-%d7%aa%d7%90%d7%95%d7%a8%d7%94-%d7%90%d7%9c%d7%99", "img": "img/product-2053.jpg"}, {"name": "גוף תאורה קרמן", "price": 289, "link": "https://store.ida-home.co.il/product/%d7%92%d7%95%d7%a3-%d7%aa%d7%90%d7%95%d7%a8%d7%94-%d7%a7%d7%a8%d7%9e%d7%9f", "img": "img/product-2032.jpg"}, {"name": "גוף תאורה לסלי", "price": 476, "link": "https://store.ida-home.co.il/product/%d7%92%d7%95%d7%a3-%d7%aa%d7%90%d7%95%d7%a8%d7%94-%d7%9c%d7%a1%d7%9c%d7%99", "img": "img/product-2015.jpg"}, {"name": "גוף תאורה מרקורי", "price": 533, "link": "https://store.ida-home.co.il/product/%d7%92%d7%95%d7%a3-%d7%aa%d7%90%d7%95%d7%a8%d7%94-%d7%9e%d7%a8%d7%a7%d7%95%d7%a8%d7%99", "img": "img/product-1963.jpg"}, {"name": "גוף תאורה טדי", "price": 271, "link": "https://store.ida-home.co.il/product/%d7%92%d7%95%d7%a3-%d7%aa%d7%90%d7%95%d7%a8%d7%94-%d7%98%d7%93%d7%99", "img": "img/product-1727.jpg"}, {"name": "מנורה תלויה מקסין", "price": 332, "link": "https://store.ida-home.co.il/product/%d7%9e%d7%a0%d7%95%d7%a8%d7%94-%d7%aa%d7%9c%d7%95%d7%99%d7%94-%d7%9e%d7%a7%d7%a1%d7%99%d7%9f", "img": "img/product-1641.jpg"}, {"name": "גוסטבו פליז", "price": 383, "link": "https://store.ida-home.co.il/product/%d7%92%d7%95%d7%a1%d7%98%d7%91%d7%95-%d7%a4%d7%9c%d7%99%d7%96", "img": "img/product-6327.jpg"}, {"name": "לייני", "price": 282, "link": "https://store.ida-home.co.il/product/%d7%92%d7%95%d7%a3-%d7%aa%d7%90%d7%95%d7%a8%d7%94-%d7%9c%d7%99%d7%99%d7%a0%d7%99", "img": "img/product-1404.jpg"}, {"name": "לואיס", "price": 297, "link": "https://store.ida-home.co.il/product/%d7%92%d7%95%d7%a3-%d7%aa%d7%90%d7%95%d7%a8%d7%94-%d7%9c%d7%95%d7%90%d7%99%d7%a1", "img": "img/product-1392.jpg"}, {"name": "מייקל", "price": 273, "link": "https://store.ida-home.co.il/product/%d7%92%d7%95%d7%a3-%d7%aa%d7%90%d7%95%d7%a8%d7%94-%d7%9e%d7%99%d7%99%d7%a7%d7%9c", "img": "img/product-1390.jpg"}, {"name": "הלנה", "price": 273, "link": "https://store.ida-home.co.il/product/%d7%94%d7%9c%d7%a0%d7%94", "img": "img/product-1265.jpg"}, {"name": "אלה", "price": 273, "link": "https://store.ida-home.co.il/product/%d7%90%d7%9c%d7%94-2", "img": "img/product-1256.jpg"}, {"name": "דונה", "price": 286, "link": "https://store.ida-home.co.il/product/%d7%93%d7%95%d7%a0%d7%94-2", "img": "img/product-1238.jpg"}, {"name": "אדל", "price": 286, "link": "https://store.ida-home.co.il/product/%d7%90%d7%93%d7%9c-2", "img": "img/product-1195.jpg"}, {"name": "מקס", "price": 273, "link": "https://store.ida-home.co.il/product/%d7%9e%d7%a7%d7%a1", "img": "img/product-1151.jpg"}, {"name": "דיון", "price": 286, "link": "https://store.ida-home.co.il/product/%d7%93%d7%99%d7%95%d7%9f-2", "img": "img/product-797.jpg"}, {"name": "ואלרי", "price": 257, "link": "https://store.ida-home.co.il/product/%d7%95%d7%90%d7%9c%d7%a8%d7%99-2", "img": "img/product-786.jpg"}, {"name": "ג'ייד פסים", "price": 356, "link": "https://store.ida-home.co.il/product/%d7%92-%d7%99%d7%99%d7%93-%d7%a4%d7%a1%d7%99%d7%9d", "img": "img/jade.webp"}, {"name": "ויולה", "price": 281, "link": "https://store.ida-home.co.il/product/%d7%95%d7%99%d7%95%d7%9c%d7%94-2", "img": "img/product-6995.jpg"}, {"name": "רזי", "price": 267, "link": "https://store.ida-home.co.il/product/%d7%a8%d7%96%d7%99", "img": "img/product-15.png"}, {"name": "צמודת תקרה מתכווננת ג'ולי", "price": 297, "link": "https://store.ida-home.co.il/product/%d7%92-%d7%95%d7%9c%d7%99-2", "img": "img/product-10840.jpg"}, {"name": "גוף תאורה תלוי קרולין", "price": 416, "link": "https://store.ida-home.co.il/product/%d7%92%d7%95%d7%a3-%d7%aa%d7%90%d7%95%d7%a8%d7%94-%d7%aa%d7%9c%d7%95%d7%99-%d7%a7%d7%a8%d7%95%d7%9c%d7%99%d7%9f", "img": "img/product-5753.jpg"}, {"name": "גוף תאורה תלוי ליסה", "price": 680, "link": "https://store.ida-home.co.il/product/%d7%92%d7%95%d7%a3-%d7%aa%d7%90%d7%95%d7%a8%d7%94-%d7%aa%d7%9c%d7%95%d7%99-%d7%9c%d7%99%d7%a1%d7%94", "img": "img/product-321.jpg"}];
+const KEY="wishlist-ida-v2";
+let state=JSON.parse(localStorage.getItem(KEY)||"{}");
+state.who=state.who||""; state.items=state.items||{};
+const dlg=document.getElementById('dlg');
+const nis=n=>"₪"+n.toLocaleString('en-US');
+function is(i){return state.items[i]||(state.items[i]={qty:1,note:"",removed:false});}
+function persist(){localStorage.setItem(KEY,JSON.stringify(state));}
+function save(){state.who=document.getElementById('who').value;persist();render();}
+function render(){
+  const g=document.getElementById('grid');g.innerHTML="";
+  let cnt=0,sum=0;
+  ITEMS.forEach((it,i)=>{
+    const s=is(i); if(!s.removed){cnt++;sum+=it.price*(s.qty||1);}
+    const c=document.createElement('div');c.className="card"+(s.removed?" removed":"");
+    c.innerHTML=`
+      <span class="ribbon">הוסר</span>
+      <button class="rm" aria-label="${s.removed?'החזר לרשימה':'הסר מהרשימה'}" title="${s.removed?'החזר':'הסר'}" onclick="toggle(${i})">${s.removed?'↺':'✕'}</button>
+      <a class="thumb" href="${it.link}" target="_blank" rel="noopener"><span class="idx">${i+1}</span><img loading="lazy" src="${it.img}" alt="${it.name}"></a>
+      <div class="body">
+        <a class="name" href="${it.link}" target="_blank" rel="noopener">${it.name}</a>
+        <div class="price">${nis(it.price)}</div>
+        <div class="ctl">
+          <div class="qrow"><span class="l">כמות</span>
+            <span class="stepper"><button aria-label="הפחת" onclick="qty(${i},-1)">−</button><span class="v" id="q${i}">${s.qty||1}</span><button aria-label="הוסף" onclick="qty(${i},1)">+</button></span>
+          </div>
+          <div class="note"><textarea placeholder="הערה: אורך חוט, עוצמת אור, העדפה…" oninput="note(${i},this.value)">${(s.note||"").replace(/</g,'&lt;')}</textarea></div>
+        </div>
+      </div>`;
+    g.appendChild(c);
+  });
+  document.getElementById('cnt').textContent=cnt;
+  document.getElementById('total').textContent=ITEMS.length;
+  document.getElementById('sum').textContent=nis(sum);
+}
+function toggle(i){is(i).removed=!is(i).removed;persist();render();}
+function qty(i,d){const s=is(i);s.qty=Math.max(1,(s.qty||1)+d);persist();render();}
+function note(i,v){is(i).note=v;persist();}
+function resetAll(){if(confirm("לאפס את כל ההסרות, הכמויות וההערות?")){state.items={};persist();render();}}
+function buildSummary(){
+  let kept=[],removed=[],sum=0;
+  ITEMS.forEach((it,i)=>{const s=is(i);
+    if(s.removed){removed.push("• "+it.name);}
+    else{const q=s.qty||1;sum+=it.price*q;
+      let line=(kept.length+1)+". "+it.name+(q>1?"  ×"+q:"")+"  —  "+nis(it.price*q);
+      if(s.note&&s.note.trim())line+="\n     ↳ "+s.note.trim();
+      kept.push(line);}
+  });
+  let t="✦ רשימת תאורה — הבית של עידה";
+  if(state.who&&state.who.trim())t+="\nמאת: "+state.who.trim();
+  t+="\n"+"—".repeat(24)+"\n"+kept.join("\n")+"\n"+"—".repeat(24)+"\nסה״כ ("+kept.length+" פריטים): "+nis(sum);
+  if(removed.length)t+="\n\n✗ הוסרו ("+removed.length+"):\n"+removed.join("\n");
+  return t;
+}
+function doSummary(){document.getElementById('out').value=buildSummary();dlg.showModal();}
+function toast(){const t=document.getElementById('toast');t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1600);}
+function copyOut(){const o=document.getElementById('out');o.select();
+  const done=()=>{toast();};
+  if(navigator.clipboard){navigator.clipboard.writeText(o.value).then(done,()=>{document.execCommand('copy');done();});}
+  else{document.execCommand('copy');done();}
+}
+document.getElementById('who').value=state.who;
+render();
+</script>
+</body>
+</html>
