@@ -1,17 +1,40 @@
-<!doctype html>
+import json,os,sys
+
+REPO="/Users/home/פרוייקטים/wishlist-ida"
+BASE="https://yaelavgil.github.io/wishlist-ida/"
+
+def tags(n):
+    t=[]
+    if "קיר" in n: t.append("מנורת קיר")
+    if "תלוי" in n or "תלויה" in n: t.append("תלויה")
+    if "צמוד" in n: t.append("צמודת תקרה")
+    if not t: t.append("גוף תאורה")
+    return t
+
+items=json.load(open("/private/tmp/claude-501/-Users-home----------/4126668b-e0e5-4b5e-9e7f-2f21afab79a0/scratchpad/wishlist.json"))
+DATA=[]
+for k,it in enumerate(items):
+    DATA.append({"id":"l"+str(k+1),"cat":"תאורה","name":it["name"],"price":it["price"],
+                 "link":it["link"],"img":"img/"+it["img"],"tags":tags(it["name"])})
+CATS=[{"key":"all","label":"הכול","icon":"✦"},
+      {"key":"תאורה","label":"תאורה","icon":"💡"},
+      {"key":"צבעים","label":"צבעים","icon":"🎨"},
+      {"key":"ידיות","label":"ידיות מטבח","icon":"🔩"}]
+
+tpl=r'''<!doctype html>
 <html lang="he" dir="rtl">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>לוח החלטות · הבית של עידה</title>
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://yaelavgil.github.io/wishlist-ida/">
+<meta property="og:url" content="__BASE__">
 <meta property="og:title" content="לוח החלטות — הבית של עידה">
 <meta property="og:description" content="תאורה · צבעים · ידיות מטבח — בחירה, מיון וסינון נוחים לשיתוף.">
-<meta property="og:image" content="https://yaelavgil.github.io/wishlist-ida/og.png">
+<meta property="og:image" content="__BASE__og.png">
 <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
 <meta property="og:locale" content="he_IL">
-<meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://yaelavgil.github.io/wishlist-ida/og.png">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="__BASE__og.png">
 <meta name="theme-color" content="#b08a54">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
@@ -177,7 +200,7 @@ dialog::backdrop{background:rgba(50,38,24,.42);backdrop-filter:blur(3px)}
 <div class="toast" id="toast">✓ הועתק</div>
 
 <script>
-const ITEMS=[{"id": "l1", "cat": "תאורה", "name": "גוף תאורה שניקה", "price": 299, "link": "https://store.ida-home.co.il/product/%d7%92%d7%95%d7%a3-%d7%aa%d7%90%d7%95%d7%a8%d7%94-%d7%a9%d7%a0%d7%99%d7%a7%d7%94", "img": "img/product-2419.jpg", "tags": ["גוף תאורה"]}, {"id": "l2", "cat": "תאורה", "name": "מנורת קיר פאולינה", "price": 383, "link": "https://store.ida-home.co.il/product/wall-light-paulina", "img": "img/k2.webp", "tags": ["מנורת קיר"]}, {"id": "l3", "cat": "תאורה", "name": "מנורת קיר סילו", "price": 263, "link": "https://store.ida-home.co.il/product/wall-light-silo", "img": "img/silo_1.webp", "tags": ["מנורת קיר"]}, {"id": "l4", "cat": "תאורה", "name": "גוף תאורה אניקה", "price": 306, "link": "https://store.ida-home.co.il/product/%d7%92%d7%95%d7%a3-%d7%aa%d7%90%d7%95%d7%a8%d7%94-%d7%90%d7%a0%d7%99%d7%a7%d7%94", "img": "img/product-2415.jpg", "tags": ["גוף תאורה"]}, {"id": "l5", "cat": "תאורה", "name": "מנורת קיר מריסה", "price": 273, "link": "https://store.ida-home.co.il/product/%d7%9b%d7%95%d7%91%d7%a2-%d7%a0%d7%96%d7%99%d7%a8-%d7%a9%d7%97%d7%95%d7%a8-5", "img": "img/product-5954.jpg", "tags": ["מנורת קיר"]}, {"id": "l6", "cat": "תאורה", "name": "גוף תאורה פרנסי", "price": 372, "link": "https://store.ida-home.co.il/product/%d7%92%d7%95%d7%a3-%d7%aa%d7%90%d7%95%d7%a8%d7%94-%d7%a4%d7%a8%d7%a0%d7%a1%d7%99", "img": "img/product-2411.jpg", "tags": ["גוף תאורה"]}, {"id": "l7", "cat": "תאורה", "name": "מנורת קיר מיכאלה", "price": 273, "link": "https://store.ida-home.co.il/product/%d7%9b%d7%95%d7%91%d7%a2-%d7%a0%d7%96%d7%99%d7%a8-%d7%a9%d7%97%d7%95%d7%a8-2", "img": "img/product-5949.jpg", "tags": ["מנורת קיר"]}, {"id": "l8", "cat": "תאורה", "name": "גוף תאורה פלורה", "price": 306, "link": "https://store.ida-home.co.il/product/%d7%92%d7%95%d7%a3-%d7%aa%d7%90%d7%95%d7%a8%d7%94-%d7%a4%d7%9c%d7%95%d7%a8%d7%94", "img": "img/product-2412.jpg", "tags": ["גוף תאורה"]}, {"id": "l9", "cat": "תאורה", "name": "גוף תאורה יוהנה", "price": 238, "link": "https://store.ida-home.co.il/product/%d7%92%d7%95%d7%a3-%d7%aa%d7%90%d7%95%d7%a8%d7%94-%d7%99%d7%95%d7%94%d7%a0%d7%94", "img": "img/light_4.webp", "tags": ["גוף תאורה"]}, {"id": "l10", "cat": "תאורה", "name": "גוף תאורה מארס", "price": 533, "link": "https://store.ida-home.co.il/product/%d7%92%d7%95%d7%a3-%d7%aa%d7%90%d7%95%d7%a8%d7%94-%d7%9e%d7%90%d7%a8%d7%a1", "img": "img/product-2046.jpg", "tags": ["גוף תאורה"]}, {"id": "l11", "cat": "תאורה", "name": "גוף תאורה טומאזו", "price": 382, "link": "https://store.ida-home.co.il/product/tomazzo-lamp", "img": "img/tomazo-1.webp", "tags": ["גוף תאורה"]}, {"id": "l12", "cat": "תאורה", "name": "גוף תאורה בריאן", "price": 263, "link": "https://store.ida-home.co.il/product/%d7%92%d7%95%d7%a3-%d7%aa%d7%90%d7%95%d7%a8%d7%94-%d7%91%d7%a8%d7%99%d7%90%d7%9f", "img": "img/product-2098.jpg", "tags": ["גוף תאורה"]}, {"id": "l13", "cat": "תאורה", "name": "גוף תאורה אלי", "price": 351, "link": "https://store.ida-home.co.il/product/%d7%92%d7%95%d7%a3-%d7%aa%d7%90%d7%95%d7%a8%d7%94-%d7%90%d7%9c%d7%99", "img": "img/product-2053.jpg", "tags": ["גוף תאורה"]}, {"id": "l14", "cat": "תאורה", "name": "גוף תאורה קרמן", "price": 289, "link": "https://store.ida-home.co.il/product/%d7%92%d7%95%d7%a3-%d7%aa%d7%90%d7%95%d7%a8%d7%94-%d7%a7%d7%a8%d7%9e%d7%9f", "img": "img/product-2032.jpg", "tags": ["גוף תאורה"]}, {"id": "l15", "cat": "תאורה", "name": "גוף תאורה לסלי", "price": 476, "link": "https://store.ida-home.co.il/product/%d7%92%d7%95%d7%a3-%d7%aa%d7%90%d7%95%d7%a8%d7%94-%d7%9c%d7%a1%d7%9c%d7%99", "img": "img/product-2015.jpg", "tags": ["גוף תאורה"]}, {"id": "l16", "cat": "תאורה", "name": "גוף תאורה מרקורי", "price": 533, "link": "https://store.ida-home.co.il/product/%d7%92%d7%95%d7%a3-%d7%aa%d7%90%d7%95%d7%a8%d7%94-%d7%9e%d7%a8%d7%a7%d7%95%d7%a8%d7%99", "img": "img/product-1963.jpg", "tags": ["גוף תאורה"]}, {"id": "l17", "cat": "תאורה", "name": "גוף תאורה טדי", "price": 271, "link": "https://store.ida-home.co.il/product/%d7%92%d7%95%d7%a3-%d7%aa%d7%90%d7%95%d7%a8%d7%94-%d7%98%d7%93%d7%99", "img": "img/product-1727.jpg", "tags": ["גוף תאורה"]}, {"id": "l18", "cat": "תאורה", "name": "מנורה תלויה מקסין", "price": 332, "link": "https://store.ida-home.co.il/product/%d7%9e%d7%a0%d7%95%d7%a8%d7%94-%d7%aa%d7%9c%d7%95%d7%99%d7%94-%d7%9e%d7%a7%d7%a1%d7%99%d7%9f", "img": "img/product-1641.jpg", "tags": ["תלויה"]}, {"id": "l19", "cat": "תאורה", "name": "גוסטבו פליז", "price": 383, "link": "https://store.ida-home.co.il/product/%d7%92%d7%95%d7%a1%d7%98%d7%91%d7%95-%d7%a4%d7%9c%d7%99%d7%96", "img": "img/product-6327.jpg", "tags": ["גוף תאורה"]}, {"id": "l20", "cat": "תאורה", "name": "לייני", "price": 282, "link": "https://store.ida-home.co.il/product/%d7%92%d7%95%d7%a3-%d7%aa%d7%90%d7%95%d7%a8%d7%94-%d7%9c%d7%99%d7%99%d7%a0%d7%99", "img": "img/product-1404.jpg", "tags": ["גוף תאורה"]}, {"id": "l21", "cat": "תאורה", "name": "לואיס", "price": 297, "link": "https://store.ida-home.co.il/product/%d7%92%d7%95%d7%a3-%d7%aa%d7%90%d7%95%d7%a8%d7%94-%d7%9c%d7%95%d7%90%d7%99%d7%a1", "img": "img/product-1392.jpg", "tags": ["גוף תאורה"]}, {"id": "l22", "cat": "תאורה", "name": "מייקל", "price": 273, "link": "https://store.ida-home.co.il/product/%d7%92%d7%95%d7%a3-%d7%aa%d7%90%d7%95%d7%a8%d7%94-%d7%9e%d7%99%d7%99%d7%a7%d7%9c", "img": "img/product-1390.jpg", "tags": ["גוף תאורה"]}, {"id": "l23", "cat": "תאורה", "name": "הלנה", "price": 273, "link": "https://store.ida-home.co.il/product/%d7%94%d7%9c%d7%a0%d7%94", "img": "img/product-1265.jpg", "tags": ["גוף תאורה"]}, {"id": "l24", "cat": "תאורה", "name": "אלה", "price": 273, "link": "https://store.ida-home.co.il/product/%d7%90%d7%9c%d7%94-2", "img": "img/product-1256.jpg", "tags": ["גוף תאורה"]}, {"id": "l25", "cat": "תאורה", "name": "דונה", "price": 286, "link": "https://store.ida-home.co.il/product/%d7%93%d7%95%d7%a0%d7%94-2", "img": "img/product-1238.jpg", "tags": ["גוף תאורה"]}, {"id": "l26", "cat": "תאורה", "name": "אדל", "price": 286, "link": "https://store.ida-home.co.il/product/%d7%90%d7%93%d7%9c-2", "img": "img/product-1195.jpg", "tags": ["גוף תאורה"]}, {"id": "l27", "cat": "תאורה", "name": "מקס", "price": 273, "link": "https://store.ida-home.co.il/product/%d7%9e%d7%a7%d7%a1", "img": "img/product-1151.jpg", "tags": ["גוף תאורה"]}, {"id": "l28", "cat": "תאורה", "name": "דיון", "price": 286, "link": "https://store.ida-home.co.il/product/%d7%93%d7%99%d7%95%d7%9f-2", "img": "img/product-797.jpg", "tags": ["גוף תאורה"]}, {"id": "l29", "cat": "תאורה", "name": "ואלרי", "price": 257, "link": "https://store.ida-home.co.il/product/%d7%95%d7%90%d7%9c%d7%a8%d7%99-2", "img": "img/product-786.jpg", "tags": ["גוף תאורה"]}, {"id": "l30", "cat": "תאורה", "name": "ג'ייד פסים", "price": 356, "link": "https://store.ida-home.co.il/product/%d7%92-%d7%99%d7%99%d7%93-%d7%a4%d7%a1%d7%99%d7%9d", "img": "img/jade.webp", "tags": ["גוף תאורה"]}, {"id": "l31", "cat": "תאורה", "name": "ויולה", "price": 281, "link": "https://store.ida-home.co.il/product/%d7%95%d7%99%d7%95%d7%9c%d7%94-2", "img": "img/product-6995.jpg", "tags": ["גוף תאורה"]}, {"id": "l32", "cat": "תאורה", "name": "רזי", "price": 267, "link": "https://store.ida-home.co.il/product/%d7%a8%d7%96%d7%99", "img": "img/product-15.png", "tags": ["גוף תאורה"]}, {"id": "l33", "cat": "תאורה", "name": "צמודת תקרה מתכווננת ג'ולי", "price": 297, "link": "https://store.ida-home.co.il/product/%d7%92-%d7%95%d7%9c%d7%99-2", "img": "img/product-10840.jpg", "tags": ["צמודת תקרה"]}, {"id": "l34", "cat": "תאורה", "name": "גוף תאורה תלוי קרולין", "price": 416, "link": "https://store.ida-home.co.il/product/%d7%92%d7%95%d7%a3-%d7%aa%d7%90%d7%95%d7%a8%d7%94-%d7%aa%d7%9c%d7%95%d7%99-%d7%a7%d7%a8%d7%95%d7%9c%d7%99%d7%9f", "img": "img/product-5753.jpg", "tags": ["תלויה"]}, {"id": "l35", "cat": "תאורה", "name": "גוף תאורה תלוי ליסה", "price": 680, "link": "https://store.ida-home.co.il/product/%d7%92%d7%95%d7%a3-%d7%aa%d7%90%d7%95%d7%a8%d7%94-%d7%aa%d7%9c%d7%95%d7%99-%d7%9c%d7%99%d7%a1%d7%94", "img": "img/product-321.jpg", "tags": ["תלויה"]}], CATS=[{"key": "all", "label": "הכול", "icon": "✦"}, {"key": "תאורה", "label": "תאורה", "icon": "💡"}, {"key": "צבעים", "label": "צבעים", "icon": "🎨"}, {"key": "ידיות", "label": "ידיות מטבח", "icon": "🔩"}];
+const ITEMS=__DATA__, CATS=__CATS__;
 const KEY="ida-board-v1";
 let st=JSON.parse(localStorage.getItem(KEY)||"{}"); st.s=st.s||{};
 let cat="all", stf=new Set(), tagf=new Set();
@@ -318,4 +341,9 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLB();});
 tabsHTML(); buildChips(); RE(true);
 </script>
 </body>
-</html>
+</html>'''
+out=(tpl.replace("__DATA__",json.dumps(DATA,ensure_ascii=False))
+        .replace("__CATS__",json.dumps(CATS,ensure_ascii=False))
+        .replace("__BASE__",BASE))
+open(os.path.join(REPO,"index.html"),"w",encoding="utf-8").write(out)
+print("board built | items",len(DATA),"| bytes",len(out))
