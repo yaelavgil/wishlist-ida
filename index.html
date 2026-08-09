@@ -23,41 +23,35 @@
   --bg:#f5f1ea; --bg2:#efe8dc; --paper:#fffefb; --surface:#ffffff;
   --ink:#332c25; --ink-soft:#645a4f; --muted:#a3978a; --faint:#cabfae;
   --brass:#b08a54; --brass-d:#946f3c; --brass-soft:#f2ead9;
-  --line:#eee7db; --line-2:#e4dact; --line-2:#e6ddce;
-  --danger:#c2604a; --ok:#6a9469;
+  --line:#eee7db; --line-2:#e6ddce; --danger:#c2604a; --ok:#6a9469;
   --shadow:0 2px 6px rgba(95,72,40,.05), 0 18px 40px -22px rgba(95,72,40,.30);
   --shadow-h:0 8px 18px rgba(95,72,40,.10), 0 30px 60px -24px rgba(95,72,40,.40);
-  --r:22px; --r-sm:14px;
+  --r:22px; --r-sm:14px; --hfont:'Rubik'; --bfont:'Rubik';
 }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
-body{font-family:"Rubik",-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;font-weight:400;
+body{font-family:var(--bfont),-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;font-weight:400;
   color:var(--ink);margin:0;padding:0 clamp(14px,4vw,44px) 80px;line-height:1.5;-webkit-font-smoothing:antialiased;
-  background:
-    radial-gradient(1200px 500px at 82% -6%, #fbf6ec 0%, rgba(251,246,236,0) 60%),
-    radial-gradient(900px 480px at 8% 4%, #f7efe1 0%, rgba(247,239,225,0) 55%),
-    linear-gradient(180deg,var(--bg) 0%, var(--bg2) 100%);
-  background-attachment:fixed}
+  background:radial-gradient(1200px 500px at 82% -6%,#fbf6ec 0%,rgba(251,246,236,0) 60%),
+    radial-gradient(900px 480px at 8% 4%,#f7efe1 0%,rgba(247,239,225,0) 55%),
+    linear-gradient(180deg,var(--bg) 0%,var(--bg2) 100%);background-attachment:fixed}
 a{color:inherit}
 .wrap{max-width:1120px;margin:0 auto}
-
 header{padding:clamp(30px,5vw,58px) 4px clamp(12px,2vw,20px)}
 .kicker{display:inline-flex;align-items:center;gap:9px;font-size:12px;font-weight:600;letter-spacing:.16em;
   text-transform:uppercase;color:var(--brass-d);margin:0 0 14px}
 .kicker::before{content:"";width:28px;height:2px;border-radius:2px;background:var(--brass);opacity:.7}
-h1{font-weight:700;font-size:clamp(30px,5.4vw,50px);letter-spacing:-.025em;margin:0 0 10px;line-height:1.05;color:var(--ink)}
-.sub{color:var(--ink-soft);font-size:clamp(14.5px,1.6vw,16.5px);max-width:58ch;margin:0;font-weight:400}
+h1{font-family:var(--hfont);font-weight:700;font-size:clamp(30px,5.4vw,50px);letter-spacing:-.02em;margin:0 0 10px;line-height:1.05;color:var(--ink)}
+.sub{color:var(--ink-soft);font-size:clamp(14.5px,1.6vw,16.5px);max-width:58ch;margin:0}
 .sub b{font-weight:600;color:var(--ink)}
-
 .who{display:flex;align-items:center;gap:11px;margin:22px 0 0;flex-wrap:wrap}
 .who .lab{font-size:13.5px;color:var(--muted);font-weight:500}
 .who input{border:1.5px solid var(--line-2);border-radius:var(--r-sm);padding:11px 15px;font:inherit;font-size:14px;
   background:var(--paper);min-width:230px;transition:.18s;color:var(--ink)}
 .who input::placeholder{color:var(--faint)}
 .who input:focus{outline:none;border-color:var(--brass);box-shadow:0 0 0 4px var(--brass-soft)}
-
 .bar{position:sticky;top:0;z-index:20;margin:20px 0 0;border-radius:0 0 18px 18px;
-  background:color-mix(in srgb,var(--bg) 82%, transparent);backdrop-filter:saturate(1.15) blur(12px);
+  background:color-mix(in srgb,var(--bg) 82%,transparent);backdrop-filter:saturate(1.15) blur(12px);
   border-bottom:1.5px solid var(--line);padding:14px 6px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
 .stats{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-inline-end:auto}
 .pill{display:inline-flex;align-items:baseline;gap:8px;background:var(--paper);border:1.5px solid var(--line);
@@ -73,13 +67,9 @@ h1{font-weight:700;font-size:clamp(30px,5.4vw,50px);letter-spacing:-.025em;margi
 .btn.primary:hover{filter:brightness(1.05)}
 .btn.ghost{background:transparent;border-color:transparent;color:var(--ink-soft)}
 .btn.ghost:hover{background:var(--brass-soft);color:var(--brass-d);box-shadow:none}
-.toggle{display:inline-flex;align-items:center;gap:8px;font-size:13.5px;color:var(--ink-soft);cursor:pointer;user-select:none;font-weight:500}
-.toggle input{accent-color:var(--brass);width:17px;height:17px}
-
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:clamp(16px,2vw,24px);margin:26px 0 0}
 .card{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;
-  display:flex;flex-direction:column;box-shadow:var(--shadow);transition:transform .22s cubic-bezier(.2,.7,.2,1), box-shadow .22s, opacity .25s;
-  animation:rise .5s both}
+  display:flex;flex-direction:column;box-shadow:var(--shadow);transition:transform .22s cubic-bezier(.2,.7,.2,1),box-shadow .22s,opacity .25s;animation:rise .5s both}
 @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
 .card:hover{transform:translateY(-5px);box-shadow:var(--shadow-h)}
 .thumb{position:relative;aspect-ratio:1/1;overflow:hidden;background:#f0eae0;display:block}
@@ -89,8 +79,7 @@ h1{font-weight:700;font-size:clamp(30px,5.4vw,50px);letter-spacing:-.025em;margi
   color:var(--ink-soft);font-size:11.5px;font-weight:600;padding:3px 9px;border-radius:999px}
 .rm{position:absolute;top:11px;inset-inline-start:11px;z-index:3;width:36px;height:36px;padding:0;border-radius:50%;
   border:1.5px solid rgba(255,255,255,.7);background:rgba(255,255,255,.92);backdrop-filter:blur(6px);color:var(--danger);
-  font-size:16px;cursor:pointer;line-height:1;display:flex;align-items:center;justify-content:center;
-  box-shadow:0 3px 10px rgba(60,40,15,.16);transition:.18s}
+  font-size:16px;cursor:pointer;line-height:1;display:flex;align-items:center;justify-content:center;box-shadow:0 3px 10px rgba(60,40,15,.16);transition:.18s}
 .rm:hover{transform:scale(1.12);background:#fff}
 .body{padding:15px 16px 17px;display:flex;flex-direction:column;gap:10px;flex:1}
 .name{font-size:16px;font-weight:600;text-decoration:none;line-height:1.3;color:var(--ink)}
@@ -107,31 +96,28 @@ h1{font-weight:700;font-size:clamp(30px,5.4vw,50px);letter-spacing:-.025em;margi
   background:var(--paper);resize:vertical;min-height:42px;color:var(--ink);transition:.18s;line-height:1.45}
 .note textarea::placeholder{color:var(--faint)}
 .note textarea:focus{outline:none;border-color:var(--brass);box-shadow:0 0 0 4px var(--brass-soft);background:#fff}
-
-.card.removed{opacity:.5}
-.card.removed .thumb img{filter:grayscale(1) contrast(.92)}
-.card.removed .name,.card.removed .price{color:var(--muted)}
-.card.removed .name{text-decoration:line-through}
-.card.removed .rm{color:var(--ok)}
-.ribbon{display:none;position:absolute;top:15px;inset-inline-start:-34px;transform:rotate(-45deg);
-  background:var(--danger);color:#fff;font-size:11px;font-weight:600;letter-spacing:.1em;padding:4px 42px;z-index:2}
-.card.removed .ribbon{display:block}
-body.hide-removed .card.removed{display:none}
-
-.foot{margin:26px auto 0;color:var(--muted);font-size:13px;display:flex;align-items:center;gap:9px;flex-wrap:wrap;font-weight:400}
+/* removed section */
+.section-h{display:flex;align-items:center;gap:12px;margin:44px 4px 4px}
+.section-h h2{font-family:var(--hfont);font-weight:700;font-size:22px;color:var(--ink-soft);margin:0}
+.section-h .line{flex:1;height:1.5px;background:var(--line)}
+.section-h .cnt{font-size:13px;color:var(--muted);font-weight:600}
+#removed-wrap{display:none}
+#removed-wrap.show{display:block}
+.card.rmv{opacity:.92}
+.card.rmv .thumb img{filter:grayscale(1) contrast(.95)}
+.card.rmv .name{color:var(--muted)}
+.restore{margin-top:auto;width:100%;justify-content:center;border-style:dashed;border-color:var(--ok);color:var(--ok);background:#f4f8f3}
+.restore:hover{background:var(--ok);color:#fff;border-style:solid}
+.foot{margin:26px auto 0;color:var(--muted);font-size:13px;display:flex;align-items:center;gap:9px;flex-wrap:wrap}
 .foot .dot{width:4px;height:4px;border-radius:50%;background:var(--faint)}
-
 dialog{border:0;border-radius:22px;padding:0;max-width:590px;width:92%;box-shadow:0 40px 90px -24px rgba(50,36,18,.55)}
 dialog::backdrop{background:rgba(50,38,24,.42);backdrop-filter:blur(3px)}
 .dh{padding:18px 20px 15px;border-bottom:1px solid var(--line);font-weight:700;font-size:17px;display:flex;align-items:center;gap:9px}
-.db{padding:17px 20px}
-.db p{margin:0 0 11px;font-size:13.5px;color:var(--ink-soft)}
-.db textarea{width:100%;border:1.5px solid var(--line-2);border-radius:14px;padding:13px;font:inherit;font-size:13.5px;
-  min-height:250px;background:var(--paper);line-height:1.6}
+.db{padding:17px 20px}.db p{margin:0 0 11px;font-size:13.5px;color:var(--ink-soft)}
+.db textarea{width:100%;border:1.5px solid var(--line-2);border-radius:14px;padding:13px;font:inherit;font-size:13.5px;min-height:250px;background:var(--paper);line-height:1.6}
 .df{padding:14px 20px 18px;display:flex;gap:10px}
-.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(20px);opacity:0;
-  background:var(--ink);color:#fff;padding:12px 22px;border-radius:999px;font-weight:600;font-size:14px;
-  transition:.28s;z-index:60;pointer-events:none;box-shadow:0 14px 34px -10px rgba(0,0,0,.45)}
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(20px);opacity:0;background:var(--ink);color:#fff;
+  padding:12px 22px;border-radius:999px;font-weight:600;font-size:14px;transition:.28s;z-index:60;pointer-events:none;box-shadow:0 14px 34px -10px rgba(0,0,0,.45)}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 @media(max-width:520px){.grid{grid-template-columns:repeat(auto-fill,minmax(152px,1fr));gap:13px}
   .body{padding:12px 12px 14px}.name{font-size:14.5px}.bar{gap:9px}.pill{padding:7px 13px}.pill .num{font-size:18px}}
@@ -142,32 +128,30 @@ dialog::backdrop{background:rgba(50,38,24,.42);backdrop-filter:blur(3px)}
 <header>
   <div class="kicker">הבית של עידה · רשימת תאורה</div>
   <h1>רשימת המשאלות שלי</h1>
-  <p class="sub">אפשר להסיר פריטים, לעדכן כמות ולהוסיף הערות — אורך חוט, עוצמת אור או העדפה. בסיום לוחצים <b>“העתק סיכום”</b> ושולחים לי בחזרה בוואטסאפ.</p>
+  <p class="sub">אפשר להסיר פריטים, לעדכן כמות ולהוסיף הערות — אורך חוט, עוצמת אור או העדפה. פריט שמסירים עובר לאזור <b>“הוסרו מהעגלה”</b> וניתן להחזירו בכל שלב. בסיום לוחצים <b>“העתק סיכום”</b> ושולחים לי בוואטסאפ.</p>
   <div class="who"><span class="lab">ממלא/ת:</span><input id="who" placeholder="השם שלך (למשל: בעל / מעצבת)" oninput="save()"></div>
 </header>
-
 <div class="bar">
   <div class="stats">
     <span class="pill"><span class="num" id="cnt">0</span><span class="cap">מתוך <span id="total">0</span> פריטים</span></span>
-    <span class="pill"><span class="num money" id="sum">₪0</span><span class="cap">סה״כ</span></span>
+    <span class="pill"><span class="num money" id="sum">₪0</span><span class="cap">סה״כ בעגלה</span></span>
   </div>
-  <label class="toggle"><input type="checkbox" id="hide" onchange="document.body.classList.toggle('hide-removed',this.checked)"> הסתר שהוסרו</label>
   <button class="btn ghost" onclick="resetAll()">איפוס</button>
   <button class="btn primary" onclick="doSummary()">📋 העתק סיכום לשליחה</button>
 </div>
-
 <div id="grid" class="grid"></div>
-
+<div id="removed-wrap">
+  <div class="section-h"><h2>הוסרו מהעגלה</h2><span class="cnt" id="rcnt">0</span><span class="line"></span></div>
+  <div id="removed-grid" class="grid"></div>
+</div>
 <div class="foot"><span>ההסרות וההערות נשמרות במכשיר שלך בלבד</span><span class="dot"></span><span>פרטי — נשלח רק כשלוחצים “העתק סיכום”</span></div>
 </div>
-
 <dialog id="dlg">
   <div class="dh">📋 סיכום לשליחה</div>
   <div class="db"><p>מוכן להעתקה ולשליחה בוואטסאפ. אפשר לערוך לפני:</p><textarea id="out"></textarea></div>
   <div class="df"><button class="btn primary" onclick="copyOut()">העתק ללוח</button><button class="btn" onclick="dlg.close()">סגור</button></div>
 </dialog>
 <div class="toast" id="toast">✓ הועתק</div>
-
 <script>
 const ITEMS=[{"name": "גוף תאורה שניקה", "price": 299, "link": "https://store.ida-home.co.il/product/%d7%92%d7%95%d7%a3-%d7%aa%d7%90%d7%95%d7%a8%d7%94-%d7%a9%d7%a0%d7%99%d7%a7%d7%94", "img": "img/product-2419.jpg"}, {"name": "מנורת קיר פאולינה", "price": 383, "link": "https://store.ida-home.co.il/product/wall-light-paulina", "img": "img/k2.webp"}, {"name": "מנורת קיר סילו", "price": 263, "link": "https://store.ida-home.co.il/product/wall-light-silo", "img": "img/silo_1.webp"}, {"name": "גוף תאורה אניקה", "price": 306, "link": "https://store.ida-home.co.il/product/%d7%92%d7%95%d7%a3-%d7%aa%d7%90%d7%95%d7%a8%d7%94-%d7%90%d7%a0%d7%99%d7%a7%d7%94", "img": "img/product-2415.jpg"}, {"name": "מנורת קיר מריסה", "price": 273, "link": "https://store.ida-home.co.il/product/%d7%9b%d7%95%d7%91%d7%a2-%d7%a0%d7%96%d7%99%d7%a8-%d7%a9%d7%97%d7%95%d7%a8-5", "img": "img/product-5954.jpg"}, {"name": "גוף תאורה פרנסי", "price": 372, "link": "https://store.ida-home.co.il/product/%d7%92%d7%95%d7%a3-%d7%aa%d7%90%d7%95%d7%a8%d7%94-%d7%a4%d7%a8%d7%a0%d7%a1%d7%99", "img": "img/product-2411.jpg"}, {"name": "מנורת קיר מיכאלה", "price": 273, "link": "https://store.ida-home.co.il/product/%d7%9b%d7%95%d7%91%d7%a2-%d7%a0%d7%96%d7%99%d7%a8-%d7%a9%d7%97%d7%95%d7%a8-2", "img": "img/product-5949.jpg"}, {"name": "גוף תאורה פלורה", "price": 306, "link": "https://store.ida-home.co.il/product/%d7%92%d7%95%d7%a3-%d7%aa%d7%90%d7%95%d7%a8%d7%94-%d7%a4%d7%9c%d7%95%d7%a8%d7%94", "img": "img/product-2412.jpg"}, {"name": "גוף תאורה יוהנה", "price": 238, "link": "https://store.ida-home.co.il/product/%d7%92%d7%95%d7%a3-%d7%aa%d7%90%d7%95%d7%a8%d7%94-%d7%99%d7%95%d7%94%d7%a0%d7%94", "img": "img/light_4.webp"}, {"name": "גוף תאורה מארס", "price": 533, "link": "https://store.ida-home.co.il/product/%d7%92%d7%95%d7%a3-%d7%aa%d7%90%d7%95%d7%a8%d7%94-%d7%9e%d7%90%d7%a8%d7%a1", "img": "img/product-2046.jpg"}, {"name": "גוף תאורה טומאזו", "price": 382, "link": "https://store.ida-home.co.il/product/tomazzo-lamp", "img": "img/tomazo-1.webp"}, {"name": "גוף תאורה בריאן", "price": 263, "link": "https://store.ida-home.co.il/product/%d7%92%d7%95%d7%a3-%d7%aa%d7%90%d7%95%d7%a8%d7%94-%d7%91%d7%a8%d7%99%d7%90%d7%9f", "img": "img/product-2098.jpg"}, {"name": "גוף תאורה אלי", "price": 351, "link": "https://store.ida-home.co.il/product/%d7%92%d7%95%d7%a3-%d7%aa%d7%90%d7%95%d7%a8%d7%94-%d7%90%d7%9c%d7%99", "img": "img/product-2053.jpg"}, {"name": "גוף תאורה קרמן", "price": 289, "link": "https://store.ida-home.co.il/product/%d7%92%d7%95%d7%a3-%d7%aa%d7%90%d7%95%d7%a8%d7%94-%d7%a7%d7%a8%d7%9e%d7%9f", "img": "img/product-2032.jpg"}, {"name": "גוף תאורה לסלי", "price": 476, "link": "https://store.ida-home.co.il/product/%d7%92%d7%95%d7%a3-%d7%aa%d7%90%d7%95%d7%a8%d7%94-%d7%9c%d7%a1%d7%9c%d7%99", "img": "img/product-2015.jpg"}, {"name": "גוף תאורה מרקורי", "price": 533, "link": "https://store.ida-home.co.il/product/%d7%92%d7%95%d7%a3-%d7%aa%d7%90%d7%95%d7%a8%d7%94-%d7%9e%d7%a8%d7%a7%d7%95%d7%a8%d7%99", "img": "img/product-1963.jpg"}, {"name": "גוף תאורה טדי", "price": 271, "link": "https://store.ida-home.co.il/product/%d7%92%d7%95%d7%a3-%d7%aa%d7%90%d7%95%d7%a8%d7%94-%d7%98%d7%93%d7%99", "img": "img/product-1727.jpg"}, {"name": "מנורה תלויה מקסין", "price": 332, "link": "https://store.ida-home.co.il/product/%d7%9e%d7%a0%d7%95%d7%a8%d7%94-%d7%aa%d7%9c%d7%95%d7%99%d7%94-%d7%9e%d7%a7%d7%a1%d7%99%d7%9f", "img": "img/product-1641.jpg"}, {"name": "גוסטבו פליז", "price": 383, "link": "https://store.ida-home.co.il/product/%d7%92%d7%95%d7%a1%d7%98%d7%91%d7%95-%d7%a4%d7%9c%d7%99%d7%96", "img": "img/product-6327.jpg"}, {"name": "לייני", "price": 282, "link": "https://store.ida-home.co.il/product/%d7%92%d7%95%d7%a3-%d7%aa%d7%90%d7%95%d7%a8%d7%94-%d7%9c%d7%99%d7%99%d7%a0%d7%99", "img": "img/product-1404.jpg"}, {"name": "לואיס", "price": 297, "link": "https://store.ida-home.co.il/product/%d7%92%d7%95%d7%a3-%d7%aa%d7%90%d7%95%d7%a8%d7%94-%d7%9c%d7%95%d7%90%d7%99%d7%a1", "img": "img/product-1392.jpg"}, {"name": "מייקל", "price": 273, "link": "https://store.ida-home.co.il/product/%d7%92%d7%95%d7%a3-%d7%aa%d7%90%d7%95%d7%a8%d7%94-%d7%9e%d7%99%d7%99%d7%a7%d7%9c", "img": "img/product-1390.jpg"}, {"name": "הלנה", "price": 273, "link": "https://store.ida-home.co.il/product/%d7%94%d7%9c%d7%a0%d7%94", "img": "img/product-1265.jpg"}, {"name": "אלה", "price": 273, "link": "https://store.ida-home.co.il/product/%d7%90%d7%9c%d7%94-2", "img": "img/product-1256.jpg"}, {"name": "דונה", "price": 286, "link": "https://store.ida-home.co.il/product/%d7%93%d7%95%d7%a0%d7%94-2", "img": "img/product-1238.jpg"}, {"name": "אדל", "price": 286, "link": "https://store.ida-home.co.il/product/%d7%90%d7%93%d7%9c-2", "img": "img/product-1195.jpg"}, {"name": "מקס", "price": 273, "link": "https://store.ida-home.co.il/product/%d7%9e%d7%a7%d7%a1", "img": "img/product-1151.jpg"}, {"name": "דיון", "price": 286, "link": "https://store.ida-home.co.il/product/%d7%93%d7%99%d7%95%d7%9f-2", "img": "img/product-797.jpg"}, {"name": "ואלרי", "price": 257, "link": "https://store.ida-home.co.il/product/%d7%95%d7%90%d7%9c%d7%a8%d7%99-2", "img": "img/product-786.jpg"}, {"name": "ג'ייד פסים", "price": 356, "link": "https://store.ida-home.co.il/product/%d7%92-%d7%99%d7%99%d7%93-%d7%a4%d7%a1%d7%99%d7%9d", "img": "img/jade.webp"}, {"name": "ויולה", "price": 281, "link": "https://store.ida-home.co.il/product/%d7%95%d7%99%d7%95%d7%9c%d7%94-2", "img": "img/product-6995.jpg"}, {"name": "רזי", "price": 267, "link": "https://store.ida-home.co.il/product/%d7%a8%d7%96%d7%99", "img": "img/product-15.png"}, {"name": "צמודת תקרה מתכווננת ג'ולי", "price": 297, "link": "https://store.ida-home.co.il/product/%d7%92-%d7%95%d7%9c%d7%99-2", "img": "img/product-10840.jpg"}, {"name": "גוף תאורה תלוי קרולין", "price": 416, "link": "https://store.ida-home.co.il/product/%d7%92%d7%95%d7%a3-%d7%aa%d7%90%d7%95%d7%a8%d7%94-%d7%aa%d7%9c%d7%95%d7%99-%d7%a7%d7%a8%d7%95%d7%9c%d7%99%d7%9f", "img": "img/product-5753.jpg"}, {"name": "גוף תאורה תלוי ליסה", "price": 680, "link": "https://store.ida-home.co.il/product/%d7%92%d7%95%d7%a3-%d7%aa%d7%90%d7%95%d7%a8%d7%94-%d7%aa%d7%9c%d7%95%d7%99-%d7%9c%d7%99%d7%a1%d7%94", "img": "img/product-321.jpg"}];
 const KEY="wishlist-ida-v2";
@@ -178,32 +162,43 @@ const nis=n=>"₪"+n.toLocaleString('en-US');
 function is(i){return state.items[i]||(state.items[i]={qty:1,note:"",removed:false});}
 function persist(){localStorage.setItem(KEY,JSON.stringify(state));}
 function save(){state.who=document.getElementById('who').value;persist();render();}
+function activeCard(it,i,s){
+  return `<span class="rm-slot"></span>
+    <button class="rm" aria-label="הסר מהעגלה" title="הסר" onclick="toggle(${i})">✕</button>
+    <a class="thumb" href="${it.link}" target="_blank" rel="noopener"><span class="idx">${i+1}</span><img loading="lazy" src="${it.img}" alt="${it.name}"></a>
+    <div class="body">
+      <a class="name" href="${it.link}" target="_blank" rel="noopener">${it.name}</a>
+      <div class="price">${nis(it.price)}</div>
+      <div class="ctl">
+        <div class="qrow"><span class="l">כמות</span>
+          <span class="stepper"><button aria-label="הפחת" onclick="qty(${i},-1)">−</button><span class="v">${s.qty||1}</span><button aria-label="הוסף" onclick="qty(${i},1)">+</button></span>
+        </div>
+        <div class="note"><textarea placeholder="הערה: אורך חוט, עוצמת אור, העדפה…" oninput="note(${i},this.value)">${(s.note||"").replace(/</g,'&lt;')}</textarea></div>
+      </div>`;
+}
+function removedCard(it,i,s){
+  return `<a class="thumb" href="${it.link}" target="_blank" rel="noopener"><img loading="lazy" src="${it.img}" alt="${it.name}"></a>
+    <div class="body">
+      <a class="name" href="${it.link}" target="_blank" rel="noopener">${it.name}</a>
+      <div class="price">${nis(it.price)}</div>
+      <button class="btn restore" onclick="toggle(${i})">↺ החזר לעגלה</button>
+    </div>`;
+}
 function render(){
   const g=document.getElementById('grid');g.innerHTML="";
-  let cnt=0,sum=0;
+  const rg=document.getElementById('removed-grid');rg.innerHTML="";
+  let cnt=0,sum=0,rcnt=0;
   ITEMS.forEach((it,i)=>{
-    const s=is(i); if(!s.removed){cnt++;sum+=it.price*(s.qty||1);}
-    const c=document.createElement('div');c.className="card"+(s.removed?" removed":"");
-    c.style.animationDelay=(Math.min(i,14)*22)+"ms";
-    c.innerHTML=`
-      <span class="ribbon">הוסר</span>
-      <button class="rm" aria-label="${s.removed?'החזר לרשימה':'הסר מהרשימה'}" title="${s.removed?'החזר':'הסר'}" onclick="toggle(${i})">${s.removed?'↺':'✕'}</button>
-      <a class="thumb" href="${it.link}" target="_blank" rel="noopener"><span class="idx">${i+1}</span><img loading="lazy" src="${it.img}" alt="${it.name}"></a>
-      <div class="body">
-        <a class="name" href="${it.link}" target="_blank" rel="noopener">${it.name}</a>
-        <div class="price">${nis(it.price)}</div>
-        <div class="ctl">
-          <div class="qrow"><span class="l">כמות</span>
-            <span class="stepper"><button aria-label="הפחת" onclick="qty(${i},-1)">−</button><span class="v" id="q${i}">${s.qty||1}</span><button aria-label="הוסף" onclick="qty(${i},1)">+</button></span>
-          </div>
-          <div class="note"><textarea placeholder="הערה: אורך חוט, עוצמת אור, העדפה…" oninput="note(${i},this.value)">${(s.note||"").replace(/</g,'&lt;')}</textarea></div>
-        </div>
-      </div>`;
-    g.appendChild(c);
+    const s=is(i);
+    const c=document.createElement('div');
+    if(s.removed){c.className="card rmv";c.innerHTML=removedCard(it,i,s);rg.appendChild(c);rcnt++;}
+    else{c.className="card";c.style.animationDelay=(Math.min(cnt,14)*22)+"ms";c.innerHTML=activeCard(it,i,s);g.appendChild(c);cnt++;sum+=it.price*(s.qty||1);}
   });
   document.getElementById('cnt').textContent=cnt;
   document.getElementById('total').textContent=ITEMS.length;
   document.getElementById('sum').textContent=nis(sum);
+  document.getElementById('rcnt').textContent=rcnt+" פריטים";
+  document.getElementById('removed-wrap').classList.toggle('show',rcnt>0);
 }
 function toggle(i){is(i).removed=!is(i).removed;persist();render();}
 function qty(i,d){const s=is(i);s.qty=Math.max(1,(s.qty||1)+d);persist();render();}
@@ -216,8 +211,7 @@ function buildSummary(){
     else{const q=s.qty||1;sum+=it.price*q;
       let line=(kept.length+1)+". "+it.name+(q>1?"  ×"+q:"")+"  —  "+nis(it.price*q);
       if(s.note&&s.note.trim())line+="\n     ↳ "+s.note.trim();
-      kept.push(line);}
-  });
+      kept.push(line);}});
   let t="✦ רשימת תאורה — הבית של עידה";
   if(state.who&&state.who.trim())t+="\nמאת: "+state.who.trim();
   t+="\n"+"—".repeat(24)+"\n"+kept.join("\n")+"\n"+"—".repeat(24)+"\nסה״כ ("+kept.length+" פריטים): "+nis(sum);
@@ -226,11 +220,8 @@ function buildSummary(){
 }
 function doSummary(){document.getElementById('out').value=buildSummary();dlg.showModal();}
 function toast(){const t=document.getElementById('toast');t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1600);}
-function copyOut(){const o=document.getElementById('out');o.select();
-  const done=()=>{toast();};
-  if(navigator.clipboard){navigator.clipboard.writeText(o.value).then(done,()=>{document.execCommand('copy');done();});}
-  else{document.execCommand('copy');done();}
-}
+function copyOut(){const o=document.getElementById('out');o.select();const done=()=>toast();
+  if(navigator.clipboard){navigator.clipboard.writeText(o.value).then(done,()=>{document.execCommand('copy');done();});}else{document.execCommand('copy');done();}}
 document.getElementById('who').value=state.who;
 render();
 </script>
