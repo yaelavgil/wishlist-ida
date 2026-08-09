@@ -14,8 +14,51 @@ def tags(n):
 items=json.load(open("/private/tmp/claude-501/-Users-home----------/4126668b-e0e5-4b5e-9e7f-2f21afab79a0/scratchpad/wishlist.json"))
 DATA=[]
 for k,it in enumerate(items):
-    DATA.append({"id":"l"+str(k+1),"cat":"תאורה","name":it["name"],"price":it["price"],
+    DATA.append({"id":"l"+str(k+1),"cat":"תאורה","type":"product","name":it["name"],"price":it["price"],
                  "link":it["link"],"img":"img/"+it["img"],"tags":tags(it["name"])})
+
+# --- Kitchen handles (Domicile) — pulled from home-picks ---
+HANDLES=[
+ ("H1","ידית צינור וינטאג'","6880","handle01.jpg","https://www.domicile.co.il/product/%d7%99%d7%93%d7%99%d7%aa-%d7%a6%d7%99%d7%a0%d7%95%d7%a8-%d7%95%d7%99%d7%a0%d7%98%d7%90%d7%92-%d7%93%d7%92%d7%9d-6880/"),
+ ("H2","ידית עם כדורים בקצוות בסגנון וינטג'","6988","handle02.jpg","https://www.domicile.co.il/product/%d7%99%d7%93%d7%99%d7%aa-%d7%a2%d7%9d-%d7%9b%d7%93%d7%95%d7%a8%d7%99%d7%9d-%d7%91%d7%a7%d7%a6%d7%95%d7%95%d7%aa-%d7%91%d7%a1%d7%92%d7%a0%d7%95%d7%9f-%d7%95%d7%99%d7%a0%d7%98%d7%92-%d7%93%d7%92/"),
+ ("H3","ידית עם חיבורים גליליים בקצוות","6048","handle03.jpg","https://www.domicile.co.il/product/%d7%99%d7%93%d7%99%d7%aa-%d7%a2%d7%9d-%d7%97%d7%99%d7%91%d7%95%d7%a8%d7%99%d7%9d-%d7%92%d7%9c%d7%99%d7%9c%d7%99%d7%99%d7%9d-%d7%91%d7%a7%d7%a6%d7%95%d7%95%d7%aa-%d7%93%d7%92%d7%9d-6048/"),
+ ("H4","ידית צינור עם בסיס ברגליים","6160","handle04.jpg","https://www.domicile.co.il/product/%d7%99%d7%93%d7%99%d7%aa-%d7%a6%d7%99%d7%a0%d7%95%d7%a8-%d7%a2%d7%9d-%d7%91%d7%a1%d7%99%d7%a1-%d7%91%d7%a8%d7%92%d7%9c%d7%99%d7%99%d7%9d-%d7%93%d7%92%d7%9d-6160/"),
+ ("H5","ידית וינטאג' בסגנון כפרי","5190","handle05.jpg","https://www.domicile.co.il/product/%d7%99%d7%93%d7%99%d7%aa-%d7%95%d7%99%d7%a0%d7%98%d7%90%d7%92-%d7%91%d7%a1%d7%92%d7%a0%d7%95%d7%9f-%d7%9b%d7%a4%d7%a8%d7%99-%d7%93%d7%92%d7%9d-5190/"),
+ ("H6","ידית ריהוט לארונות ומטבחים","F010","handle06.jpg","https://www.domicile.co.il/product/%d7%99%d7%93%d7%99%d7%aa-%d7%a8%d7%99%d7%94%d7%95%d7%98-%d7%9c%d7%90%d7%a8%d7%95%d7%a0%d7%95%d7%aa-%d7%95%d7%9e%d7%98%d7%91%d7%97%d7%99%d7%9d-%d7%93%d7%92%d7%9d-f010/"),
+]
+def htags(n):
+    t=[]
+    if "וינט" in n: t.append("וינטג'")
+    if "כפרי" in n: t.append("כפרי")
+    if "צינור" in n: t.append("צינור")
+    if not t: t.append("קלאסי")
+    return t
+for h in HANDLES:
+    DATA.append({"id":h[0],"cat":"ידיות","type":"product","name":h[1]+" · "+h[2],
+                 "price":None,"link":h[4],"img":"img/"+h[3],"tags":htags(h[1])})
+
+# --- Paint colors (Nirlat "Color Is") — pulled from home-picks ---
+COLORS=[("C1","White Kitten","IS 0022","dfdedb","נייטרלים"),("C2","Mission Hills","IS 0363","e1dbc6","נייטרלים"),
+ ("C3","Flan","IS 0237","e1caad","נייטרלים"),("C4","Phelps Putty","NTC 109","c0bbab","נייטרלים"),
+ ("C5","Beacon Fog","IS 0490","a1adae","נייטרלים"),("C6","Lickety Split","IS 0699","c7dbd2","ירוקים"),
+ ("C7","Resting Place","IS 0462","c1cbc1","ירוקים"),("C8","Uninhibited","IS 0700","bad2c9","ירוקים"),
+ ("C9","Fair Maiden","IS 0456","acb8aa","ירוקים"),("C10","Plunge","IS 0701","aac5bb","ירוקים"),
+ ("C11","Peg's Promise","IS 0702","93b1a6","ירוקים"),("C12","Melville","NTC 074","90a79c","ירוקים"),
+ ("C13","Malarca","IS 0458","778575","ירוקים"),("C14","Drifting Tide","IS 0670","e0efec","ירוק-כחול"),
+ ("C15","Dream Catcher","IS 0481","dce5de","ירוק-כחול"),("C16","Zircon Ice","IS 0664","d0e3e5","ירוק-כחול"),
+ ("C17","Cape Hope","IS 0496","c2d3d3","ירוק-כחול"),("C18","Monet Magic","IS 0665","bedade","ירוק-כחול"),
+ ("C19","Dreaming of the Day","IS 0470","b1c6c1","ירוק-כחול"),("C20","Restful Retreat","IS 0497","b5c8ca","ירוק-כחול"),
+ ("C21","Stormy Bay","IS 0484","9fb3b2","ירוק-כחול"),("C22","Trisha's Eyes","IS 0666","93bac5","ירוק-כחול"),
+ ("C23","Brush Blue","IS 0607","d6e2ed","כחולים"),("C24","Sea Foam Mist","IS 0642","cddde2","כחולים"),
+ ("C25","Empress Lila","IS 0636","c7deed","כחולים"),("C26","Simple Serenity","IS 0614","cadae6","כחולים"),
+ ("C27","Bridgewater Bay","IS 0650","c1d9e3","כחולים"),("C28","Abstract Idea","IS 0643","bdd2de","כחולים"),
+ ("C29","Blue Bayou","IS 0615","b8cde0","כחולים"),("C30","Dream Whisper","NRC 085","b8cbd4","כחולים"),
+ ("C31","Pompeii Ruins","IS 0623","b8c8d4","כחולים"),("C32","Dancing in the Rain","IS 0644","afc7d7","כחולים"),
+ ("C33","Bluette","IS 0616","a4bfd8","כחולים"),("C34","In The Blue","IS 0504","a1b3be","כחולים"),
+ ("C35","Cape Cod Bay","IS 0633","5e7585","כחולים"),("C36","Peninsula","IS 0654","4a80a1","כחולים")]
+for c in COLORS:
+    DATA.append({"id":c[0],"cat":"צבעים","type":"color","name":c[1],"code":c[2],
+                 "hex":"#"+c[3],"price":None,"link":"","img":"","tags":[c[4]]})
 CATS=[{"key":"all","label":"הכול","icon":"✦"},
       {"key":"תאורה","label":"תאורה","icon":"💡"},
       {"key":"צבעים","label":"צבעים","icon":"🎨"},
@@ -114,6 +157,10 @@ select:hover,.tbtn:hover{border-color:var(--faint)}
 .name{font-size:15.5px;font-weight:600;text-decoration:none;line-height:1.28;color:var(--ink)}
 .name:hover{color:var(--brass-d)}
 .price{font-weight:700;font-size:18px;color:var(--brass-d)}
+.price.muted{color:var(--muted);font-weight:500;font-size:13px}
+.thumb.swatch{cursor:zoom-in;box-shadow:inset 0 0 0 1px rgba(0,0,0,.06)}
+.thumb.swatch img{display:none}
+.code{font-weight:600;font-size:14px;color:var(--ink-soft);letter-spacing:.03em}
 .seg{display:flex;gap:6px;margin-top:auto}
 .seg button{flex:1;border:1.5px solid var(--line-2);background:var(--paper);border-radius:11px;padding:8px 0;font:inherit;font-size:15px;font-weight:700;cursor:pointer;transition:.15s;color:var(--muted)}
 .seg button:hover{border-color:var(--faint)}
@@ -251,12 +298,20 @@ function visible(){
 function cardEl(it){
   if(els.has(it.id))return els.get(it.id);
   const c=document.createElement('div'); c.dataset.id=it.id;
-  c.innerHTML=`
-    <div class="thumb" onclick="openLB('${it.id}')">${(it.tags&&it.tags[0])?`<span class="tag">${it.tags[0]}</span>`:''}<img loading="lazy" src="${it.img}" alt="${it.name}"></div>
+  const badge=(it.tags&&it.tags[0])?`<span class="tag">${it.tags[0]}</span>`:'';
+  const media=it.type==='color'
+    ?`<div class="thumb swatch" style="background:${it.hex}" onclick="openLB('${it.id}')">${badge}</div>`
+    :`<div class="thumb" onclick="openLB('${it.id}')">${badge}<img loading="lazy" src="${it.img}" alt="${it.name}"></div>`;
+  const nameEl=it.link?`<a class="name" href="${it.link}" target="_blank" rel="noopener">${it.name}</a>`:`<span class="name">${it.name}</span>`;
+  const sub=it.type==='color'?`<div class="code">${it.code||''}</div>`
+    :(it.price!=null?`<div class="price">${nis(it.price)}</div>`:`<div class="price muted">המחיר בחשבון שלך בחנות</div>`);
+  const qty=it.type==='product'
+    ?`<div class="qty"><span class="ql">כמות</span><span class="stp"><button title="הפחת" onclick="setQ('${it.id}',-1)">−</button><span class="qv">1</span><button title="הוסף" onclick="setQ('${it.id}',1)">+</button></span></div>`:'';
+  c.innerHTML=`${media}
     <div class="body">
-      <a class="name" href="${it.link}" target="_blank" rel="noopener">${it.name}</a>
-      <div class="price">${nis(it.price)}</div>
-      <div class="qty"><span class="ql">כמות</span><span class="stp"><button title="הפחת" onclick="setQ('${it.id}',-1)">−</button><span class="qv">1</span><button title="הוסף" onclick="setQ('${it.id}',1)">+</button></span></div>
+      ${nameEl}
+      ${sub}
+      ${qty}
       <div class="seg">
         <button class="yes" title="נבחר" onclick="setS('${it.id}','yes')">✓</button>
         <button class="maybe" title="אולי" onclick="setS('${it.id}','maybe')">?</button>
@@ -305,7 +360,7 @@ function RE(animate){
 function updateSumm(vis){
   const inCat=ITEMS.filter(i=>cat==='all'||i.cat===cat);
   const yes=inCat.filter(i=>S(i.id).status==='yes'); const maybe=inCat.filter(i=>S(i.id).status==='maybe');
-  const sum=yes.reduce((a,i)=>a+i.price*(S(i.id).qty||1),0);
+  const sum=yes.reduce((a,i)=>a+(i.price||0)*(S(i.id).qty||1),0);
   document.getElementById('summ').innerHTML=
     `מוצג: <b>${vis.length}</b> · נבחרו: <b style="color:var(--yes)">${yes.length}</b> · אולי: <b style="color:var(--maybe)">${maybe.length}</b> · סה״כ נבחרים: <span class="money">${nis(sum)}</span>`;
 }
@@ -314,9 +369,14 @@ function setS(id,v){const s=S(id); s.status=(s.status===v)?'none':v; save(); pai
   if(stf.size||so==='status')RE(); }
 function setN(id,v){S(id).note=v;save();}
 function setQ(id,d){const s=S(id);s.qty=Math.max(1,(s.qty||1)+d);save();paint(id);updateSumm(visible());}
-function openLB(id){const it=byId[id]; document.getElementById('lbimg').src=it.img;
-  document.getElementById('lbname').textContent=it.name; document.getElementById('lbprice').textContent=nis(it.price);
-  document.getElementById('lbstore').href=it.link; document.getElementById('lb').classList.add('on');}
+function openLB(id){const it=byId[id];
+  const im=document.querySelector('.lb .im'), img=document.getElementById('lbimg');
+  if(it.type==='color'){img.style.display='none';im.style.background=it.hex;}
+  else{img.style.display='';im.style.background='';img.src=it.img;}
+  document.getElementById('lbname').textContent=it.name;
+  document.getElementById('lbprice').textContent=it.type==='color'?(it.code||''):(it.price!=null?nis(it.price):'');
+  const stEl=document.getElementById('lbstore'); if(it.link){stEl.style.display='';stEl.href=it.link;}else{stEl.style.display='none';}
+  document.getElementById('lb').classList.add('on');}
 function closeLB(){document.getElementById('lb').classList.remove('on');}
 function resetAll(){if(confirm("לאפס את כל הבחירות וההערות?")){st.s={};save();els.forEach((c,id)=>paint(id));RE();}}
 function openSummary(){
@@ -326,7 +386,7 @@ function openSummary(){
     const yes=its.filter(i=>S(i.id).status==='yes'), maybe=its.filter(i=>S(i.id).status==='maybe'), no=its.filter(i=>S(i.id).status==='no');
     if(!yes.length&&!maybe.length&&!no.length)return;
     out+=`\n${c.icon} ${c.label}\n`+"—".repeat(20)+"\n";
-    const line=i=>{const q=S(i.id).qty||1; let l="• "+i.name+(q>1?"  ×"+q:"")+"  —  "+nis(i.price*q); const n=S(i.id).note; if(n&&n.trim())l+="\n   ↳ "+n.trim(); return l;};
+    const line=i=>{const q=S(i.id).qty||1; let l="• "+i.name; if(i.type==='color'&&i.code)l+="  ("+i.code+")"; if(i.price!=null)l+=(q>1?"  ×"+q:"")+"  —  "+nis(i.price*q); const n=S(i.id).note; if(n&&n.trim())l+="\n   ↳ "+n.trim(); return l;};
     if(yes.length){out+="✓ נבחרו:\n"+yes.map(line).join("\n")+"\n";}
     if(maybe.length){out+="\n? אולי:\n"+maybe.map(line).join("\n")+"\n";}
     if(no.length){out+="\n✕ לא:\n"+no.map(i=>"• "+i.name).join("\n")+"\n";}
