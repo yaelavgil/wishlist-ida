@@ -57,8 +57,9 @@ COLORS=[("C1","White Kitten","IS 0022","dfdedb","נייטרלים"),("C2","Missi
  ("C33","Bluette","IS 0616","a4bfd8","כחולים"),("C34","In The Blue","IS 0504","a1b3be","כחולים"),
  ("C35","Cape Cod Bay","IS 0633","5e7585","כחולים"),("C36","Peninsula","IS 0654","4a80a1","כחולים")]
 for c in COLORS:
+    fan="https://nirlat.com/fan/#/category/wall/family//color-fan//hue/"+c[2].replace(" ","_")
     DATA.append({"id":c[0],"cat":"צבעים","type":"color","name":c[1],"code":c[2],
-                 "hex":"#"+c[3],"price":None,"link":"","img":"","tags":[c[4]]})
+                 "hex":"#"+c[3],"price":None,"link":fan,"img":"","tags":[c[4]]})
 CATS=[{"key":"all","label":"הכול","icon":"✦"},
       {"key":"תאורה","label":"תאורה","icon":"💡"},
       {"key":"צבעים","label":"צבעים","icon":"🎨"},
@@ -375,7 +376,7 @@ function openLB(id){const it=byId[id];
   else{img.style.display='';im.style.background='';img.src=it.img;}
   document.getElementById('lbname').textContent=it.name;
   document.getElementById('lbprice').textContent=it.type==='color'?(it.code||''):(it.price!=null?nis(it.price):'');
-  const stEl=document.getElementById('lbstore'); if(it.link){stEl.style.display='';stEl.href=it.link;}else{stEl.style.display='none';}
+  const stEl=document.getElementById('lbstore'); if(it.link){stEl.style.display='';stEl.href=it.link;stEl.textContent=it.type==='color'?'לגוון באתר נירלט ↗':'לצפייה בחנות ↗';}else{stEl.style.display='none';}
   document.getElementById('lb').classList.add('on');}
 function closeLB(){document.getElementById('lb').classList.remove('on');}
 function resetAll(){if(confirm("לאפס את כל הבחירות וההערות?")){st.s={};save();els.forEach((c,id)=>paint(id));RE();}}
