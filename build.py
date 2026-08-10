@@ -2,6 +2,7 @@ import json,os,sys
 
 REPO="/Users/home/פרוייקטים/wishlist-ida"
 BASE="https://yaelavgil.github.io/wishlist-ida/"
+DBURL="https://home-picks-47450-default-rtdb.europe-west1.firebasedatabase.app"
 
 def tags(n):
     t=[]
@@ -141,6 +142,15 @@ select:hover,.tbtn:hover{border-color:var(--faint)}
 .chip.st-yes.on{background:var(--yes-bg);border-color:var(--yes);color:var(--yes)}
 .chip.st-maybe.on{background:var(--maybe-bg);border-color:var(--maybe);color:var(--maybe)}
 .chip.st-no.on{background:var(--no-bg);border-color:var(--no);color:var(--no)}
+.whoami{padding:9px 4px 0;font-size:13px;color:var(--ink-soft)}
+.whoami b{color:var(--ink)}
+.linkbtn{background:none;border:0;color:var(--brass-d);font:inherit;font-size:13px;cursor:pointer;text-decoration:underline;padding:0}
+.people{display:flex;gap:5px;flex-wrap:wrap;margin:1px 0}
+.pchip{width:23px;height:23px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11.5px;font-weight:700;color:#fff;box-shadow:0 1px 3px rgba(0,0,0,.18)}
+.pchip.s-yes{background:var(--yes)}.pchip.s-maybe{background:var(--maybe)}.pchip.s-no{background:var(--no)}
+.pchip.meC{box-shadow:0 0 0 2px var(--paper),0 0 0 3.5px var(--ink)}
+.mepick{display:flex;gap:9px;flex-wrap:wrap}
+.mepick .tbtn{flex:1;justify-content:center;font-size:15px;padding:13px}
 .summ{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:11px 4px 0;color:var(--ink-soft);font-size:13.5px;font-weight:500}
 .summ b{color:var(--ink)}.summ .money{color:var(--brass-d);font-weight:700}
 
@@ -224,7 +234,7 @@ dialog::backdrop{background:rgba(50,38,24,.42);backdrop-filter:blur(3px)}
 <header>
   <div class="kicker">הבית של עידה · לוח החלטות</div>
   <h1>מה בוחרים לבית</h1>
-  <p class="sub">כל ההחלטות במקום אחד — תאורה, צבעים וידיות מטבח. סמנו לכל פריט <b>✓ נבחר</b> / <b>? אולי</b> / <b>✕ לא</b>, סננו, מיינו וחפשו. בסוף <b>“סיכום לשליחה”</b> ושולחים.</p>
+  <p class="sub">כל ההחלטות במקום אחד — תאורה, צבעים וידיות. כל אחד בוחר שם ומסמן <b>✓ נבחר</b> / <b>? אולי</b> / <b>✕ לא</b> — <b>וכולם רואים את הבחירות של כולם, בזמן אמת</b>. אפשר גם למיין, לסנן ולהוסיף פריטים.</p>
 </header>
 
 <div class="deck">
@@ -244,6 +254,7 @@ dialog::backdrop{background:rgba(50,38,24,.42);backdrop-filter:blur(3px)}
   </div>
   <div class="chips" id="stchips"></div>
   <div class="chips" id="tagchips"></div>
+  <div class="whoami" id="whoami"></div>
   <div class="summ" id="summ"></div>
 </div>
 
@@ -260,6 +271,19 @@ dialog::backdrop{background:rgba(50,38,24,.42);backdrop-filter:blur(3px)}
   <div class="df"><button class="tbtn primary" onclick="copyOut()">העתק ללוח</button><button class="tbtn" onclick="dlg.close()">סגור</button></div>
 </dialog>
 <div class="toast" id="toast">✓ הועתק</div>
+
+<dialog id="meDlg"><div class="dh">👋 מי את/ה?</div>
+  <div class="db">
+    <p>בחרו שם — כל הסימונים שלכם יופיעו לכולם על אותו לוח, תחת השם הזה.</p>
+    <div class="mepick">
+      <button type="button" class="tbtn" onclick="setMe('יעל')">יעל</button>
+      <button type="button" class="tbtn" onclick="setMe('רועי')">רועי</button>
+      <button type="button" class="tbtn" onclick="setMe('נופר')">נופר</button>
+    </div>
+    <div class="form" style="margin-top:12px"><label>או שם אחר<input id="meOther" placeholder="השם שלך"></label></div>
+  </div>
+  <div class="df"><button class="tbtn primary" onclick="setMe(document.getElementById('meOther').value)">המשך</button></div>
+</dialog>
 
 <dialog id="addDlg"><div class="dh">➕ הוספת פריט</div>
   <div class="db"><div class="form">
@@ -291,8 +315,11 @@ dialog::backdrop{background:rgba(50,38,24,.42);backdrop-filter:blur(3px)}
 
 <script>
 const BITEMS=__DATA__, BCATS=__CATS__;
+const DB="__DBURL__";
 const KEY="ida-board-v1";
 let st=JSON.parse(localStorage.getItem(KEY)||"{}"); st.s=st.s||{}; st.custom=st.custom||{cats:[],items:[],seq:0};
+let me=JSON.parse(localStorage.getItem('ida-me')||'null'); // {pk,name}
+let remote={}; // {pk:{name,items:{id:{s,n,q}}}}
 let cat="all", stf=new Set(), tagf=new Set();
 let ITEMS=[],CATS=[],byId={};
 function rebuild(){ITEMS=BITEMS.concat(st.custom.items);CATS=BCATS.concat(st.custom.cats);byId=Object.fromEntries(ITEMS.map(x=>[x.id,x]));}
@@ -357,6 +384,7 @@ function cardEl(it){
     <div class="body">
       ${nameEl}
       ${sub}
+      <div class="people" style="display:none"></div>
       ${qty}
       <div class="seg">
         <button class="yes" title="נבחר" onclick="setS('${it.id}','yes')">✓</button>
@@ -411,11 +439,11 @@ function updateSumm(vis){
   document.getElementById('summ').innerHTML=
     `מוצג: <b>${vis.length}</b> · נבחרו: <b style="color:var(--yes)">${yes.length}</b> · אולי: <b style="color:var(--maybe)">${maybe.length}</b> · סה״כ נבחרים: <span class="money">${nis(sum)}</span>`;
 }
-function setS(id,v){const s=S(id); s.status=(s.status===v)?'none':v; save(); paint(id);
+function setS(id,v){const s=S(id); s.status=(s.status===v)?'none':v; save(); paint(id); fbPushMark(id); renderPeople();
   const so=document.getElementById('sort').value; updateSumm(visible());
   if(stf.size||so==='status')RE(); }
-function setN(id,v){S(id).note=v;save();}
-function setQ(id,d){const s=S(id);s.qty=Math.max(1,(s.qty||1)+d);save();paint(id);updateSumm(visible());}
+function setN(id,v){S(id).note=v;save();fbPushMark(id);}
+function setQ(id,d){const s=S(id);s.qty=Math.max(1,(s.qty||1)+d);save();paint(id);fbPushMark(id);updateSumm(visible());}
 function openLB(id){const it=byId[id];
   const im=document.querySelector('.lb .im'), img=document.getElementById('lbimg');
   if(it.type==='color'){img.style.display='none';im.style.background=it.hex;}
@@ -483,13 +511,52 @@ function removeCustom(id){
   st.custom.items=st.custom.items.filter(x=>x.id!==id); delete st.s[id]; save();
   const el=els.get(id); if(el){el.remove();els.delete(id);} rebuild(); buildChips(); tabsHTML(); RE();
 }
+/* ---------- shared backend (Firebase RTDB via REST) ---------- */
+function uid(){try{return crypto.randomUUID();}catch(e){return 'p'+Date.now().toString(36)+Math.random().toString(16).slice(2);}}
+function meaningful(s){return s&&((s.status&&s.status!=='none')||(s.note&&s.note.trim())||(s.qty&&s.qty>1));}
+function fbPushMark(id){ if(!me)return; const s=st.s[id]||{};
+  const u=`${DB}/picks/${me.pk}/items/${encodeURIComponent(id)}.json`;
+  if(meaningful(s)) fetch(u,{method:'PUT',body:JSON.stringify({s:s.status||'none',n:s.note||'',q:s.qty||1})}).catch(()=>{});
+  else fetch(u,{method:'DELETE'}).catch(()=>{}); }
+function fbPushAll(){ if(!me)return; const items={};
+  Object.keys(st.s).forEach(id=>{const s=st.s[id]; if(meaningful(s)) items[id]={s:s.status,n:s.note||'',q:s.qty||1};});
+  fetch(`${DB}/picks/${me.pk}.json`,{method:'PATCH',body:JSON.stringify({name:me.name})}).catch(()=>{});
+  fetch(`${DB}/picks/${me.pk}/items.json`,{method:'PATCH',body:JSON.stringify(items)}).catch(()=>{}); }
+function fbPoll(){ fetch(`${DB}/picks.json`).then(r=>r.json()).then(d=>{remote=d||{};renderPeople();}).catch(()=>{}); }
+const STL2={yes:'✓ נבחר',maybe:'? אולי',no:'✕ לא'};
+function marksFor(id){
+  const out=[];
+  Object.entries(remote).forEach(([pk,p])=>{ if(!p||!p.items)return; const m=p.items[id];
+    if(m&&m.s&&m.s!=='none') out.push({pk,name:p.name||'?',status:m.s,mine:me&&pk===me.pk}); });
+  if(me){ const s=st.s[id]; const mine=out.find(o=>o.mine);
+    if(s&&s.status&&s.status!=='none'){ if(mine)mine.status=s.status; else out.push({pk:me.pk,name:me.name,status:s.status,mine:true}); }
+    else if(mine) out.splice(out.indexOf(mine),1); }
+  return out;
+}
+function renderPeople(){
+  els.forEach((c,id)=>{const box=c.querySelector('.people'); if(!box)return; const ms=marksFor(id);
+    box.innerHTML=ms.map(m=>`<span class="pchip s-${m.status}${m.mine?' meC':''}" title="${m.name}: ${STL2[m.status]||''}">${(m.name||'?').trim().charAt(0)||'?'}</span>`).join('');
+    box.style.display=ms.length?'':'none'; });
+  const names=new Set(Object.values(remote||{}).map(p=>p&&p.name).filter(Boolean)); if(me&&me.name)names.add(me.name);
+  const el=document.getElementById('whoami');
+  if(el) el.innerHTML=(me?`אני: <b>${me.name}</b> <button class="linkbtn" onclick="openMe()">(החלף)</button>`:'')
+    +(names.size?` &nbsp;·&nbsp; משתתפים: ${[...names].join(' · ')}`:'');
+}
+function openMe(){ document.getElementById('meOther').value=(me&&!['יעל','רועי','נופר'].includes(me.name))?me.name:''; document.getElementById('meDlg').showModal(); }
+function setMe(name){ name=(name||'').trim(); if(!name){alert('צריך שם');return;}
+  const pk=(me&&me.pk)||uid(); me={pk,name}; localStorage.setItem('ida-me',JSON.stringify(me));
+  document.getElementById('meDlg').close(); fbPushAll(); startSync(); renderPeople(); }
+function startSync(){ fbPoll(); if(!window._pollI) window._pollI=setInterval(fbPoll,5000); }
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)fbPoll();});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeLB();}});
 rebuild(); tabsHTML(); buildChips(); RE(true);
+if(me) startSync(); else openMe();
 </script>
 </body>
 </html>'''
 out=(tpl.replace("__DATA__",json.dumps(DATA,ensure_ascii=False))
         .replace("__CATS__",json.dumps(CATS,ensure_ascii=False))
+        .replace("__DBURL__",DBURL)
         .replace("__BASE__",BASE))
 open(os.path.join(REPO,"index.html"),"w",encoding="utf-8").write(out)
 
