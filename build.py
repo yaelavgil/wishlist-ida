@@ -109,17 +109,16 @@ body{font-family:"Rubik",-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-
   background-attachment:fixed}
 a{color:inherit}
 .wrap{max-width:1180px;margin:0 auto}
-header{padding:clamp(26px,4.5vw,50px) 4px 6px}
-.kicker{display:inline-flex;align-items:center;gap:9px;font-size:12px;font-weight:600;letter-spacing:.16em;text-transform:uppercase;color:var(--brass-d);margin:0 0 12px}
-.kicker::before{content:"";width:28px;height:2px;border-radius:2px;background:var(--brass);opacity:.7}
-h1{font-weight:700;font-size:clamp(28px,5vw,46px);letter-spacing:-.025em;margin:0 0 8px;line-height:1.05}
-.sub{color:var(--ink-soft);font-size:clamp(14px,1.5vw,16px);max-width:60ch;margin:0}
-.sub b{font-weight:600;color:var(--ink)}
+header{padding:clamp(12px,2.5vw,20px) 4px 2px}
+.hrow{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;flex-wrap:wrap}
+.kicker{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--brass-d);margin:0 0 5px}
+.kicker::before{content:"";width:22px;height:2px;border-radius:2px;background:var(--brass);opacity:.7}
+h1{font-weight:700;font-size:clamp(21px,4vw,31px);letter-spacing:-.02em;margin:0;line-height:1.05}
 
 /* sticky control deck */
-.deck{position:sticky;top:0;z-index:30;margin:16px 0 0;padding:12px 0 10px;
-  background:color-mix(in srgb,var(--bg) 86%,transparent);backdrop-filter:saturate(1.15) blur(12px);border-bottom:1.5px solid var(--line)}
-.tabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:2px 2px 8px}
+.deck{position:sticky;top:0;z-index:30;margin:8px 0 0;padding:7px 0 7px;
+  background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:saturate(1.15) blur(12px);border-bottom:1.5px solid var(--line)}
+.tabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:2px 2px 6px}
 .tabs::-webkit-scrollbar{display:none}
 .tab{position:relative;flex:0 0 auto;border:1.5px solid var(--line-2);background:var(--paper);border-radius:999px;
   padding:9px 17px;font:inherit;font-weight:600;font-size:14px;color:var(--ink-soft);cursor:pointer;transition:.18s;display:inline-flex;align-items:center;gap:8px}
@@ -127,7 +126,11 @@ h1{font-weight:700;font-size:clamp(28px,5vw,46px);letter-spacing:-.025em;margin:
 .tab:hover{border-color:var(--faint);transform:translateY(-1px)}
 .tab.on{background:linear-gradient(180deg,#bf9760,var(--brass-d));color:#fff;border-color:var(--brass-d);box-shadow:0 8px 18px -10px rgba(148,111,60,.8)}
 .tab.on .c{background:rgba(255,255,255,.25);color:#fff}
-.tools{display:flex;gap:9px;align-items:center;flex-wrap:wrap;padding:4px 2px 0}
+.tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:5px 2px 0}
+.tbtn.ic{padding:9px 13px}
+.tbtn.on{background:var(--brass-soft);border-color:var(--brass);color:var(--brass-d)}
+.filters[hidden]{display:none}
+.filters{padding-top:7px;border-top:1px solid var(--line);margin-top:7px}
 .search{flex:1;min-width:180px;position:relative}
 .search input{width:100%;border:1.5px solid var(--line-2);border-radius:var(--r-sm);padding:10px 38px 10px 14px;font:inherit;font-size:14px;background:var(--paper);transition:.18s}
 .search input:focus{outline:none;border-color:var(--brass);box-shadow:0 0 0 4px var(--brass-soft)}
@@ -142,7 +145,7 @@ select:hover,.tbtn:hover{border-color:var(--faint)}
 .chip.st-yes.on{background:var(--yes-bg);border-color:var(--yes);color:var(--yes)}
 .chip.st-maybe.on{background:var(--maybe-bg);border-color:var(--maybe);color:var(--maybe)}
 .chip.st-no.on{background:var(--no-bg);border-color:var(--no);color:var(--no)}
-.whoami{padding:9px 4px 0;font-size:13px;color:var(--ink-soft)}
+.whoami{font-size:12px;color:var(--ink-soft);text-align:end;line-height:1.5;flex-shrink:0}
 .whoami b{color:var(--ink)}
 .linkbtn{background:none;border:0;color:var(--brass-d);font:inherit;font-size:13px;cursor:pointer;text-decoration:underline;padding:0}
 .people{display:flex;gap:5px;flex-wrap:wrap;margin:1px 0}
@@ -151,7 +154,7 @@ select:hover,.tbtn:hover{border-color:var(--faint)}
 .pchip.meC{box-shadow:0 0 0 2px var(--paper),0 0 0 3.5px var(--ink)}
 .mepick{display:flex;gap:9px;flex-wrap:wrap}
 .mepick .tbtn{flex:1;justify-content:center;font-size:15px;padding:13px}
-.summ{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:11px 4px 0;color:var(--ink-soft);font-size:13.5px;font-weight:500}
+.summ{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:7px 4px 0;color:var(--ink-soft);font-size:12.5px;font-weight:500}
 .summ b{color:var(--ink)}.summ .money{color:var(--brass-d);font-weight:700}
 
 /* grid */
@@ -163,8 +166,8 @@ select:hover,.tbtn:hover{border-color:var(--faint)}
 .card::before{content:"";position:absolute;inset-inline-start:0;top:0;bottom:0;width:5px;background:transparent;transition:.2s;z-index:2}
 .card.s-yes::before{background:var(--yes)}.card.s-maybe::before{background:var(--maybe)}.card.s-no::before{background:var(--no)}
 .card.s-no{opacity:.6}
-.thumb{position:relative;aspect-ratio:4/3.4;overflow:hidden;background:#fbf8f2;display:block;cursor:zoom-in}
-.thumb img{width:100%;height:100%;object-fit:contain;padding:12px;display:block;transition:transform .5s cubic-bezier(.2,.7,.2,1)}
+.thumb{position:relative;aspect-ratio:4/3.4;overflow:hidden;background:transparent;display:block;cursor:zoom-in}
+.thumb img{width:100%;height:100%;object-fit:contain;padding:6px;display:block;mix-blend-mode:multiply;transition:transform .5s cubic-bezier(.2,.7,.2,1)}
 .card:hover .thumb img{transform:scale(1.05)}
 .tag{position:absolute;top:11px;inset-inline-end:11px;background:rgba(255,255,255,.86);backdrop-filter:blur(4px);color:var(--ink-soft);font-size:11px;font-weight:600;padding:3px 9px;border-radius:999px}
 .body{padding:13px 14px 15px;display:flex;flex-direction:column;gap:9px;flex:1}
@@ -235,35 +238,55 @@ dialog::backdrop{background:rgba(50,38,24,.42);backdrop-filter:blur(3px)}
 .df{padding:13px 20px 17px;display:flex;gap:10px}
 .toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(16px);opacity:0;background:var(--ink);color:#fff;padding:12px 22px;border-radius:999px;font-weight:600;font-size:14px;transition:.28s;z-index:90;pointer-events:none}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-@media(max-width:520px){.thumb{aspect-ratio:4/3.2}.name{font-size:14px}.tab{padding:8px 13px}}
+@media(max-width:560px){
+  header{padding:7px 4px 0}
+  .kicker{display:none}
+  .hrow{align-items:center;gap:8px}
+  h1{font-size:19px}
+  .deck{margin-top:6px;padding:5px 0 6px}
+  .tabs{padding:2px 2px 5px}
+  .tools{gap:7px;padding:5px 2px 0}
+  .whoami{font-size:11px}
+  .summ{font-size:11.5px;gap:9px;padding:5px 4px 0}
+  .filters{padding-top:6px;margin-top:6px}
+  .grid{grid-template-columns:repeat(2,1fr);gap:10px;margin-top:12px}
+  .thumb{aspect-ratio:1/1}
+  .body{padding:10px 10px 12px;gap:7px}.name{font-size:13px}.price{font-size:15.5px}
+  .seg button{padding:7px 0}.tab{padding:8px 13px}
+  .search{order:-1;flex:1 1 100%}
+}
+@media(max-width:400px){ .tbtn.ic .t{display:none} .tbtn.ic{padding:9px 12px} .tools{gap:6px} }
 </style>
 </head>
 <body>
 <div class="wrap">
 <header>
-  <div class="kicker">הבית שלנו · לוח החלטות משותף</div>
-  <h1>מה בוחרים לבית</h1>
-  <p class="sub">כל ההחלטות במקום אחד — תאורה, צבעים וידיות. כל אחד בוחר שם ומסמן <b>✓ נבחר</b> / <b>? אולי</b> / <b>✕ לא</b> — <b>וכולם רואים את הבחירות של כולם, בזמן אמת</b>. אפשר גם למיין, לסנן ולהוסיף פריטים.</p>
+  <div class="hrow">
+    <div><div class="kicker">הבית שלנו · לוח משותף</div><h1>מה בוחרים לבית</h1></div>
+    <div class="whoami" id="whoami"></div>
+  </div>
 </header>
 
 <div class="deck">
   <div class="tabs" id="tabs"></div>
   <div class="tools">
-    <div class="search"><span class="i">🔍</span><input id="q" placeholder="חיפוש לפי שם…" oninput="RE()"></div>
-    <select id="sort" onchange="RE()">
-      <option value="def">מיון: ברירת מחדל</option>
-      <option value="pa">מחיר — מהזול ליקר</option>
-      <option value="pd">מחיר — מהיקר לזול</option>
-      <option value="name">שם (א׳→ת׳)</option>
-      <option value="status">לפי סטטוס (נבחרו קודם)</option>
+    <div class="search"><span class="i">🔍</span><input id="q" placeholder="חיפוש…" oninput="RE()"></div>
+    <select id="sort" onchange="RE()" title="מיון">
+      <option value="def">מיון</option>
+      <option value="pa">מחיר ↑</option>
+      <option value="pd">מחיר ↓</option>
+      <option value="name">א׳→ת׳</option>
+      <option value="status">נבחרו קודם</option>
     </select>
-    <button class="tbtn" onclick="openAdd()">➕ הוסף</button>
-    <button class="tbtn primary" onclick="openSummary()">📋 סיכום לשליחה</button>
-    <button class="tbtn" onclick="resetAll()">איפוס</button>
+    <button class="tbtn ic" id="filterBtn" onclick="toggleFilters()" title="סינון">⚙︎<span class="t"> סינון</span></button>
+    <button class="tbtn ic" onclick="openAdd()" title="הוסף פריט">➕<span class="t"> הוסף</span></button>
+    <button class="tbtn primary ic" onclick="openSummary()" title="סיכום לשליחה">📋<span class="t"> סיכום</span></button>
+    <button class="tbtn ic ghost" onclick="resetAll()" title="איפוס">↺</button>
   </div>
-  <div class="chips" id="stchips"></div>
-  <div class="chips" id="tagchips"></div>
-  <div class="whoami" id="whoami"></div>
+  <div class="filters" id="filters" hidden>
+    <div class="chips" id="stchips"></div>
+    <div class="chips" id="tagchips"></div>
+  </div>
   <div class="summ" id="summ"></div>
 </div>
 
@@ -574,6 +597,7 @@ function renderPeople(){
   if(el) el.innerHTML=(me?`אני: <b>${me.name}</b> <button class="linkbtn" onclick="openMe()">(החלף)</button>`:'')
     +(names.size?` &nbsp;·&nbsp; משתתפים: ${[...names].join(' · ')}`:'');
 }
+function toggleFilters(){ const f=document.getElementById('filters'); f.hidden=!f.hidden; document.getElementById('filterBtn').classList.toggle('on',!f.hidden); }
 function openMe(){ document.getElementById('meOther').value=(me&&!['יעל','רועי','נופר'].includes(me.name))?me.name:''; document.getElementById('meDlg').showModal(); }
 function setMe(name){ name=(name||'').trim(); if(!name){alert('צריך שם');return;}
   const pk=(me&&me.pk)||uid(); me={pk,name}; localStorage.setItem('ida-me',JSON.stringify(me));
