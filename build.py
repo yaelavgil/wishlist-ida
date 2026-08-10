@@ -389,7 +389,7 @@ function visible(){
 function cardEl(it){
   if(els.has(it.id))return els.get(it.id);
   const c=document.createElement('div'); c.dataset.id=it.id;
-  const badge=(it.tags&&it.tags[0])?`<span class="tag">${it.tags[0]}</span>`:'';
+  const badge='';
   const media=it.type==='color'
     ?`<div class="thumb swatch" style="background:${it.hex}" onclick="openLB('${it.id}')">${badge}</div>`
     :it.img
