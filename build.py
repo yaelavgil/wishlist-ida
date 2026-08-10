@@ -64,7 +64,7 @@ for c in COLORS:
 CATS=[{"key":"all","label":"הכול","icon":"✦"},
       {"key":"תאורה","label":"תאורה","icon":"💡"},
       {"key":"צבעים","label":"צבעים","icon":"🎨"},
-      {"key":"ידיות","label":"ידיות מטבח","icon":"🔩"}]
+      {"key":"ידיות","label":"ידיות","icon":"🔩"}]
 
 tpl=r'''<!doctype html>
 <html lang="he" dir="rtl">
@@ -101,8 +101,9 @@ tpl=r'''<!doctype html>
   --r:20px;--r-sm:13px;
 }
 *{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%}
+html{-webkit-text-size-adjust:100%;overflow-x:clip}
 body{font-family:"Rubik",-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;color:var(--ink);margin:0;
+  overflow-x:clip;max-width:100vw;
   padding:0 clamp(12px,3.5vw,40px) 90px;line-height:1.5;-webkit-font-smoothing:antialiased;
   background:radial-gradient(1200px 500px at 82% -6%,#fbf6ec 0,rgba(251,246,236,0) 60%),
     radial-gradient(900px 480px at 8% 4%,#f7efe1 0,rgba(247,239,225,0) 55%),linear-gradient(180deg,var(--bg),var(--bg2));
@@ -118,8 +119,7 @@ h1{font-weight:700;font-size:clamp(21px,4vw,31px);letter-spacing:-.02em;margin:0
 /* sticky control deck */
 .deck{position:sticky;top:0;z-index:30;margin:8px 0 0;padding:7px 0 7px;
   background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:saturate(1.15) blur(12px);border-bottom:1.5px solid var(--line)}
-.tabs{display:flex;gap:6px;overflow-x:auto;scrollbar-width:none;padding:2px 2px 6px}
-.tabs::-webkit-scrollbar{display:none}
+.tabs{display:flex;flex-wrap:wrap;gap:6px;padding:2px 2px 6px}
 .tab{position:relative;flex:0 0 auto;border:1.5px solid var(--line-2);background:var(--paper);border-radius:999px;
   padding:9px 17px;font:inherit;font-weight:600;font-size:14px;color:var(--ink-soft);cursor:pointer;transition:.18s;display:inline-flex;align-items:center;gap:8px}
 .tab .c{font-size:12px;color:var(--muted);background:var(--brass-soft);border-radius:999px;padding:1px 8px;font-weight:700}
