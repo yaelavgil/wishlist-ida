@@ -81,7 +81,10 @@ select:hover,.tbtn:hover{border-color:var(--faint)}
 .whoami{font-size:12px;color:var(--ink-soft);text-align:end;line-height:1.5;flex-shrink:0}
 .whoami b{color:var(--ink)}
 .linkbtn{background:none;border:0;color:var(--brass-d);font:inherit;font-size:13px;cursor:pointer;text-decoration:underline;padding:0}
-.people{display:flex;gap:5px;flex-wrap:wrap;margin:2px 0}
+.people{display:flex;flex-direction:column;gap:4px;margin:2px 0}
+.pmark{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.pmark .ext{font-size:11px;color:var(--muted);font-weight:500}
+.pmark .ext:before{content:"↳ ";opacity:.6}
 .pchip{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:600;padding:3px 10px 3px 4px;border-radius:999px;background:var(--paper);border:1.5px solid var(--line-2);color:var(--ink-soft);line-height:1.35}
 .pchip .g{width:16px;height:16px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:9.5px;font-weight:800;color:#fff;flex-shrink:0}
 .pchip.s-yes .g{background:var(--yes)}
@@ -240,7 +243,7 @@ dialog::backdrop{background:rgba(50,38,24,.42);backdrop-filter:blur(3px)}
   <div class="info"><h3 id="lbname"></h3><div class="p" id="lbprice"></div><a class="store" id="lbstore" target="_blank" rel="noopener">לצפייה בחנות ↗</a></div></div>
 </div>
 
-<dialog id="dlg"><div class="dh">📋 סיכום לשליחה</div>
+<dialog id="dlg"><div class="dh">🛒 רשימת הזמנה</div>
   <div class="db"><textarea id="out"></textarea></div>
   <div class="df"><button class="tbtn primary" onclick="copyOut()">העתק ללוח</button><button class="tbtn" onclick="dlg.close()">סגור</button></div>
 </dialog>
@@ -396,7 +399,7 @@ function cardEl(it){
         <button class="maybe" title="אולי" onclick="setS('${it.id}','maybe')">?</button>
         <button class="no" title="לא" onclick="setS('${it.id}','no')">✕</button>
       </div>
-      <div class="note"><textarea placeholder="הערה…" oninput="setN('${it.id}',this.value)"></textarea></div>
+      <div class="note"><textarea placeholder="הערה: גוון / גודל / וריאציה…" oninput="setN('${it.id}',this.value)"></textarea></div>
       ${it.custom?`<button class="rmc" onclick="removeCustom('${it.id}')">🗑 הסר פריט</button>`:''}
     </div>`;
   els.set(it.id,c); grid.appendChild(c); paint(it.id,c); return c;
@@ -461,18 +464,22 @@ function openLB(id){const it=byId[id];
 function closeLB(){document.getElementById('lb').classList.remove('on');}
 function resetAll(){if(confirm("לאפס את כל הבחירות וההערות?")){st.s={};save();els.forEach((c,id)=>paint(id));RE();}}
 function openSummary(){
-  let out=""; const cats=CATS.filter(c=>c.key!=='all');
+  const who=personf==='all'?(me&&me.name):personf;
+  const label=who==(me&&me.name)?'אני':who;
+  if(!who){ document.getElementById('out').value='בחרו שם קודם.'; dlg.showModal(); return; }
+  let out="", sum=0; const cats=CATS.filter(c=>c.key!=='all');
   cats.forEach(c=>{
     const its=ITEMS.filter(i=>i.cat===c.key);
-    const yes=its.filter(i=>S(i.id).status==='yes'), maybe=its.filter(i=>S(i.id).status==='maybe'), no=its.filter(i=>S(i.id).status==='no');
-    if(!yes.length&&!maybe.length&&!no.length)return;
-    out+=`\n${c.icon} ${c.label}\n`+"—".repeat(20)+"\n";
-    const line=i=>{const q=S(i.id).qty||1; let l="• "+i.name; if(i.type==='color'&&i.code)l+="  ("+i.code+")"; if(i.price!=null)l+=(q>1?"  ×"+q:"")+"  —  "+nis(i.price*q); const n=S(i.id).note; if(n&&n.trim())l+="\n   ↳ "+n.trim(); return l;};
-    if(yes.length){out+="✓ נבחרו:\n"+yes.map(line).join("\n")+"\n";}
-    if(maybe.length){out+="\n? אולי:\n"+maybe.map(line).join("\n")+"\n";}
-    if(no.length){out+="\n✕ לא:\n"+no.map(i=>"• "+i.name).join("\n")+"\n";}
+    const yes=its.filter(i=>statusOfName(who,i.id)==='yes'), maybe=its.filter(i=>statusOfName(who,i.id)==='maybe');
+    if(!yes.length&&!maybe.length)return;
+    out+=`\n${c.icon} ${c.label}\n`+"—".repeat(22)+"\n";
+    const line=i=>{const mk=markOf(who,i.id)||{}; const q=mk.q||1; let l="• "+i.name; if(i.type==='color'&&i.code)l+="  ("+i.code+")"; if(i.price!=null){l+=(q>1?"  ×"+q:"")+"  —  "+nis((i.price||0)*q); sum+=(i.price||0)*q;} else if(q>1){l+="  ×"+q;} if(mk.n&&mk.n.trim())l+="\n   ↳ "+mk.n.trim(); return l;};
+    if(yes.length){out+="✓ להזמין:\n"+yes.map(line).join("\n")+"\n";}
+    if(maybe.length){out+="\n? אולי (להחליט):\n"+maybe.map(line).join("\n")+"\n";}
   });
-  out=(out.trim()?"✦ מה בוחרים לבית\n"+out:"עדיין לא סומנו פריטים.");
+  out = out.trim()
+    ? `🛒 רשימת הזמנה — לפי ${label}\n`+out+"—".repeat(22)+`\nסה״כ (לפריטים עם מחיר): ${nis(sum)}`
+    : `לא סומנו פריטים ל"${label}".\nסמנו ✓ על מה שרוצים להזמין (אפשר גם כמות והערה על גוון/גודל).`;
   document.getElementById('out').value=out; dlg.showModal();
 }
 function copyOut(){const o=document.getElementById('out');o.select();
@@ -544,16 +551,21 @@ function fbPoll(){ fetch(`${DB}/picks.json`).then(r=>r.json()).then(d=>{
 const GL={yes:'✓',maybe:'?',no:'✕'};
 function allPeople(){
   const arr=Object.entries(remote).filter(([pk,p])=>p&&p.name).map(([pk,p])=>({pk,name:p.name,items:p.items||{}}));
-  if(me){ const items={}; Object.keys(st.s).forEach(id=>{const s=st.s[id]; if(s&&s.status&&s.status!=='none')items[id]={s:s.status};});
+  if(me){ const items={}; Object.keys(st.s).forEach(id=>{const s=st.s[id]; if(s&&s.status&&s.status!=='none')items[id]={s:s.status,n:s.note||'',q:s.qty||1};});
     const others=arr.filter(p=>p.pk!==me.pk); others.push({pk:me.pk,name:me.name,items}); return others; }
   return arr;
 }
 function namesList(){ const out=[],seen=new Set(); allPeople().forEach(p=>{if(p.name&&!seen.has(p.name)){seen.add(p.name);out.push(p.name);}}); return out; }
-function statusOfName(name,id){ for(const p of allPeople()){ if(p.name===name){ const m=p.items[id]; if(m&&m.s&&m.s!=='none') return m.s; } } return 'none'; }
-function marksFor(id){ const out=[]; namesList().forEach(name=>{ const s=statusOfName(name,id); if(s!=='none') out.push({name,status:s,mine:me&&name===me.name}); }); return out; }
+function markOf(name,id){ for(const p of allPeople()){ if(p.name===name){ const m=p.items[id]; if(m&&m.s&&m.s!=='none') return m; } } return null; }
+function statusOfName(name,id){ const m=markOf(name,id); return m?m.s:'none'; }
+function marksFor(id){ const out=[]; namesList().forEach(name=>{ const m=markOf(name,id); if(m) out.push({name,status:m.s,note:m.n||'',qty:m.q||1,mine:me&&name===me.name}); }); return out; }
 function renderPeople(){
   els.forEach((c,id)=>{const box=c.querySelector('.people'); if(!box)return; const ms=marksFor(id);
-    box.innerHTML=ms.map(m=>`<span class="pchip s-${m.status}${m.mine?' me':''}"><span class="g">${GL[m.status]}</span>${m.name}</span>`).join('');
+    box.innerHTML=ms.map(m=>{
+      const showExt=!m.mine && ((m.qty&&m.qty>1)||(m.note&&m.note.trim()));
+      const ext=showExt?`<span class="ext">${m.qty>1?'×'+m.qty:''}${m.note&&m.note.trim()?(m.qty>1?' · ':'')+m.note.trim():''}</span>`:'';
+      return `<div class="pmark"><span class="pchip s-${m.status}${m.mine?' me':''}"><span class="g">${GL[m.status]}</span>${m.name}</span>${ext}</div>`;
+    }).join('');
     box.style.display=ms.length?'':'none'; });
   const names=namesList();
   const el=document.getElementById('whoami');
