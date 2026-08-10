@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>לוח החלטות · הבית של עידה</title>
+<title>לוח החלטות · הבית שלנו</title>
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://yaelavgil.github.io/wishlist-ida/">
-<meta property="og:title" content="לוח החלטות — הבית של עידה">
-<meta property="og:description" content="תאורה · צבעים · ידיות מטבח — בחירה, מיון וסינון נוחים לשיתוף.">
-<meta property="og:site_name" content="הבית של עידה">
+<meta property="og:title" content="מה בוחרים לבית — לוח החלטות משותף">
+<meta property="og:description" content="בוחרים יחד לבית — מוצרים מכל חנות. כל אחד מסמן ✓/?/✕ וכולם רואים, בזמן אמת.">
+<meta property="og:site_name" content="הבית שלנו">
 <meta property="og:image" content="https://yaelavgil.github.io/wishlist-ida/og.jpg">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
@@ -117,6 +117,15 @@ select:hover,.tbtn:hover{border-color:var(--faint)}
 .form input:focus,.form select:focus{outline:none;border-color:var(--brass);box-shadow:0 0 0 3px var(--brass-soft)}
 .form .row2{display:flex;gap:10px}
 .form input[type=color]{padding:4px;height:46px;cursor:pointer}
+.fstatus{font-size:12.5px;line-height:1.5;display:none}
+.fstatus.show{display:block}
+.fstatus.working{color:var(--ink-soft)}.fstatus.ok{color:var(--yes)}.fstatus.fail{color:var(--no)}
+.spinner{display:inline-block;width:12px;height:12px;border:2px solid var(--brass-soft);border-top-color:var(--brass-d);border-radius:50%;animation:spin .7s linear infinite;vertical-align:-2px;margin-inline-end:5px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.form input.flash{animation:flashf .9s ease}
+@keyframes flashf{0%{background:var(--maybe-bg);border-color:var(--maybe)}100%{background:var(--paper)}}
+.tip{font-size:12px;color:var(--muted);margin:6px 0 0;line-height:1.6}
+.tip a{color:var(--brass-d);font-weight:700;text-decoration:none;border:1.5px dashed var(--brass);border-radius:8px;padding:2px 9px;display:inline-block;cursor:grab}
 .seg{display:flex;gap:6px;margin-top:auto}
 .seg button{flex:1;border:1.5px solid var(--line-2);background:var(--paper);border-radius:11px;padding:8px 0;font:inherit;font-size:15px;font-weight:700;cursor:pointer;transition:.15s;color:var(--muted)}
 .seg button:hover{border-color:var(--faint)}
@@ -164,7 +173,7 @@ dialog::backdrop{background:rgba(50,38,24,.42);backdrop-filter:blur(3px)}
 <body>
 <div class="wrap">
 <header>
-  <div class="kicker">הבית של עידה · לוח החלטות</div>
+  <div class="kicker">הבית שלנו · לוח החלטות משותף</div>
   <h1>מה בוחרים לבית</h1>
   <p class="sub">כל ההחלטות במקום אחד — תאורה, צבעים וידיות. כל אחד בוחר שם ומסמן <b>✓ נבחר</b> / <b>? אולי</b> / <b>✕ לא</b> — <b>וכולם רואים את הבחירות של כולם, בזמן אמת</b>. אפשר גם למיין, לסנן ולהוסיף פריטים.</p>
 </header>
@@ -217,8 +226,13 @@ dialog::backdrop{background:rgba(50,38,24,.42);backdrop-filter:blur(3px)}
   <div class="df"><button class="tbtn primary" onclick="setMe(document.getElementById('meOther').value)">המשך</button></div>
 </dialog>
 
-<dialog id="addDlg"><div class="dh">➕ הוספת פריט</div>
+<dialog id="addDlg"><div class="dh">➕ הוספת פריט מכל חנות</div>
   <div class="db"><div class="form">
+    <div id="a_prodFields2" class="form" style="gap:8px">
+      <label>קישור למוצר (הדביקו — הפרטים יישלפו ✨)<input id="a_url" type="url" placeholder="https://… מכל חנות" dir="ltr"></label>
+      <button type="button" class="tbtn" id="a_fetch" onclick="fetchMeta()" style="align-self:flex-start">✨ שליפת פרטים אוטומטית</button>
+      <div id="a_fstatus" class="fstatus"></div>
+    </div>
     <label>קטגוריה<select id="a_sec" onchange="addToggle()"></select></label>
     <div id="a_newFields" class="row2" style="display:none">
       <label style="flex:2">שם קטגוריה חדשה<input id="a_secNew" placeholder="למשל: כלים סניטריים"></label>
@@ -231,7 +245,7 @@ dialog::backdrop{background:rgba(50,38,24,.42);backdrop-filter:blur(3px)}
         <label>מחיר ₪ (לא חובה)<input id="a_price" type="number" min="0" inputmode="numeric"></label>
         <label>תגית לסינון (לא חובה)<input id="a_tag" placeholder="למשל: תלוי"></label>
       </div>
-      <label>קישור לתמונה (לא חובה)<input id="a_img" placeholder="https://…/image.jpg"></label>
+      <label>קישור לתמונה (לא חובה)<input id="a_img" placeholder="https://…/image.jpg" dir="ltr"></label>
     </div>
     <div id="a_colorFields" style="display:none">
       <div class="row2">
@@ -239,8 +253,8 @@ dialog::backdrop{background:rgba(50,38,24,.42);backdrop-filter:blur(3px)}
         <label style="flex:2">קוד (לא חובה)<input id="a_code" placeholder="IS 0000"></label>
       </div>
     </div>
-    <label>קישור לעמוד המוצר/הגוון (לא חובה)<input id="a_link" placeholder="https://…"></label>
-    <p style="margin:2px 0 0;font-size:12px;color:var(--muted)">נשמר במכשיר שלך בלבד. כדי שכולם (בעל / מעצבת) יראו — שלחי לי את הפרטים ואטמיע בקביעות.</p>
+    <p class="tip">💡 גררו את <a id="bookmarklet" href="#">➕ הוסף לבית</a> לסרגל הסימניות. בכל חנות — לחצו עליו כדי לשלוף את המוצר לכאן (עוקף חסימות).</p>
+    <p style="margin:2px 0 0;font-size:12px;color:var(--muted)">הפריט מתווסף ל<b>לוח המשותף</b> — כולם יראו אותו.</p>
   </div></div>
   <div class="df"><button class="tbtn primary" onclick="submitAdd()">הוסף</button><button class="tbtn" onclick="document.getElementById('addDlg').close()">ביטול</button></div>
 </dialog>
@@ -254,7 +268,13 @@ let me=JSON.parse(localStorage.getItem('ida-me')||'null'); // {pk,name}
 let remote={}; // {pk:{name,items:{id:{s,n,q}}}}
 let cat="all", stf=new Set(), tagf=new Set();
 let ITEMS=[],CATS=[],byId={};
-function rebuild(){ITEMS=BITEMS.concat(st.custom.items);CATS=BCATS.concat(st.custom.cats);byId=Object.fromEntries(ITEMS.map(x=>[x.id,x]));}
+let shared={items:{},cats:{}}; // shared catalog from Firebase (/picks/_catalog)
+function rebuild(){
+  const im={}; st.custom.items.forEach(i=>im[i.id]=i); Object.values(shared.items||{}).forEach(i=>{if(i&&i.id)im[i.id]=i;});
+  const cm={}; st.custom.cats.forEach(c=>cm[c.key]=c); Object.values(shared.cats||{}).forEach(c=>{if(c&&c.key)cm[c.key]=c;});
+  ITEMS=BITEMS.concat(Object.values(im)); CATS=BCATS.concat(Object.values(cm));
+  byId=Object.fromEntries(ITEMS.map(x=>[x.id,x]));
+}
 const els=new Map();
 const dlg=document.getElementById('dlg'), grid=document.getElementById('grid');
 const nis=n=>"₪"+(n||0).toLocaleString('en-US');
@@ -399,7 +419,7 @@ function openSummary(){
     if(maybe.length){out+="\n? אולי:\n"+maybe.map(line).join("\n")+"\n";}
     if(no.length){out+="\n✕ לא:\n"+no.map(i=>"• "+i.name).join("\n")+"\n";}
   });
-  out=(out.trim()?"✦ לוח החלטות — הבית של עידה\n"+out:"עדיין לא סומנו פריטים.");
+  out=(out.trim()?"✦ מה בוחרים לבית\n"+out:"עדיין לא סומנו פריטים.");
   document.getElementById('out').value=out; dlg.showModal();
 }
 function copyOut(){const o=document.getElementById('out');o.select();
@@ -410,6 +430,7 @@ function addToggle(){
   document.getElementById('a_newFields').style.display=sec==='__new__'?'flex':'none';
   const t=document.getElementById('a_type').value;
   document.getElementById('a_prodFields').style.display=t==='product'?'':'none';
+  document.getElementById('a_prodFields2').style.display=t==='product'?'':'none';
   document.getElementById('a_colorFields').style.display=t==='color'?'':'none';
 }
 function openAdd(){
@@ -417,30 +438,33 @@ function openAdd(){
   CATS.filter(c=>c.key!=='all').forEach(c=>{const o=document.createElement('option');o.value=c.key;o.textContent=c.icon+' '+c.label;sel.appendChild(o);});
   const o=document.createElement('option');o.value='__new__';o.textContent='➕ קטגוריה חדשה…';sel.appendChild(o);
   if(cat!=='all')sel.value=cat;
-  ['a_name','a_price','a_img','a_link','a_tag','a_code','a_secNew'].forEach(id=>document.getElementById(id).value='');
-  document.getElementById('a_secIcon').value='📌';
+  ['a_name','a_price','a_img','a_url','a_tag','a_code','a_secNew'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('a_secIcon').value='📌'; setFetchStatus('');
   addToggle(); document.getElementById('addDlg').showModal();
 }
 function submitAdd(){
-  const name=document.getElementById('a_name').value.trim();
-  if(!name){alert('צריך שם לפריט');return;}
-  let secKey=document.getElementById('a_sec').value;
+  const gv=id=>document.getElementById(id).value.trim();
+  const name=gv('a_name'); if(!name){alert('צריך שם לפריט');return;}
+  let secKey=document.getElementById('a_sec').value, newCat=null;
   if(secKey==='__new__'){
-    const lab=document.getElementById('a_secNew').value.trim();
-    if(!lab){alert('צריך שם לקטגוריה החדשה');return;}
-    const icon=document.getElementById('a_secIcon').value.trim()||'📌';
-    secKey='uc'+(++st.custom.seq); st.custom.cats.push({key:secKey,label:lab,icon:icon});
+    const lab=gv('a_secNew'); if(!lab){alert('צריך שם לקטגוריה החדשה');return;}
+    secKey='uc'+(++st.custom.seq)+Math.random().toString(16).slice(2,5);
+    newCat={key:secKey,label:lab,icon:gv('a_secIcon')||'📌'}; st.custom.cats.push(newCat);
   }
   const type=document.getElementById('a_type').value;
-  const it={id:'ui'+(++st.custom.seq),cat:secKey,type:type,name:name,custom:true,link:document.getElementById('a_link').value.trim()};
-  if(type==='color'){it.hex=document.getElementById('a_hex').value;const cd=document.getElementById('a_code').value.trim();if(cd)it.code=cd;it.price=null;it.tags=[];}
-  else{const p=document.getElementById('a_price').value;it.price=p?Number(p):null;const img=document.getElementById('a_img').value.trim();if(img)it.img=img;const tg=document.getElementById('a_tag').value.trim();it.tags=tg?[tg]:[];}
-  st.custom.items.push(it); save(); rebuild(); cat=secKey; stf.clear(); tagf.clear();
+  const it={id:'ui'+Date.now().toString(36)+Math.random().toString(16).slice(2,5),cat:secKey,type:type,name:name,custom:true,link:type==='product'?gv('a_url'):''};
+  if(type==='color'){it.hex=document.getElementById('a_hex').value;const cd=gv('a_code');if(cd)it.code=cd;it.price=null;it.tags=[];}
+  else{const p=gv('a_price');it.price=p?Number(p):null;const img=gv('a_img');if(img)it.img=img;const tg=gv('a_tag');it.tags=tg?[tg]:[];}
+  st.custom.items.push(it); save();
+  if(newCat) fbPushCatalogCat(newCat);
+  fbPushCatalogItem(it);
+  rebuild(); cat=secKey; stf.clear(); tagf.clear();
   document.getElementById('addDlg').close(); buildChips(); tabsHTML(); RE(true);
 }
 function removeCustom(id){
-  if(!confirm('להסיר את הפריט?'))return;
+  if(!confirm('להסיר את הפריט מהלוח של כולם?'))return;
   st.custom.items=st.custom.items.filter(x=>x.id!==id); delete st.s[id]; save();
+  fbDelCatalogItem(id); if(me) fetch(`${DB}/picks/${me.pk}/items/${encodeURIComponent(id)}.json`,{method:'DELETE'}).catch(()=>{});
   const el=els.get(id); if(el){el.remove();els.delete(id);} rebuild(); buildChips(); tabsHTML(); RE();
 }
 /* ---------- shared backend (Firebase RTDB via REST) ---------- */
@@ -454,7 +478,15 @@ function fbPushAll(){ if(!me)return; const items={};
   Object.keys(st.s).forEach(id=>{const s=st.s[id]; if(meaningful(s)) items[id]={s:s.status,n:s.note||'',q:s.qty||1};});
   fetch(`${DB}/picks/${me.pk}.json`,{method:'PATCH',body:JSON.stringify({name:me.name})}).catch(()=>{});
   fetch(`${DB}/picks/${me.pk}/items.json`,{method:'PATCH',body:JSON.stringify(items)}).catch(()=>{}); }
-function fbPoll(){ fetch(`${DB}/picks.json`).then(r=>r.json()).then(d=>{remote=d||{};renderPeople();}).catch(()=>{}); }
+function fbPushCatalogItem(it){ fetch(`${DB}/picks/_catalog/items/${encodeURIComponent(it.id)}.json`,{method:'PUT',body:JSON.stringify(it)}).catch(()=>{}); }
+function fbPushCatalogCat(c){ fetch(`${DB}/picks/_catalog/cats/${encodeURIComponent(c.key)}.json`,{method:'PUT',body:JSON.stringify(c)}).catch(()=>{}); }
+function fbDelCatalogItem(id){ fetch(`${DB}/picks/_catalog/items/${encodeURIComponent(id)}.json`,{method:'DELETE'}).catch(()=>{}); }
+function fbPoll(){ fetch(`${DB}/picks.json`).then(r=>r.json()).then(d=>{
+  d=d||{}; const cat=d._catalog||{items:{},cats:{}}; delete d._catalog; remote=d;
+  const changed=JSON.stringify(cat)!==JSON.stringify(shared); shared=cat;
+  if(changed){ rebuild(); buildChips(); tabsHTML(); RE(); }
+  renderPeople();
+}).catch(()=>{}); }
 const STL2={yes:'✓ נבחר',maybe:'? אולי',no:'✕ לא'};
 function marksFor(id){
   const out=[];
@@ -479,10 +511,53 @@ function setMe(name){ name=(name||'').trim(); if(!name){alert('צריך שם');r
   const pk=(me&&me.pk)||uid(); me={pk,name}; localStorage.setItem('ida-me',JSON.stringify(me));
   document.getElementById('meDlg').close(); fbPushAll(); startSync(); renderPeople(); }
 function startSync(){ fbPoll(); if(!window._pollI) window._pollI=setInterval(fbPoll,5000); }
+/* ---------- smart add: auto-fetch product from any store URL ---------- */
+let fetching=false;
+function setFetchStatus(cls,html){ const s=document.getElementById('a_fstatus'); if(!s)return; if(!cls){s.className='fstatus';s.innerHTML='';return;} s.className='fstatus show '+cls; s.innerHTML=html; }
+async function fetchMeta(){
+  if(fetching)return; const url=document.getElementById('a_url').value.trim();
+  if(!/^https?:\/\//.test(url)){alert('קודם הדביקו קישור למוצר');return;}
+  fetching=true; const btn=document.getElementById('a_fetch'); btn.disabled=true; btn.textContent='⏳ שולף...';
+  try{
+    const proxies=['https://api.allorigins.win/raw?url=','https://api.codetabs.com/v1/proxy?quest=','https://corsproxy.io/?url='];
+    let html=null;
+    for(let i=0;i<proxies.length;i++){ setFetchStatus('working',`<span class="spinner"></span> שולף פרטים... ניסיון ${i+1}/${proxies.length}`);
+      try{const res=await fetch(proxies[i]+encodeURIComponent(url),{signal:AbortSignal.timeout(6000)}); if(res.ok){const t=await res.text(); if(t&&t.length>500){html=t;break;}}}catch(e){} }
+    if(!html) throw 0;
+    setFetchStatus('working','<span class="spinner"></span> מנתח את פרטי המוצר...');
+    const doc=new DOMParser().parseFromString(html,'text/html');
+    const og=p=>doc.querySelector(`meta[property="${p}"]`)?.content||'';
+    let name=og('og:title')||doc.querySelector('title')?.textContent||''; name=name.split(/\s*[|\-–]\s*(?=[^|\-–]*$)/)[0].trim().slice(0,80);
+    const img=og('og:image'); let price=og('product:price:amount')||'';
+    if(!price){for(const s of doc.querySelectorAll('script[type="application/ld+json"]')){const m=s.textContent.match(/"price"\s*:\s*"?([\d\.]+)"?/);if(m){price=m[1];break;}}}
+    if(!price){const m=(doc.body?.textContent||'').match(/₪\s*([\d,]+(?:\.\d+)?)/);if(m)price=m[1].replace(/,/g,'');}
+    const flash=id=>{const el=document.getElementById(id);el.classList.remove('flash');void el.offsetWidth;el.classList.add('flash');};
+    if(name){document.getElementById('a_name').value=name;flash('a_name');}
+    if(img){document.getElementById('a_img').value=img;flash('a_img');}
+    if(price){document.getElementById('a_price').value=Math.round(parseFloat(price));flash('a_price');}
+    if(name) setFetchStatus('ok',`✅ נשלפו: ${[name&&'שם',price&&'מחיר',img&&'תמונה'].filter(Boolean).join(', ')} — בדקו ואשרו`);
+    else setFetchStatus('fail','😕 העמוד נטען בלי פרטי מוצר — מלאו ידנית');
+  }catch(e){ setFetchStatus('fail','🚫 החנות חוסמת שליפה — מלאו ידנית, או השתמשו ב-➕ שבטיפ'); }
+  fetching=false; const b=document.getElementById('a_fetch'); b.disabled=false; b.textContent='✨ שליפת פרטים אוטומטית';
+}
+function checkIncomingAdd(){
+  const m=location.hash.match(/#add=([A-Za-z0-9+/=\-_]+)/); if(!m)return;
+  try{ const p=JSON.parse(decodeURIComponent(escape(atob(m[1].replace(/-/g,'+').replace(/_/g,'/')))));
+    history.replaceState(null,'',location.pathname); openAdd();
+    document.getElementById('a_url').value=p.u||''; document.getElementById('a_name').value=(p.n||'').slice(0,80);
+    document.getElementById('a_img').value=p.i||''; if(p.p)document.getElementById('a_price').value=Math.round(parseFloat(p.p));
+    setFetchStatus('ok','✨ המוצר הגיע מהחנות — בחרו קטגוריה ואשרו');
+  }catch(e){}
+}
+(function(){ const code="(function(){var d=document,q=function(p){var m=d.querySelector('meta[property=\"'+p+'\"]');return m?m.content:''};var n=q('og:title')||d.title;n=n.split(/\\s*[|\\u2013-]\\s*(?=[^|\\u2013-]*$)/)[0].trim();var i=q('og:image');var pm=(d.body.innerText.match(/\\u20aa\\s*([\\d,]+(?:\\.\\d+)?)/)||[])[1]||'';var pl={u:location.href,n:n,i:i,p:pm.replace(/,/g,'')};window.open('https://yaelavgil.github.io/wishlist-ida/picks/#add='+btoa(unescape(encodeURIComponent(JSON.stringify(pl)))));})()";
+  const el=document.getElementById('bookmarklet'); if(el){ el.href='javascript:'+encodeURIComponent(code); el.addEventListener('click',e=>e.preventDefault()); }
+})();
+document.getElementById('a_url').addEventListener('paste',()=>{ setTimeout(()=>{ if(!document.getElementById('a_name').value.trim()) fetchMeta(); },150); });
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)fbPoll();});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeLB();}});
 rebuild(); tabsHTML(); buildChips(); RE(true);
 if(me) startSync(); else openMe();
+checkIncomingAdd();
 </script>
 </body>
 </html>
