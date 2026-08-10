@@ -81,10 +81,18 @@ select:hover,.tbtn:hover{border-color:var(--faint)}
 .whoami{font-size:12px;color:var(--ink-soft);text-align:end;line-height:1.5;flex-shrink:0}
 .whoami b{color:var(--ink)}
 .linkbtn{background:none;border:0;color:var(--brass-d);font:inherit;font-size:13px;cursor:pointer;text-decoration:underline;padding:0}
-.people{display:flex;gap:5px;flex-wrap:wrap;margin:1px 0}
-.pchip{width:23px;height:23px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11.5px;font-weight:700;color:#fff;box-shadow:0 1px 3px rgba(0,0,0,.18)}
-.pchip.s-yes{background:var(--yes)}.pchip.s-maybe{background:var(--maybe)}.pchip.s-no{background:var(--no)}
-.pchip.meC{box-shadow:0 0 0 2px var(--paper),0 0 0 3.5px var(--ink)}
+.people{display:flex;gap:5px;flex-wrap:wrap;margin:2px 0}
+.pchip{display:inline-flex;align-items:center;gap:4px;font-size:11.5px;font-weight:600;padding:3px 9px 3px 7px;border-radius:999px;border:1.5px solid;line-height:1.35}
+.pchip .g{font-weight:800;font-size:12px}
+.pchip.s-yes{background:var(--yes-bg);color:var(--yes);border-color:#cfe3cd}
+.pchip.s-maybe{background:var(--maybe-bg);color:var(--maybe);border-color:#ecdcb4}
+.pchip.s-no{background:var(--no-bg);color:var(--no);border-color:#eccabf}
+.pchip.me{box-shadow:0 0 0 1.5px rgba(60,44,24,.14)}
+.frow{display:flex;gap:8px;align-items:flex-start}
+.frow+.frow{margin-top:7px}
+.flabel{font-size:11px;color:var(--muted);font-weight:700;min-width:50px;padding-top:8px;flex-shrink:0}
+.frow .chips{padding:0;flex:1}
+.chip.person.on{background:var(--brass-d);border-color:var(--brass-d);color:#fff}
 .mepick{display:flex;gap:9px;flex-wrap:wrap}
 .mepick .tbtn{flex:1;justify-content:center;font-size:15px;padding:13px}
 .summ{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:7px 4px 0;color:var(--ink-soft);font-size:12.5px;font-weight:500}
@@ -217,8 +225,9 @@ dialog::backdrop{background:rgba(50,38,24,.42);backdrop-filter:blur(3px)}
     <button class="tbtn ic ghost" onclick="resetAll()" title="איפוס">↺</button>
   </div>
   <div class="filters" id="filters" hidden>
-    <div class="chips" id="stchips"></div>
-    <div class="chips" id="tagchips"></div>
+    <div class="frow"><span class="flabel">מי בחר</span><div class="chips" id="pplchips"></div></div>
+    <div class="frow"><span class="flabel">סטטוס</span><div class="chips" id="stchips"></div></div>
+    <div class="frow"><span class="flabel">קטגוריה</span><div class="chips" id="tagchips"></div></div>
   </div>
   <div class="summ" id="summ"></div>
 </div>
@@ -290,7 +299,8 @@ const KEY="ida-board-v1";
 let st=JSON.parse(localStorage.getItem(KEY)||"{}"); st.s=st.s||{}; st.custom=st.custom||{cats:[],items:[],seq:0};
 let me=JSON.parse(localStorage.getItem('ida-me')||'null'); // {pk,name}
 let remote={}; // {pk:{name,items:{id:{s,n,q}}}}
-let cat="all", stf=new Set(), tagf=new Set();
+let _psig="";
+let cat="all", stf=new Set(), tagf=new Set(), personf="all";
 let ITEMS=[],CATS=[],byId={};
 let shared={items:{},cats:{}}; // shared catalog from Firebase (/picks/_catalog)
 function rebuild(){
@@ -317,6 +327,12 @@ function tabsHTML(){
   });
 }
 function buildChips(){
+  if(personf!=='all' && !namesList().includes(personf)) personf='all';
+  const pc=document.getElementById('pplchips');
+  if(pc){ pc.innerHTML="";
+    const mk=(val,lab)=>{const c=document.createElement('button');c.className="chip person"+(personf===val?" on":"");c.textContent=lab;c.onclick=()=>{personf=val;buildChips();RE();};pc.appendChild(c);};
+    mk('all','כולם'); namesList().forEach(n=>mk(n,n));
+  }
   const sc=document.getElementById('stchips');
   const sts=[['yes','✓ נבחר','st-yes'],['maybe','? אולי','st-maybe'],['no','✕ לא','st-no'],['none','לא הוחלט','']];
   sc.innerHTML=""; sts.forEach(([k,lab,cls])=>{
@@ -329,17 +345,30 @@ function buildChips(){
   uniq.forEach(tg=>{const c=document.createElement('button'); c.className="chip"+(tagf.has(tg)?" on":""); c.textContent=tg;
     c.onclick=()=>{tagf.has(tg)?tagf.delete(tg):tagf.add(tg);buildChips();RE();}; tc.appendChild(c);});
 }
+function passPerson(i){
+  if(personf==='all'){
+    if(stf.size===0) return true;
+    const ss=new Set(marksFor(i.id).map(m=>m.status));
+    if(stf.has('none') && ss.size===0) return true;
+    return [...stf].some(s=>s!=='none' && ss.has(s));
+  }
+  const s=statusOfName(personf,i.id);
+  if(stf.size===0) return s!=='none';
+  return stf.has(s);
+}
 function visible(){
   const q=(document.getElementById('q').value||"").trim();
   let a=ITEMS.filter(i=>(cat==='all'||i.cat===cat)
     &&(!q||i.name.includes(q))
-    &&(stf.size===0||stf.has(S(i.id).status))
-    &&(tagf.size===0||(i.tags||[]).some(t=>tagf.has(t))));
+    &&(tagf.size===0||(i.tags||[]).some(t=>tagf.has(t)))
+    &&passPerson(i));
   const s=document.getElementById('sort').value, rank={yes:0,maybe:1,none:2,no:3};
-  if(s==='pa')a.sort((x,y)=>x.price-y.price);
-  else if(s==='pd')a.sort((x,y)=>y.price-x.price);
+  const who=personf==='all'?(me&&me.name):personf;
+  const so=id=>who?statusOfName(who,id):'none';
+  if(s==='pa')a.sort((x,y)=>(x.price||0)-(y.price||0));
+  else if(s==='pd')a.sort((x,y)=>(y.price||0)-(x.price||0));
   else if(s==='name')a.sort((x,y)=>x.name.localeCompare(y.name,'he'));
-  else if(s==='status')a.sort((x,y)=>rank[S(x.id).status]-rank[S(y.id).status]);
+  else if(s==='status')a.sort((x,y)=>rank[so(x.id)]-rank[so(y.id)]);
   return a;
 }
 function cardEl(it){
@@ -409,11 +438,11 @@ function RE(animate){
   updateSumm(vis);
 }
 function updateSumm(vis){
-  const inCat=ITEMS.filter(i=>cat==='all'||i.cat===cat);
-  const yes=inCat.filter(i=>S(i.id).status==='yes'); const maybe=inCat.filter(i=>S(i.id).status==='maybe');
-  const sum=yes.reduce((a,i)=>a+(i.price||0)*(S(i.id).qty||1),0);
-  document.getElementById('summ').innerHTML=
-    `מוצג: <b>${vis.length}</b> · נבחרו: <b style="color:var(--yes)">${yes.length}</b> · אולי: <b style="color:var(--maybe)">${maybe.length}</b> · סה״כ נבחרים: <span class="money">${nis(sum)}</span>`;
+  const who=personf==='all'?(me&&me.name):personf;
+  let y=0,m=0,n=0;
+  if(who) ITEMS.forEach(i=>{const s=statusOfName(who,i.id); if(s==='yes')y++;else if(s==='maybe')m++;else if(s==='no')n++;});
+  document.getElementById('summ').innerHTML=`מוצג: <b>${vis.length}</b>`
+    +(who?` &nbsp;·&nbsp; <b>${who==(me&&me.name)?'אני':who}</b>: <b style="color:var(--yes)">${y}</b> נבחרו · <b style="color:var(--maybe)">${m}</b> אולי · <b style="color:var(--no)">${n}</b> לא`:'');
 }
 function setS(id,v){const s=S(id); s.status=(s.status===v)?'none':v; save(); paint(id); fbPushMark(id); renderPeople();
   const so=document.getElementById('sort').value; updateSumm(visible());
@@ -508,27 +537,28 @@ function fbDelCatalogItem(id){ fetch(`${DB}/picks/_catalog/items/${encodeURIComp
 function fbPoll(){ fetch(`${DB}/picks.json`).then(r=>r.json()).then(d=>{
   d=d||{}; const cat=d._catalog||{items:{},cats:{}}; delete d._catalog; remote=d;
   const changed=JSON.stringify(cat)!==JSON.stringify(shared); shared=cat;
-  if(changed){ rebuild(); buildChips(); tabsHTML(); RE(); }
+  if(changed){ rebuild(); tabsHTML(); RE(); }
+  const psig=namesList().join('|'); if(changed||psig!==_psig){ _psig=psig; buildChips(); }
   renderPeople();
 }).catch(()=>{}); }
-const STL2={yes:'✓ נבחר',maybe:'? אולי',no:'✕ לא'};
-function marksFor(id){
-  const out=[];
-  Object.entries(remote).forEach(([pk,p])=>{ if(!p||!p.items)return; const m=p.items[id];
-    if(m&&m.s&&m.s!=='none') out.push({pk,name:p.name||'?',status:m.s,mine:me&&pk===me.pk}); });
-  if(me){ const s=st.s[id]; const mine=out.find(o=>o.mine);
-    if(s&&s.status&&s.status!=='none'){ if(mine)mine.status=s.status; else out.push({pk:me.pk,name:me.name,status:s.status,mine:true}); }
-    else if(mine) out.splice(out.indexOf(mine),1); }
-  return out;
+const GL={yes:'✓',maybe:'?',no:'✕'};
+function allPeople(){
+  const arr=Object.entries(remote).filter(([pk,p])=>p&&p.name).map(([pk,p])=>({pk,name:p.name,items:p.items||{}}));
+  if(me){ const items={}; Object.keys(st.s).forEach(id=>{const s=st.s[id]; if(s&&s.status&&s.status!=='none')items[id]={s:s.status};});
+    const others=arr.filter(p=>p.pk!==me.pk); others.push({pk:me.pk,name:me.name,items}); return others; }
+  return arr;
 }
+function namesList(){ const out=[],seen=new Set(); allPeople().forEach(p=>{if(p.name&&!seen.has(p.name)){seen.add(p.name);out.push(p.name);}}); return out; }
+function statusOfName(name,id){ for(const p of allPeople()){ if(p.name===name){ const m=p.items[id]; if(m&&m.s&&m.s!=='none') return m.s; } } return 'none'; }
+function marksFor(id){ const out=[]; namesList().forEach(name=>{ const s=statusOfName(name,id); if(s!=='none') out.push({name,status:s,mine:me&&name===me.name}); }); return out; }
 function renderPeople(){
   els.forEach((c,id)=>{const box=c.querySelector('.people'); if(!box)return; const ms=marksFor(id);
-    box.innerHTML=ms.map(m=>`<span class="pchip s-${m.status}${m.mine?' meC':''}" title="${m.name}: ${STL2[m.status]||''}">${(m.name||'?').trim().charAt(0)||'?'}</span>`).join('');
+    box.innerHTML=ms.map(m=>`<span class="pchip s-${m.status}${m.mine?' me':''}"><span class="g">${GL[m.status]}</span>${m.name}</span>`).join('');
     box.style.display=ms.length?'':'none'; });
-  const names=new Set(Object.values(remote||{}).map(p=>p&&p.name).filter(Boolean)); if(me&&me.name)names.add(me.name);
+  const names=namesList();
   const el=document.getElementById('whoami');
   if(el) el.innerHTML=(me?`אני: <b>${me.name}</b> <button class="linkbtn" onclick="openMe()">(החלף)</button>`:'')
-    +(names.size?` &nbsp;·&nbsp; משתתפים: ${[...names].join(' · ')}`:'');
+    +(names.length?` &nbsp;·&nbsp; משתתפים: ${names.join(' · ')}`:'');
 }
 function toggleFilters(){ const f=document.getElementById('filters'); f.hidden=!f.hidden; document.getElementById('filterBtn').classList.toggle('on',!f.hidden); }
 function openMe(){ document.getElementById('meOther').value=(me&&!['יעל','רועי','נופר'].includes(me.name))?me.name:''; document.getElementById('meDlg').showModal(); }
