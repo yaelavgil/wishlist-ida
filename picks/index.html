@@ -92,8 +92,9 @@ select:hover,.tbtn:hover{border-color:var(--faint)}
 .linkbtn{background:none;border:0;color:var(--brass-d);font:inherit;font-size:13px;cursor:pointer;text-decoration:underline;padding:0}
 .people{display:flex;flex-direction:column;gap:4px;margin:2px 0}
 .pmark{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
-.pmark .ext{font-size:11px;color:var(--muted);font-weight:500}
-.pmark .ext:before{content:"↳ ";opacity:.6}
+.pchip .g{flex-shrink:0}
+.pchip.s-none .g{background:var(--muted)}
+.pnote{flex-basis:100%;font-size:12.5px;color:var(--ink);background:var(--bg2);border-inline-start:3px solid var(--brass-soft);border-radius:8px;padding:5px 10px;line-height:1.45;white-space:pre-wrap}
 .pchip{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:600;padding:3px 10px 3px 4px;border-radius:999px;background:var(--paper);border:1.5px solid var(--line-2);color:var(--ink-soft);line-height:1.35}
 .pchip .g{width:16px;height:16px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:9.5px;font-weight:800;color:#fff;flex-shrink:0}
 .pchip.s-yes .g{background:var(--yes)}
@@ -603,15 +604,15 @@ function allPeople(){
   return arr;
 }
 function namesList(){ const out=[],seen=new Set(); allPeople().forEach(p=>{if(p.name&&!seen.has(p.name)){seen.add(p.name);out.push(p.name);}}); return out; }
-function markOf(name,id){ for(const p of allPeople()){ if(p.name===name){ const m=p.items[id]; if(m&&m.s&&m.s!=='none') return m; } } return null; }
+function markOf(name,id){ for(const p of allPeople()){ if(p.name===name){ const m=p.items[id]; if(m&&((m.s&&m.s!=='none')||(m.n&&String(m.n).trim())||(m.q&&m.q>1))) return m; } } return null; }
 function statusOfName(name,id){ const m=markOf(name,id); return m?m.s:'none'; }
 function marksFor(id){ const out=[]; namesList().forEach(name=>{ const m=markOf(name,id); if(m) out.push({name,status:m.s,note:m.n||'',qty:m.q||1,mine:me&&name===me.name}); }); return out; }
 function renderPeople(){
   els.forEach((c,id)=>{const box=c.querySelector('.people'); if(!box)return; const ms=marksFor(id);
     box.innerHTML=ms.map(m=>{
-      const showExt=!m.mine && ((m.qty&&m.qty>1)||(m.note&&m.note.trim()));
-      const ext=showExt?`<span class="ext">${m.qty>1?'×'+m.qty:''}${m.note&&m.note.trim()?(m.qty>1?' · ':'')+m.note.trim():''}</span>`:'';
-      return `<div class="pmark"><span class="pchip s-${m.status}${m.mine?' me':''}"><span class="g">${GL[m.status]}</span>${m.name}</span>${ext}</div>`;
+      const qty=(m.qty&&m.qty>1)?` <b>×${m.qty}</b>`:'';
+      const note=(!m.mine&&m.note&&m.note.trim())?`<span class="pnote">${m.note.trim().replace(/</g,'&lt;')}</span>`:'';
+      return `<div class="pmark"><span class="pchip s-${m.status||'none'}${m.mine?' me':''}"><span class="g">${GL[m.status]||'💬'}</span>${m.name}${qty}</span>${note}</div>`;
     }).join('');
     box.style.display=ms.length?'':'none'; });
   const names=namesList();
