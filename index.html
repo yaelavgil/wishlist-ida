@@ -63,6 +63,15 @@ h1{font-weight:700;font-size:clamp(21px,4vw,31px);letter-spacing:-.02em;margin:0
 .tbtn.on{background:var(--brass-soft);border-color:var(--brass);color:var(--brass-d)}
 .filters[hidden]{display:none}
 .filters{padding-top:7px;border-top:1px solid var(--line);margin-top:7px}
+.views{display:inline-flex;gap:4px;background:var(--paper);border:1.5px solid var(--line-2);border-radius:999px;padding:4px;margin:2px 2px 0;max-width:100%}
+.vbtn{border:0;background:transparent;border-radius:999px;padding:8px 16px;font:inherit;font-weight:600;font-size:14px;color:var(--ink-soft);cursor:pointer;white-space:nowrap;transition:.15s}
+.vbtn:hover{color:var(--brass-d)}
+.vbtn.on{background:linear-gradient(180deg,#bf9760,var(--brass-d));color:#fff;box-shadow:0 6px 14px -8px rgba(148,111,60,.8)}
+.tbtn.fbtn{display:inline-flex;align-items:center;gap:6px}
+.fbadge{background:var(--brass-d);color:#fff;border-radius:999px;font-size:10px;font-weight:800;min-width:16px;height:16px;display:none;align-items:center;justify-content:center;padding:0 4px;margin-inline-start:2px}
+.editb{position:absolute;top:9px;inset-inline-end:9px;z-index:4;width:28px;height:28px;border-radius:50%;border:1.5px solid var(--line);background:rgba(255,255,255,.9);backdrop-filter:blur(4px);color:var(--ink-soft);font-size:13px;cursor:pointer;line-height:1;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(60,40,15,.12);opacity:.55;transition:.15s}
+.card:hover .editb{opacity:1}
+.editb:hover{color:var(--brass-d);transform:scale(1.08)}
 .search{flex:1;min-width:180px;position:relative}
 .search input{width:100%;border:1.5px solid var(--line-2);border-radius:var(--r-sm);padding:10px 38px 10px 14px;font:inherit;font-size:14px;background:var(--paper);transition:.18s}
 .search input:focus{outline:none;border-color:var(--brass);box-shadow:0 0 0 4px var(--brass-soft)}
@@ -197,6 +206,8 @@ dialog::backdrop{background:rgba(50,38,24,.42);backdrop-filter:blur(3px)}
   .body{padding:10px 10px 12px;gap:7px}.name{font-size:13px}.price{font-size:15.5px}
   .seg button{padding:7px 0}.tab{padding:8px 13px}
   .search{order:-1;flex:1 1 100%}
+  .views{width:100%;display:flex}.vbtn{flex:1;padding:9px 4px;font-size:12.5px}
+  .editb{opacity:.8}
 }
 @media(max-width:400px){ .tbtn.ic .t{display:none} .tbtn.ic{padding:9px 12px} .tools{gap:6px} }
 </style>
@@ -212,6 +223,11 @@ dialog::backdrop{background:rgba(50,38,24,.42);backdrop-filter:blur(3px)}
 
 <div class="deck">
   <div class="tabs" id="tabs"></div>
+  <div class="views" id="views">
+    <button class="vbtn on" data-v="all" onclick="setView('all')">הכל</button>
+    <button class="vbtn" data-v="left" onclick="setView('left')">✅ מה שנשאר</button>
+    <button class="vbtn" data-v="order" onclick="setView('order')">🛒 להזמנה</button>
+  </div>
   <div class="tools">
     <div class="search"><span class="i">🔍</span><input id="q" placeholder="חיפוש…" oninput="RE()"></div>
     <select id="sort" onchange="RE()" title="מיון">
@@ -221,9 +237,10 @@ dialog::backdrop{background:rgba(50,38,24,.42);backdrop-filter:blur(3px)}
       <option value="name">א׳→ת׳</option>
       <option value="status">נבחרו קודם</option>
     </select>
-    <button class="tbtn ic" id="filterBtn" onclick="toggleFilters()" title="סינון">⚙︎<span class="t"> סינון</span></button>
+    <button class="tbtn fbtn" id="filterBtn" onclick="toggleFilters()" title="סינון מתקדם">
+      <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M3 5h18l-7 8.2V19l-4 2v-7.8z"/></svg>סינון<span class="fbadge" id="fbadge"></span></button>
     <button class="tbtn ic" onclick="openAdd()" title="הוסף פריט">➕<span class="t"> הוסף</span></button>
-    <button class="tbtn primary ic" onclick="openSummary()" title="סיכום לשליחה">📋<span class="t"> סיכום</span></button>
+    <button class="tbtn primary ic" onclick="openSummary()" title="רשימת הזמנה">📋<span class="t"> הזמנה</span></button>
     <button class="tbtn ic ghost" onclick="resetAll()" title="איפוס">↺</button>
   </div>
   <div class="filters" id="filters" hidden>
@@ -302,13 +319,17 @@ let st=JSON.parse(localStorage.getItem(KEY)||"{}"); st.s=st.s||{}; st.custom=st.
 let me=JSON.parse(localStorage.getItem('ida-me')||'null'); // {pk,name}
 let remote={}; // {pk:{name,items:{id:{s,n,q}}}}
 let _psig="";
-let cat="all", stf=new Set(), tagf=new Set(), personf="all";
+let cat="all", stf=new Set(), tagf=new Set(), personf="all", viewMode="all";
 let ITEMS=[],CATS=[],byId={};
 let shared={items:{},cats:{}}; // shared catalog from Firebase (/picks/_catalog)
 function rebuild(){
-  const im={}; st.custom.items.forEach(i=>im[i.id]=i); Object.values(shared.items||{}).forEach(i=>{if(i&&i.id)im[i.id]=i;});
-  const cm={}; st.custom.cats.forEach(c=>cm[c.key]=c); Object.values(shared.cats||{}).forEach(c=>{if(c&&c.key)cm[c.key]=c;});
-  ITEMS=BITEMS.concat(Object.values(im)); CATS=BCATS.concat(Object.values(cm));
+  const im={}; BITEMS.forEach(i=>im[i.id]={...i});
+  st.custom.items.forEach(i=>{if(i&&i.id)im[i.id]={...(im[i.id]||{}),...i};});
+  Object.values(shared.items||{}).forEach(i=>{if(i&&i.id)im[i.id]={...(im[i.id]||{}),...i};});
+  const cm={}; BCATS.forEach(c=>cm[c.key]={...c});
+  st.custom.cats.forEach(c=>{if(c&&c.key)cm[c.key]={...(cm[c.key]||{}),...c};});
+  Object.values(shared.cats||{}).forEach(c=>{if(c&&c.key)cm[c.key]={...(cm[c.key]||{}),...c};});
+  ITEMS=Object.values(im); CATS=Object.values(cm);
   byId=Object.fromEntries(ITEMS.map(x=>[x.id,x]));
 }
 const els=new Map();
@@ -346,7 +367,17 @@ function buildChips(){
   const tc=document.getElementById('tagchips'); tc.innerHTML="";
   uniq.forEach(tg=>{const c=document.createElement('button'); c.className="chip"+(tagf.has(tg)?" on":""); c.textContent=tg;
     c.onclick=()=>{tagf.has(tg)?tagf.delete(tg):tagf.add(tg);buildChips();RE();}; tc.appendChild(c);});
+  updateFilterBadge();
 }
+function passView(i){
+  if(viewMode==='all') return true;
+  const ms=marksFor(i.id);
+  if(viewMode==='left') return !ms.some(m=>m.status==='no');
+  if(viewMode==='order') return personf!=='all' ? statusOfName(personf,i.id)==='yes' : ms.some(m=>m.status==='yes');
+  return true;
+}
+function setView(v){ viewMode=v; document.querySelectorAll('.vbtn').forEach(b=>b.classList.toggle('on',b.dataset.v===v)); RE(); }
+function updateFilterBadge(){ const n=(personf!=='all'?1:0)+stf.size+tagf.size; const b=document.getElementById('fbadge'); if(b){b.textContent=n||'';b.style.display=n?'inline-flex':'none';} const fb=document.getElementById('filterBtn'); if(fb)fb.classList.toggle('on',n>0); }
 function passPerson(i){
   if(personf==='all'){
     if(stf.size===0) return true;
@@ -363,7 +394,7 @@ function visible(){
   let a=ITEMS.filter(i=>(cat==='all'||i.cat===cat)
     &&(!q||i.name.includes(q))
     &&(tagf.size===0||(i.tags||[]).some(t=>tagf.has(t)))
-    &&passPerson(i));
+    &&passView(i)&&passPerson(i));
   const s=document.getElementById('sort').value, rank={yes:0,maybe:1,none:2,no:3};
   const who=personf==='all'?(me&&me.name):personf;
   const so=id=>who?statusOfName(who,id):'none';
@@ -387,7 +418,7 @@ function cardEl(it){
     :(it.price!=null?`<div class="price">${nis(it.price)}</div>`:`<div class="price muted">המחיר בחשבון שלך בחנות</div>`);
   const qty=it.type==='product'
     ?`<div class="qty"><span class="ql">כמות</span><span class="stp"><button title="הפחת" onclick="setQ('${it.id}',-1)">−</button><span class="qv">1</span><button title="הוסף" onclick="setQ('${it.id}',1)">+</button></span></div>`:'';
-  c.innerHTML=`${media}
+  c.innerHTML=`<button class="editb" title="ערוך פריט" onclick="event.stopPropagation();editItem('${it.id}')">✎</button>${media}
     <div class="body">
       ${nameEl}
       ${sub}
@@ -493,16 +524,29 @@ function addToggle(){
   document.getElementById('a_colorFields').style.display=t==='color'?'':'none';
 }
 function openAdd(){
+  window._editId=null;
+  const dh=document.querySelector('#addDlg .dh'); if(dh)dh.textContent='➕ הוספת פריט מכל חנות';
   const sel=document.getElementById('a_sec'); sel.innerHTML="";
   CATS.filter(c=>c.key!=='all').forEach(c=>{const o=document.createElement('option');o.value=c.key;o.textContent=c.icon+' '+c.label;sel.appendChild(o);});
   const o=document.createElement('option');o.value='__new__';o.textContent='➕ קטגוריה חדשה…';sel.appendChild(o);
   if(cat!=='all')sel.value=cat;
   ['a_name','a_price','a_img','a_url','a_tag','a_code','a_secNew'].forEach(id=>document.getElementById(id).value='');
+  document.getElementById('a_type').value='product'; document.getElementById('a_hex').value='#c8bdae';
   document.getElementById('a_secIcon').value='📌'; setFetchStatus('');
   addToggle(); document.getElementById('addDlg').showModal();
 }
+function editItem(id){ const it=byId[id]; if(!it)return; openAdd();
+  window._editId=id; const dh=document.querySelector('#addDlg .dh'); if(dh)dh.textContent='✎ עריכת פריט';
+  document.getElementById('a_type').value=it.type||'product';
+  const sec=document.getElementById('a_sec'); if([...sec.options].some(o=>o.value===it.cat)) sec.value=it.cat;
+  document.getElementById('a_name').value=it.name||'';
+  if(it.type==='color'){ if(it.hex)document.getElementById('a_hex').value=it.hex; document.getElementById('a_code').value=it.code||''; }
+  else{ document.getElementById('a_price').value=(it.price!=null?it.price:''); document.getElementById('a_img').value=it.img||''; document.getElementById('a_tag').value=(it.tags&&it.tags[0])||''; document.getElementById('a_url').value=it.link||''; }
+  addToggle();
+}
 function submitAdd(){
   const gv=id=>document.getElementById(id).value.trim();
+  const editId=window._editId; window._editId=null;
   const name=gv('a_name'); if(!name){alert('צריך שם לפריט');return;}
   let secKey=document.getElementById('a_sec').value, newCat=null;
   if(secKey==='__new__'){
@@ -511,13 +555,15 @@ function submitAdd(){
     newCat={key:secKey,label:lab,icon:gv('a_secIcon')||'📌'}; st.custom.cats.push(newCat);
   }
   const type=document.getElementById('a_type').value;
-  const it={id:'ui'+Date.now().toString(36)+Math.random().toString(16).slice(2,5),cat:secKey,type:type,name:name,custom:true,link:type==='product'?gv('a_url'):''};
-  if(type==='color'){it.hex=document.getElementById('a_hex').value;const cd=gv('a_code');if(cd)it.code=cd;it.price=null;it.tags=[];}
-  else{const p=gv('a_price');it.price=p?Number(p):null;const img=gv('a_img');if(img)it.img=img;const tg=gv('a_tag');it.tags=tg?[tg]:[];}
-  st.custom.items.push(it); save();
-  if(newCat) fbPushCatalogCat(newCat);
-  fbPushCatalogItem(it);
+  const base=editId?{...(byId[editId]||{}),id:editId}:{id:'ui'+Date.now().toString(36)+Math.random().toString(16).slice(2,5),custom:true};
+  const it={...base,cat:secKey,type:type,name:name,link:type==='product'?gv('a_url'):(base.link||'')};
+  if(type==='color'){it.hex=document.getElementById('a_hex').value;const cd=gv('a_code');it.code=cd||undefined;it.price=null;if(!it.tags)it.tags=[];}
+  else{const p=gv('a_price');it.price=p?Number(p):null;it.img=gv('a_img')||'';const tg=gv('a_tag');it.tags=tg?[tg]:[];}
+  const idx=st.custom.items.findIndex(x=>x.id===it.id);
+  if(idx>=0) st.custom.items[idx]=it; else st.custom.items.push(it);
+  save(); if(newCat) fbPushCatalogCat(newCat); fbPushCatalogItem(it);
   rebuild(); cat=secKey; stf.clear(); tagf.clear();
+  const el=els.get(it.id); if(el){el.remove();els.delete(it.id);}
   document.getElementById('addDlg').close(); buildChips(); tabsHTML(); RE(true);
 }
 function removeCustom(id){
@@ -527,7 +573,7 @@ function removeCustom(id){
   const el=els.get(id); if(el){el.remove();els.delete(id);} rebuild(); buildChips(); tabsHTML(); RE();
 }
 /* ---------- shared backend (Firebase RTDB via REST) ---------- */
-function uid(){try{return crypto.randomUUID();}catch(e){return 'p'+Date.now().toString(36)+Math.random().toString(16).slice(2);}}
+function pkFromName(n){ let s='p_'; for(const ch of (n||'').trim()) s+=ch.codePointAt(0).toString(16)+'-'; return s; }
 function meaningful(s){return s&&((s.status&&s.status!=='none')||(s.note&&s.note.trim())||(s.qty&&s.qty>1));}
 function fbPushMark(id){ if(!me)return; const s=st.s[id]||{};
   const u=`${DB}/picks/${me.pk}/items/${encodeURIComponent(id)}.json`;
@@ -537,6 +583,7 @@ function fbPushAll(){ if(!me)return; const items={};
   Object.keys(st.s).forEach(id=>{const s=st.s[id]; if(meaningful(s)) items[id]={s:s.status,n:s.note||'',q:s.qty||1};});
   fetch(`${DB}/picks/${me.pk}.json`,{method:'PATCH',body:JSON.stringify({name:me.name})}).catch(()=>{});
   fetch(`${DB}/picks/${me.pk}/items.json`,{method:'PATCH',body:JSON.stringify(items)}).catch(()=>{}); }
+function fbPushName(){ if(!me)return; fetch(`${DB}/picks/${me.pk}/name.json`,{method:'PUT',body:JSON.stringify(me.name)}).catch(()=>{}); }
 function fbPushCatalogItem(it){ fetch(`${DB}/picks/_catalog/items/${encodeURIComponent(it.id)}.json`,{method:'PUT',body:JSON.stringify(it)}).catch(()=>{}); }
 function fbPushCatalogCat(c){ fetch(`${DB}/picks/_catalog/cats/${encodeURIComponent(c.key)}.json`,{method:'PUT',body:JSON.stringify(c)}).catch(()=>{}); }
 function fbDelCatalogItem(id){ fetch(`${DB}/picks/_catalog/items/${encodeURIComponent(id)}.json`,{method:'DELETE'}).catch(()=>{}); }
@@ -574,9 +621,17 @@ function renderPeople(){
 function toggleFilters(){ const f=document.getElementById('filters'); f.hidden=!f.hidden; document.getElementById('filterBtn').classList.toggle('on',!f.hidden); }
 function openMe(){ document.getElementById('meOther').value=(me&&!['יעל','רועי','נופר'].includes(me.name))?me.name:''; document.getElementById('meDlg').showModal(); }
 function setMe(name){ name=(name||'').trim(); if(!name){alert('צריך שם');return;}
-  const pk=(me&&me.pk)||uid(); me={pk,name}; localStorage.setItem('ida-me',JSON.stringify(me));
-  document.getElementById('meDlg').close(); fbPushAll(); startSync(); renderPeople(); }
-function startSync(){ fbPoll(); if(!window._pollI) window._pollI=setInterval(fbPoll,5000); }
+  me={pk:pkFromName(name),name}; localStorage.setItem('ida-me',JSON.stringify(me));
+  document.getElementById('meDlg').close(); fbPushName(); startSync(); renderPeople(); }
+function loadMyMarks(){
+  if(!me)return;
+  fetch(`${DB}/picks/${me.pk}.json`).then(r=>r.json()).then(node=>{
+    if(node&&node.items){ let ch=false;
+      Object.entries(node.items).forEach(([id,m])=>{ if(m&&m.s&&m.s!=='none'){ const cur=st.s[id]; if(!cur||!cur.status||cur.status==='none'){ st.s[id]={status:m.s,note:m.n||'',qty:m.q||1}; ch=true; } } });
+      if(ch){ save(); els.forEach((c,id)=>paint(id)); updateSumm(visible()); renderPeople(); } }
+  }).catch(()=>{});
+}
+function startSync(){ fbPoll(); loadMyMarks(); if(!window._pollI) window._pollI=setInterval(fbPoll,5000); }
 /* ---------- smart add: auto-fetch product from any store URL ---------- */
 let fetching=false;
 function setFetchStatus(cls,html){ const s=document.getElementById('a_fstatus'); if(!s)return; if(!cls){s.className='fstatus';s.innerHTML='';return;} s.className='fstatus show '+cls; s.innerHTML=html; }
@@ -622,7 +677,7 @@ document.getElementById('a_url').addEventListener('paste',()=>{ setTimeout(()=>{
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)fbPoll();});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeLB();}});
 rebuild(); tabsHTML(); buildChips(); RE(true);
-if(me) startSync(); else openMe();
+if(me){ me.pk=pkFromName(me.name); localStorage.setItem('ida-me',JSON.stringify(me)); fbPushName(); startSync(); } else openMe();
 checkIncomingAdd();
 </script>
 </body>
