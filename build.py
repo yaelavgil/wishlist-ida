@@ -257,6 +257,24 @@ dialog::backdrop{background:rgba(50,38,24,.42);backdrop-filter:blur(3px)}
 .dh{padding:17px 20px 14px;border-bottom:1px solid var(--line);font-weight:700;font-size:17px}
 .db{padding:16px 20px}.db textarea{width:100%;border:1.5px solid var(--line-2);border-radius:14px;padding:13px;font:inherit;font-size:13px;min-height:260px;background:var(--paper);line-height:1.6}
 .df{padding:13px 20px 17px;display:flex;gap:10px}
+.cartbody{max-height:min(62vh,540px);overflow:auto}
+.csub{font-weight:700;font-size:15px;color:var(--ink);margin:4px 0 4px}
+.ccount{background:var(--brass-soft);color:var(--brass-d);border-radius:999px;font-size:12px;padding:1px 9px;font-weight:800}
+.csec{font-size:12px;font-weight:700;color:var(--brass-d);margin:11px 0 2px}
+.cartrow{display:flex;gap:11px;align-items:center;padding:9px 0;border-bottom:1px solid var(--line)}
+.cartrow img,.cartrow .cthumb{width:48px;height:48px;border-radius:10px;flex-shrink:0;border:1px solid var(--line);object-fit:contain}
+.cartrow img{mix-blend-mode:multiply;background:transparent;padding:2px}
+.cartrow .ci{flex:1;min-width:0}
+.cartrow .cn{font-weight:600;font-size:14px;line-height:1.25;text-decoration:none;color:var(--ink)}
+.cartrow a.cn:hover{color:var(--brass-d);text-decoration:underline}
+.cartrow .cnote{font-size:11.5px;color:var(--muted);margin-top:3px;white-space:pre-wrap}
+.cartrow .cp{font-weight:700;color:var(--brass-d);white-space:nowrap;font-size:14px}
+.cartrow .cp small{color:var(--muted);font-weight:600}
+.addcart{border:1.5px solid var(--yes)!important;color:var(--yes)!important;background:var(--yes-bg)!important;font-weight:700;white-space:nowrap;padding:8px 12px;font-size:13px}
+.addcart:hover{background:var(--yes)!important;color:#fff!important}
+.ctotal{text-align:end;font-size:15px;padding:11px 2px 2px;border-top:2px solid var(--line-2);margin-top:6px;font-weight:600}
+.ctotal b{color:var(--brass-d);font-size:20px;margin-inline-start:4px}
+.cempty{color:var(--muted);font-size:13.5px;padding:10px 0}
 .toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(16px);opacity:0;background:var(--ink);color:#fff;padding:12px 22px;border-radius:999px;font-weight:600;font-size:14px;transition:.28s;z-index:90;pointer-events:none}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 @media(max-width:560px){
@@ -309,7 +327,7 @@ dialog::backdrop{background:rgba(50,38,24,.42);backdrop-filter:blur(3px)}
     <button class="tbtn fbtn" id="filterBtn" onclick="toggleFilters()" title="סינון מתקדם">
       <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor" aria-hidden="true"><path d="M3 5h18l-7 8.2V19l-4 2v-7.8z"/></svg>סינון<span class="fbadge" id="fbadge"></span></button>
     <button class="tbtn ic" onclick="openAdd()" title="הוסף פריט">➕<span class="t"> הוסף</span></button>
-    <button class="tbtn primary ic" onclick="openSummary()" title="רשימת הזמנה">📋<span class="t"> הזמנה</span></button>
+    <button class="tbtn primary ic" onclick="openCart()" title="עגלה / הזמנה">🛒<span class="t"> עגלה</span></button>
     <button class="tbtn ic ghost" onclick="resetAll()" title="איפוס">↺</button>
   </div>
   <div class="filters" id="filters" hidden>
@@ -328,6 +346,10 @@ dialog::backdrop{background:rgba(50,38,24,.42);backdrop-filter:blur(3px)}
   <div class="info"><h3 id="lbname"></h3><div class="p" id="lbprice"></div><a class="store" id="lbstore" target="_blank" rel="noopener">לצפייה בחנות ↗</a></div></div>
 </div>
 
+<dialog id="cartDlg"><div class="dh" id="cartTitle">🛒 עגלה</div>
+  <div class="db cartbody" id="cartBody"></div>
+  <div class="df"><button class="tbtn primary" onclick="document.getElementById('cartDlg').close();openSummary()">📋 העתק הזמנה</button><button class="tbtn" onclick="document.getElementById('cartDlg').close()">סגור</button></div>
+</dialog>
 <dialog id="dlg"><div class="dh">🛒 רשימת הזמנה</div>
   <div class="db"><textarea id="out"></textarea></div>
   <div class="df"><button class="tbtn primary" onclick="copyOut()">העתק ללוח</button><button class="tbtn" onclick="dlg.close()">סגור</button></div>
@@ -584,6 +606,37 @@ function openSummary(){
 function copyOut(){const o=document.getElementById('out');o.select();
   const d=()=>{const t=document.getElementById('toast');t.classList.add('show');setTimeout(()=>t.classList.remove('show'),1500);};
   navigator.clipboard?navigator.clipboard.writeText(o.value).then(d,()=>{document.execCommand('copy');d();}):(document.execCommand('copy'),d());}
+function cartRow(i,q,note,isMaybe,editable){
+  const media=i.type==='color'?`<span class="cthumb" style="background:${i.hex}"></span>`:(i.img?`<img loading="lazy" src="${i.img}" alt="">`:`<span class="cthumb"></span>`);
+  const nameEl=i.link?`<a class="cn" href="${i.link}" target="_blank" rel="noopener">${i.name}</a>`:`<span class="cn">${i.name}</span>`;
+  const noteHtml=note&&note.trim()?`<div class="cnote">↳ ${note.trim().replace(/</g,'&lt;')}</div>`:'';
+  const right=isMaybe
+    ? (editable?`<button class="tbtn addcart" onclick="promoteToCart('${i.id}')">➕ לעגלה</button>`:`<span class="cp">${i.price!=null?nis(i.price):''}</span>`)
+    : `<span class="cp">${i.price!=null?nis((i.price||0)*q):''}${q>1?` <small>×${q}</small>`:''}</span>`;
+  return `<div class="cartrow">${media}<div class="ci">${nameEl}${noteHtml}</div>${right}</div>`;
+}
+function openCart(){
+  const who=personf==='all'?(me&&me.name):personf;
+  const body=document.getElementById('cartBody'); const title=document.getElementById('cartTitle');
+  if(!who){ body.innerHTML='<div class="cempty">בחרו שם קודם.</div>'; title.textContent='🛒 עגלה'; document.getElementById('cartDlg').showModal(); return; }
+  const editable = !!(me && who===me.name);
+  const cats=CATS.filter(c=>c.key!=='all'); const inView=i=>(cat==='all'||i.cat===cat);
+  let chosenHtml='', total=0, anyChosen=false, cnt=0;
+  cats.forEach(c=>{ const chosen=ITEMS.filter(i=>i.cat===c.key&&inView(i)&&statusOfName(who,i.id)==='yes');
+    if(!chosen.length)return; anyChosen=true; chosenHtml+=`<div class="csec">${c.icon} ${c.label}</div>`;
+    chosen.forEach(i=>{const mk=markOf(who,i.id)||{};const q=mk.q||1;total+=(i.price||0)*q;cnt++;chosenHtml+=cartRow(i,q,mk.n,false,editable);}); });
+  let maybeHtml='', anyMaybe=false;
+  cats.forEach(c=>{ const mb=ITEMS.filter(i=>i.cat===c.key&&inView(i)&&statusOfName(who,i.id)==='maybe');
+    if(!mb.length)return; anyMaybe=true; maybeHtml+=`<div class="csec">${c.icon} ${c.label}</div>`;
+    mb.forEach(i=>{const mk=markOf(who,i.id)||{};maybeHtml+=cartRow(i,mk.q||1,mk.n,true,editable);}); });
+  let html=`<div class="csub">🛒 נבחרו לקנייה${cnt?` <span class="ccount">${cnt}</span>`:''}</div>`;
+  html+= anyChosen?chosenHtml:'<div class="cempty">עדיין אין פריטים נבחרים (✓).</div>';
+  html+=`<div class="ctotal">סה״כ נבחרים: <b>${nis(total)}</b></div>`;
+  if(anyMaybe) html+=`<div class="csub" style="margin-top:18px">🤔 לשקול — אולי</div>`+maybeHtml;
+  title.textContent='🛒 עגלה — '+(who===(me&&me.name)?'שלי':who);
+  body.innerHTML=html; document.getElementById('cartDlg').showModal();
+}
+function promoteToCart(id){ setS(id,'yes'); openCart(); }
 function addToggle(){
   const sec=document.getElementById('a_sec').value;
   document.getElementById('a_newFields').style.display=sec==='__new__'?'flex':'none';
