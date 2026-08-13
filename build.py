@@ -12,7 +12,7 @@ def tags(n):
     if not t: t.append("גוף תאורה")
     return t
 
-items=json.load(open("/private/tmp/claude-501/-Users-home----------/4126668b-e0e5-4b5e-9e7f-2f21afab79a0/scratchpad/wishlist.json"))
+items=json.load(open(os.path.join(REPO,"lighting.json"),encoding="utf-8"))
 DATA=[]
 for k,it in enumerate(items):
     DATA.append({"id":"l"+str(k+1),"cat":"תאורה","type":"product","name":it["name"],"price":it["price"],
@@ -71,23 +71,15 @@ COFFEE=[
   "https://www.citydeal.co.il/product/מכונת-אספרסו-breville-barista-express™-bes876-יבואן-רשמי",
   "https://www.citydeal.co.il/images/itempics/19328-2_23092024104925.jpg",
   ["טמפינג נעזר","גובה 41 ס״מ"]),
- ("K3","Breville Barista Touch Impress · BES881",6399,
-  "https://www.hameir.co.il/product/מכונת-אספרסו-breville-בריוויל-barista-touch-impress-דגם-bes881-גימור-נירוסטה",
-  "https://www.hameir.co.il/images/itempics/BES881BSS_29052024173526.jpg",
-  ["מסך מגע + אוטומטית","גובה 41.5 ס״מ"]),
- ("K4","Breville Barista Touch · BES880 (לא נמכרת חדשה בישראל)",None,
-  "https://www.hamoncafe.co.il/coffee-makers/barista-touch-bes880",
-  "https://hamoncafe.co.il/wp-content/uploads/2024/04/Barista-Touch-BES880.png",
-  ["יבוא/יד שנייה בלבד","גובה 40.6 ס״מ"]),
 ]
 for k in COFFEE:
     DATA.append({"id":k[0],"cat":"מכונות קפה","type":"product","name":k[1],
                  "price":k[2],"link":k[3],"img":k[4],"tags":k[5]})
-CATS=[{"key":"all","label":"הכול","icon":"✦"},
-      {"key":"תאורה","label":"תאורה","icon":"💡"},
-      {"key":"צבעים","label":"צבעים","icon":"🎨"},
-      {"key":"ידיות","label":"ידיות","icon":"🔩"},
-      {"key":"מכונות קפה","label":"מכונות קפה","icon":"☕"}]
+CATS=[{"key":"all","label":"הכול","icon":"✦","slug":"all"},
+      {"key":"תאורה","label":"תאורה","icon":"💡","slug":"lighting"},
+      {"key":"צבעים","label":"צבעים","icon":"🎨","slug":"colors"},
+      {"key":"ידיות","label":"ידיות","icon":"🔩","slug":"handles"},
+      {"key":"מכונות קפה","label":"מכונות קפה","icon":"☕","slug":"coffee"}]
 
 tpl=r'''<!doctype html>
 <html lang="he" dir="rtl">
@@ -453,13 +445,28 @@ const S=id=>st.s[id]||(st.s[id]={status:'none',note:'',qty:1});
 const save=()=>localStorage.setItem(KEY,JSON.stringify(st));
 const STL={yes:'נבחר',maybe:'אולי',no:'לא',none:''};
 
+/* deep-linkable tabs: each category has a slug, reflected in the URL hash (#coffee) */
+const slugOf=c=>c.slug||c.key;
+function syncHash(){
+  const c=CATS.find(x=>x.key===cat);
+  if(!c||c.key==='all') history.replaceState(null,'',location.pathname+location.search);
+  else history.replaceState(null,'','#'+encodeURIComponent(slugOf(c)));
+}
+function applyHash(){
+  const raw=location.hash.slice(1); if(!raw) return;
+  let h; try{h=decodeURIComponent(raw);}catch(e){h=raw;}
+  const c=CATS.find(x=>slugOf(x)===h||x.key===h);
+  if(c){cat=c.key;tagf.clear();}
+}
+function setCat(k){cat=k;tagf.clear();syncHash();buildChips();tabsHTML();RE(true);}
+window.addEventListener('hashchange',()=>{applyHash();buildChips();tabsHTML();RE(true);});
 function tabsHTML(){
   const t=document.getElementById('tabs'); t.innerHTML="";
   CATS.forEach(c=>{
     const n=c.key==='all'?ITEMS.length:ITEMS.filter(i=>i.cat===c.key).length;
     const b=document.createElement('button'); b.className="tab"+(cat===c.key?" on":"");
     b.innerHTML=`<span>${c.icon}</span>${c.label}<span class="c">${n}</span>`;
-    b.onclick=()=>{cat=c.key;tagf.clear();buildChips();tabsHTML();RE(true);};
+    b.onclick=()=>setCat(c.key);
     t.appendChild(b);
   });
 }
@@ -707,7 +714,7 @@ function submitAdd(){
   const idx=st.custom.items.findIndex(x=>x.id===it.id);
   if(idx>=0) st.custom.items[idx]=it; else st.custom.items.push(it);
   save(); if(newCat) fbPushCatalogCat(newCat); fbPushCatalogItem(it);
-  rebuild(); cat=secKey; stf.clear(); tagf.clear();
+  rebuild(); cat=secKey; stf.clear(); tagf.clear(); syncHash();
   const el=els.get(it.id); if(el){el.remove();els.delete(it.id);}
   document.getElementById('addDlg').close(); buildChips(); tabsHTML(); RE(true);
 }
@@ -821,7 +828,7 @@ function checkIncomingAdd(){
 document.getElementById('a_url').addEventListener('paste',()=>{ setTimeout(()=>{ if(!document.getElementById('a_name').value.trim()) fetchMeta(); },150); });
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)fbPoll();});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeLB();}});
-rebuild(); tabsHTML(); buildChips(); RE(true);
+rebuild(); applyHash(); tabsHTML(); buildChips(); RE(true);
 if(me){ me.pk=pkFromName(me.name); localStorage.setItem('ida-me',JSON.stringify(me)); fbPushName(); startSync(); } else openMe();
 checkIncomingAdd();
 </script>
