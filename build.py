@@ -61,10 +61,33 @@ for c in COLORS:
     fan="https://nirlat.com/fan/#/category/wall/family//color-fan//hue/"+c[2].replace(" ","_")
     DATA.append({"id":c[0],"cat":"צבעים","type":"color","name":c[1],"code":c[2],
                  "hex":"#"+c[3],"price":None,"link":fan,"img":"","tags":[c[4]]})
+# --- Coffee makers (Breville) — specs/prices/links verified 13.8.2026 ---
+COFFEE=[
+ ("K1","Breville Barista Pro · BES878",3478,
+  "https://www.citydeal.co.il/product/מכונת-קפה-אספרסו-משולבת-מטחנה-breville-bes878-barista-pro-נירוסטה---יבואן-רשמי",
+  "https://www.citydeal.co.il/images/itempics/19331_23092024112145.jpg",
+  ["המשתלמת ביותר","גובה 40.6 ס״מ"]),
+ ("K2","Breville Barista Express Impress · BES876",3448,
+  "https://www.citydeal.co.il/product/מכונת-אספרסו-breville-barista-express™-bes876-יבואן-רשמי",
+  "https://www.citydeal.co.il/images/itempics/19328-2_23092024104925.jpg",
+  ["טמפינג נעזר","גובה 41 ס״מ"]),
+ ("K3","Breville Barista Touch Impress · BES881",6399,
+  "https://www.hameir.co.il/product/מכונת-אספרסו-breville-בריוויל-barista-touch-impress-דגם-bes881-גימור-נירוסטה",
+  "https://www.hameir.co.il/images/itempics/BES881BSS_29052024173526.jpg",
+  ["מסך מגע + אוטומטית","גובה 41.5 ס״מ"]),
+ ("K4","Breville Barista Touch · BES880 (לא נמכרת חדשה בישראל)",None,
+  "https://www.hamoncafe.co.il/coffee-makers/barista-touch-bes880",
+  "https://hamoncafe.co.il/wp-content/uploads/2024/04/Barista-Touch-BES880.png",
+  ["יבוא/יד שנייה בלבד","גובה 40.6 ס״מ"]),
+]
+for k in COFFEE:
+    DATA.append({"id":k[0],"cat":"מכונות קפה","type":"product","name":k[1],
+                 "price":k[2],"link":k[3],"img":k[4],"tags":k[5]})
 CATS=[{"key":"all","label":"הכול","icon":"✦"},
       {"key":"תאורה","label":"תאורה","icon":"💡"},
       {"key":"צבעים","label":"צבעים","icon":"🎨"},
-      {"key":"ידיות","label":"ידיות","icon":"🔩"}]
+      {"key":"ידיות","label":"ידיות","icon":"🔩"},
+      {"key":"מכונות קפה","label":"מכונות קפה","icon":"☕"}]
 
 tpl=r'''<!doctype html>
 <html lang="he" dir="rtl">
