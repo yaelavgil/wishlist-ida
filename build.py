@@ -61,20 +61,27 @@ for c in COLORS:
     fan="https://nirlat.com/fan/#/category/wall/family//color-fan//hue/"+c[2].replace(" ","_")
     DATA.append({"id":c[0],"cat":"צבעים","type":"color","name":c[1],"code":c[2],
                  "hex":"#"+c[3],"price":None,"link":fan,"img":"","tags":[c[4]]})
-# --- Coffee makers (Breville) — specs/prices/links verified 13.8.2026 ---
+# --- Coffee makers — specs/prices/links verified 13-14.8.2026 ---
 COFFEE=[
  ("K1","Breville Barista Pro · BES878",3478,
   "https://www.citydeal.co.il/product/מכונת-קפה-אספרסו-משולבת-מטחנה-breville-bes878-barista-pro-נירוסטה---יבואן-רשמי",
   "https://www.citydeal.co.il/images/itempics/19331_23092024112145.jpg",
-  ["המשתלמת ביותר","גובה 40.6 ס״מ"]),
+  ["המשתלמת ביותר","גובה 40.6 ס״מ"],
+  "✔ יש: חימום תוך 3 שניות (ThermoJet), מטחנה 30 דרגות, מקציף ידני חזק ומהיר\n✘ אין: עזרה בטמפינג (ידני לגמרי), מסך מגע, קפה קר\n📐 ‎35.4×41×40.6 ס״מ (רוחב×עומק×גובה) · 9.1 ק״ג · העמוקה מכולן"),
  ("K2","Breville Barista Express Impress · BES876",3448,
   "https://www.citydeal.co.il/product/מכונת-אספרסו-breville-barista-express™-bes876-יבואן-רשמי",
   "https://www.citydeal.co.il/images/itempics/19328-2_23092024104925.jpg",
-  ["טמפינג נעזר","גובה 41 ס״מ"]),
+  ["טמפינג מונחה","גובה 41 ס״מ"],
+  "✔ יש: טמפינג מונחה (Impress) + תיקון מינון אוטומטי — קפה עקבי לכל אחד, מטחנה 25 דרגות\n✘ אין: קפה קר, מסך מגע · חימום איטי (~60 שנ׳)\n📐 ‎33×38×41 ס״מ (רוחב×עומק×גובה) · ~11 ק״ג"),
+ ("K3","DeLonghi La Specialista Maestro · EC9865",4390,
+  "https://www.coffee4u.co.il/product/מכונת-אספרסו-la-specialista-maestro-cold-brew-metal-ec-9865m-delonghi",
+  "https://www.coffee4u.co.il/images/itempics/1355_07072024000601.jpg",
+  ["טמפינג מונחה + קפה קר","גובה ~46 ס״מ"],
+  "✔ יש: גם טמפינג מונחה וגם cold brew אמיתי, שני גופי חימום (חליטה+הקצפה ברצף), מיכל 2.5 ל׳\n✘ אין: דיוק טחינה (8 דרגות בלבד מול 25–30 בברוויל)\n📐 ‎42×37×45.5–46.5 ס״מ (רוחב×עומק×גובה) · 16 ק״ג · הגבוהה והכבדה מכולן — לתכנן מדף גבוה יותר"),
 ]
 for k in COFFEE:
     DATA.append({"id":k[0],"cat":"מכונות קפה","type":"product","name":k[1],
-                 "price":k[2],"link":k[3],"img":k[4],"tags":k[5]})
+                 "price":k[2],"link":k[3],"img":k[4],"tags":k[5],"desc":k[6]})
 CATS=[{"key":"all","label":"הכול","icon":"✦","slug":"all"},
       {"key":"תאורה","label":"תאורה","icon":"💡","slug":"lighting"},
       {"key":"צבעים","label":"צבעים","icon":"🎨","slug":"colors"},
@@ -210,6 +217,7 @@ select:hover,.tbtn:hover{border-color:var(--faint)}
 .name{font-size:15.5px;font-weight:600;text-decoration:none;line-height:1.28;color:var(--ink)}
 .name:hover{color:var(--brass-d)}
 .price{font-weight:700;font-size:18px;color:var(--brass-d)}
+.desc{font-size:12.5px;line-height:1.45;color:var(--ink-soft);background:var(--brass-soft);border-radius:9px;padding:7px 9px;white-space:pre-line}
 .price.muted{color:var(--muted);font-weight:500;font-size:13px}
 .thumb.swatch{cursor:zoom-in;box-shadow:inset 0 0 0 1px rgba(0,0,0,.06)}
 .thumb.swatch img{display:none}
@@ -543,6 +551,7 @@ function cardEl(it){
     <div class="body">
       ${nameEl}
       ${sub}
+      ${it.desc?`<div class="desc">${it.desc}</div>`:''}
       <div class="people" style="display:none"></div>
       ${qty}
       <div class="seg">
