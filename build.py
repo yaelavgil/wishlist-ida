@@ -82,11 +82,40 @@ COFFEE=[
 for k in COFFEE:
     DATA.append({"id":k[0],"cat":"מכונות קפה","type":"product","name":k[1],
                  "price":k[2],"link":k[3],"img":k[4],"tags":k[5],"desc":k[6]})
+
+# --- Built-in microwaves — specs/prices/links verified 14.8.2026 ---
+# All Bosch models: 38cm-class facade 59.4x38.2, niche 56.0-56.8 W x 36.2-36.5 H
+MICRO=[
+ ("M1","Bosch BEL523MS0 · Serie 4 · נירוסטה + גריל",1589,
+  "https://www.bettershop.co.il/product/bosch_bel523ms0/",
+  "https://ecdn.speedsize.com/566103a2-53f1-4a19-905b-45d84f5c6ca2/www.bettershop.co.il/wp-content/uploads/2019/07/BEL523MS01.jpg",
+  ["ההמלצה","עם גריל"],
+  "✔ יש: גריל 1000W + מצבי שילוב, 8 תוכניות, פתיחה אלקטרונית, אחריות יבואן רשמי BSH\n✘ אין: גימור שחור (זה דגם הנירוסטה) · נפח 20 ל׳ בלבד\n📐 חזית ‎59.4×38.2 ס״מ · נישה: רוחב ‎56–56.8, גובה ‎36.2–36.5, עומק ‎30+ ס״מ"),
+ ("M2","Bosch BFL554MB0 · Serie 6 · זכוכית שחורה · 25 ל׳",1790,
+  "https://www.zap.co.il/model.aspx?modelid=1252542",
+  "https://img.zap.co.il/pics/3/9/4/4/95094493c.gif",
+  ["הכי מרווח ב-38 ס״מ","שחור"],
+  "✔ יש: 25 ל׳ (הגדול במחלקת ה-38 ס״מ), 900W, זכוכית שחורה תואמת תנורי Serie 6, פתיחת מגע\n✘ אין: גריל\n📐 חזית ‎59.4×38.2 ס״מ · נישה: רוחב ‎56–56.8, גובה ‎36.2–36.5, עומק ‎34+ ס״מ (גוף עמוק יותר!)"),
+ ("M3","Bosch BFL520MB0 · Serie 2 · שחור",1513,
+  "https://www.zap.co.il/model.aspx?modelid=1242484",
+  "https://img.zap.co.il/pics/8/0/6/5/93205608c.gif",
+  ["הבוש הזול","שחור"],
+  "✔ יש: חזית שחורה תואמת תנור שחור, 7 תוכניות, אחריות BSH — הדרך הזולה לבוש\n✘ אין: גריל · ממשק בסיסי (Serie 2) · נפח 20 ל׳\n📐 חזית ‎59.4×38.2 ס״מ · נישה: רוחב ‎56–56.8, גובה ‎36.2–36.5, עומק ‎30+ ס״מ"),
+ ("M4","Sauter MW6623B · 25 ל׳ + גריל (תקציבי)",1085,
+  "https://www.zap.co.il/model.aspx?modelid=1185804",
+  "https://img.zap.co.il/pics/1/4/8/2/76282841c.gif",
+  ["הכי זול","עם גריל"],
+  "✔ יש: 25 ל׳ + גריל 1000W בשני-שליש מחיר מבוש, יבואן רשמי (אלקטרה)\n✘ אין: התאמה עיצובית לתנור בוש · שירות ברמת BSH\n📐 גבוה יותר: חזית ‎59.5×38.8, דורש נישה בגובה ‎~40 ס״מ — לוודא התאמה לפני קנייה!"),
+]
+for m in MICRO:
+    DATA.append({"id":m[0],"cat":"מיקרוגל","type":"product","name":m[1],
+                 "price":m[2],"link":m[3],"img":m[4],"tags":m[5],"desc":m[6]})
 CATS=[{"key":"all","label":"הכול","icon":"✦","slug":"all"},
       {"key":"תאורה","label":"תאורה","icon":"💡","slug":"lighting"},
       {"key":"צבעים","label":"צבעים","icon":"🎨","slug":"colors"},
       {"key":"ידיות","label":"ידיות","icon":"🔩","slug":"handles"},
-      {"key":"מכונות קפה","label":"מכונות קפה","icon":"☕","slug":"coffee"}]
+      {"key":"מכונות קפה","label":"מכונות קפה","icon":"☕","slug":"coffee"},
+      {"key":"מיקרוגל","label":"מיקרוגל","icon":"♨️","slug":"microwave"}]
 
 tpl=r'''<!doctype html>
 <html lang="he" dir="rtl">
