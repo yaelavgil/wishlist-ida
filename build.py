@@ -150,6 +150,11 @@ COOKTOPS=[
   "https://www.mispar1.co.il/images/itempics/17035_260120231315531_large.jpg",
   ["🥉 מקום 3","מלך שביעות הרצון"],
   "🥉 מקום 3 — הנמכר והמדורג ביותר בישראל: 4.68/5 מ-592 ביקורות (והדגם הקודם: 4.51 מ-3,006!)\n⭐ פיצ'ר מיוחד: עובד על חשמל רגיל חד-פאזי 16A — בלי שדרוג לוח חשמל, ולכן שולט במטבחים בארץ\n😊 שבחים נפוצים: חימום מהיר, בוסט חזק, ניקוי קל · תלונות: רעש מאוורר קל בבוסט, טביעות אצבע\n💡 ממשק TouchSelect‏, טיימר כפול (התראה + כיבוי אזור) · זיהוי סיר אוטומטי"),
+ ("P4","Bosch PXV831HC1E · Serie 6 · אינדוקציה 80 ס״מ",4788,
+  "https://www.citydeal.co.il/product/כיריים-אינדוקציה-80-סמ-5-אזורי-בישול-bosch-serie-6-pxv831hc1e-זכוכית-שחורה---יבואן-רשמי",
+  "https://www.soferavi.co.il/wp-content/uploads/PXV831HC1E.jpg",
+  ["🏆 שדרוג אפשרי למקום 1","80 ס״מ · תלת-פאזי!"],
+  "🏆 המועמדת להחלפת מקום 1 (ההוספה של יעל) — הדור החדש: ממשק DirectSelect שאין ל-Serie 8\n⭐ פיצ'ר מיוחד: חיישן PerfectFry Plus ששומר שהשמן לא יישרף + Home Connect — היחידה בלוח עם שניהם\n✔ 5 אזורי בישול כולל FlexInduction · 17 עוצמות · תוצרת ספרד · אחריות יבואן BSH\n⚠️ ‏7,400W — דורש חיבור תלת-פאזי, לוודא עם חשמלאי! · 📐 משטח ‎80.2×52 ס״מ\n💰 ‏₪4,788 בסיטי דיל דרך זאפ · יחידת תצוגה ₪4,059 באינסייל"),
 ]
 for p in COOKTOPS:
     DATA.append({"id":p[0],"cat":"כיריים","type":"product","name":p[1],
@@ -177,8 +182,40 @@ for d in DISH:
     DATA.append({"id":d[0],"cat":"מדיח","type":"product","name":d[1],
                  "price":d[2],"link":d[3],"img":d[4],"tags":d[5],"desc":d[6]})
 
+# --- LG 3-door fridges with ice maker — top 3 + Samsung contrast, verified 19.8.2026 ---
+FRIDGE=[
+ ("R1","LG GMZ765 · 750 ל׳ · 3 דלתות · בר מים חיצוני + מכין קרח",10690,
+  "https://www.electricland.co.il/product/מקרר-3-דלתות-lg-דגם-gmz765-נירוסטה-כהה",
+  "https://www.electricland.co.il/images/itempics/GMZ765_280520251555060_large.jpg",
+  ["🥇 מקום 1","קרח + בר מים בדלת"],
+  "🥇 מקום 1 בין ה-LG — הכי קרוב לחוויית קיוסק ב-3 דלתות: בר מים מסונן חיצוני בדלת (בלי לפתוח!) + מכין קרח אוטומטי בחיבור לקו המים שלכם\n⭐ פיצ'ר מיוחד: Knock-Knock (דפיקה מאירה את הפנים) · UVnano לחיטוי פיית המים · מדחס ליניארי עם 10 שנות אחריות\n😊 דגם חדש — עדיין מעט ביקורות · הקרח נאסף ממגירה במקפיא (אין מתקן קרח בדלת — ראו הסמסונג למטה)\n📐 רוחב 90.8 ס״מ · 750 ל׳ (504/246) · נירוסטה מושחרת · 💰 ₪10,690 באלקטריק לנד (בזאפ מ-₪8,395)"),
+ ("R2","LG R-3D288BINS · 750 ל׳ · InstaView · מכין קרח",10500,
+  "https://www.mahsanyvoan.co.il",
+  "https://www.mahsanyvoan.co.il/images/itempics/R-3D288BINS_2703202615232514061_large.jpg",
+  ["🥈 מקום 2","InstaView"],
+  "🥈 מקום 2 — החדש ביותר (בשוק מפברואר 2026): חלון InstaView — שתי דפיקות על הזכוכית ורואים פנימה בלי לפתוח\n⭐ פיצ'ר מיוחד: InstaView + ThinQ Wi-Fi · מכין קרח אוטומטי בחיבור לקו מים + בר מים פנימי\n😊 עדיין אין ביקורות בזאפ (חדש מדי) · אותה חומרת קרח כמו מקום 1, בלי הבר החיצוני\n📐 ‏90.8×178.5×80.2 ס״מ · 750 ל׳ · 💰 ₪10,500 במחסני היבואן (בזאפ מ-₪10,497)"),
+ ("R3","LG GR-B278SE · 750 ל׳ · 3 דלתות · מכין קרח",8649,
+  "https://www.bettershop.co.il/product/lg_gr-b278se/",
+  "https://ecdn.speedsize.com/566103a2-53f1-4a19-905b-45d84f5c6ca2/www.bettershop.co.il/wp-content/uploads/2024/01/מקרר-3-דלתות-LG-דגם-GR-B278SE-בנפח-של-750-ליטר-מקפיא-תחתון-עם-מייצר-קוביות-קרח-גימור-נירוסטה-מושחרת.jpg",
+  ["🥉 מקום 3","בחירת הערך"],
+  "🥉 מקום 3 — בחירת הערך: אותו מכין קרח אוטומטי (חיבור לקו מים) ואותם 750 ל׳, ב-₪2,000 פחות\n⭐ פיצ'ר מיוחד: מדחס Smart Inverter עם 10 שנות אחריות במחיר של ~₪8K · בר מים פנימי\n😊 ‏3.7/5 (3 ביקורות): שקט, שומר טריות · מדגם קטן\n📐 ‏90.8×178×80.2 ס״מ · נירוסטה מושחרת · 💰 ₪8,649 ב-BetterShop (בזאפ מ-₪7,988)"),
+ ("R4","Samsung RF29T5221SG · 790 ל׳ · קיוסק קרח+מים בדלת",9270,
+  "https://www.zap.co.il/model.aspx?modelid=1130847",
+  "",
+  ["מחוץ לדירוג — אלוף הקרח","לא LG"],
+  "האמת המלאה לצרכני קרח כבדים: זה ה-3 דלתות היחיד בישראל עם קיוסק קרח אמיתי בדלת — קוביות וגם קרח כתוש, בלי לפתוח כלום\n⭐ בדיוק הפיצ'ר שב-LG קיים רק בדגמי 4 דלתות (כמו GR930BDIS שבדקתם) — כאן בפורמט 3 הדלתות שרציתם\n✔ 790 ל׳ · מכין קרח אוטומטי בחיבור לקו מים · SpaceMax · אינוורטר 10 שנות אחריות · מצב שבת\n💰 מ-₪9,270 (שחור) עד ₪11,990 (פלטינה) · אם מוכנים לוותר על מותג LG — זו המכונה הנכונה לקרח"),
+]
+for r in FRIDGE:
+    DATA.append({"id":r[0],"cat":"מקרר","type":"product","name":r[1],
+                 "price":r[2],"link":r[3],"img":r[4],"tags":r[5],"desc":r[6]})
+
 # zap price-comparison link per appliance (link = recommended store, zap = comparison)
 ZAP={
+ "P4":"https://www.zap.co.il/model.aspx?modelid=1235119",
+ "R1":"https://www.zap.co.il/model.aspx?modelid=1243043",
+ "R2":"https://www.zap.co.il/model.aspx?modelid=1261226",
+ "R3":"https://www.zap.co.il/model.aspx?modelid=1224769",
+ "R4":"https://www.zap.co.il/model.aspx?modelid=1130847",
  "K1":"https://www.zap.co.il/model.aspx?modelid=1068710",
  "K2":"https://www.zap.co.il/model.aspx?modelid=1196729",
  "K3":"https://www.zap.co.il/model.aspx?modelid=1224102",
@@ -206,7 +243,8 @@ CATS=[{"key":"all","label":"הכול","icon":"✦","slug":"all"},
       {"key":"מיקרוגל","label":"מיקרוגל","icon":"♨️","slug":"microwave"},
       {"key":"תנור","label":"תנור","icon":"🔥","slug":"oven"},
       {"key":"כיריים","label":"כיריים","icon":"🍳","slug":"cooktop"},
-      {"key":"מדיח","label":"מדיח","icon":"🫧","slug":"dishwasher"}]
+      {"key":"מדיח","label":"מדיח","icon":"🫧","slug":"dishwasher"},
+      {"key":"מקרר","label":"מקרר","icon":"🧊","slug":"fridge"}]
 
 tpl=r'''<!doctype html>
 <html lang="he" dir="rtl">
