@@ -92,17 +92,17 @@ MICRO=[
   ["🥇 מקום 1","עם גריל"],
   "🥇 מקום 1 — השילוב הטוב ביותר של ממשק, איכות ומחיר; ההמלצה הקבועה בפורומי המטבחים למטבח עם תנור בוש\n⭐ פיצ'ר מיוחד: גריל קוורץ 1000W + מצבי שילוב מיקרו+גריל — משחים ומפצפץ, לא רק מחמם\n✔ ממשק: 8 תוכניות אוטו', פתיחה אלקטרונית · עיצוב Serie 4 נירוסטה תואם תנור\n📐 חזית ‎59.4×38.2 ס״מ · נישה: רוחב ‎56–56.8, גובה ‎36.2–36.5, עומק ‎30+ ס״מ"),
  ("M2","Bosch BFL554MB0 · Serie 6 · זכוכית שחורה · 25 ל׳",1790,
-  "https://www.zap.co.il/model.aspx?modelid=1252542",
+  "https://www.bettershop.co.il/product/bosch-bfl554mb0/",
   "https://img.zap.co.il/pics/3/9/4/4/95094493c.gif",
   ["🥈 מקום 2","שחור · 25 ל׳"],
   "🥈 מקום 2 — העיצוב היוקרתי ביותר (זכוכית שחורה Serie 6) והנפח הגדול ביותר שאפשר בנישה קומפקטית\n⭐ פיצ'ר מיוחד: 25 ליטר בתוך מחלקת ה-38 ס״מ — נכנסת תבנית מלאה, בלי להגדיל את הנישה\n✔ ממשק: AutoPilot 7 תוכניות, פתיחת מגע · 900W · ✘ אין גריל\n📐 חזית ‎59.4×38.2 ס״מ · נישה: רוחב ‎56–56.8, גובה ‎36.2–36.5, עומק ‎34+ ס״מ (גוף עמוק יותר!)"),
- ("M3","Bosch BFL520MB0 · Serie 2 · שחור",1513,
-  "https://www.zap.co.il/model.aspx?modelid=1242484",
+ ("M3","Bosch BFL520MB0 · Serie 2 · שחור",1627,
+  "https://www.bettershop.co.il/product/bosch-bfl520mb0/",
   "https://img.zap.co.il/pics/8/0/6/5/93205608c.gif",
   ["🥉 מקום 3","שחור"],
   "🥉 מקום 3 — אותה איכות BSH בממשק פשוט יותר; הדרך הזולה ביותר לחזית בוש שחורה\n⭐ פיצ'ר מיוחד: היחס מחיר/מותג — בוש אמיתי עם אחריות יבואן בפחות מ-₪1,550\n✔ ממשק: 7 תוכניות, בסיסי ונוח (Serie 2) · ✘ אין: גריל · נפח 20 ל׳\n📐 חזית ‎59.4×38.2 ס״מ · נישה: רוחב ‎56–56.8, גובה ‎36.2–36.5, עומק ‎30+ ס״מ"),
- ("M4","Sauter MW6623B · 25 ל׳ + גריל (תקציבי)",1085,
-  "https://www.zap.co.il/model.aspx?modelid=1185804",
+ ("M4","Sauter MW6623B · 25 ל׳ + גריל (תקציבי)",1090,
+  "https://www.netoneto.co.il/product/מיקרוגל-בנוי-דיגיטלי-משולב-גריל-25-ליטר-מבית-sauter-סאוטר-דגם-mw6623",
   "https://img.zap.co.il/pics/1/4/8/2/76282841c.gif",
   ["מחוץ לדירוג — תקציבי","עם גריל"],
   "להשוואה בלבד (לא בוש): 25 ל׳ + גריל 1000W בשני-שליש מחיר, יבואן רשמי (אלקטרה)\n✘ אין: התאמה עיצובית לתנור בוש · שירות ברמת BSH\n📐 גבוה יותר: חזית ‎59.5×38.8, דורש נישה בגובה ‎~40 ס״מ — לוודא התאמה לפני קנייה!"),
@@ -113,13 +113,13 @@ for m in MICRO:
 
 # --- Bosch built-in ovens (60cm) — top 3, verified 17.8.2026 ---
 OVENS=[
- ("O1","Bosch HBG7741B1 · Serie 8 · זכוכית שחורה · פירוליטי",4116,
-  "https://www.zap.co.il/model.aspx?modelid=1227208",
+ ("O1","Bosch HBG7741B1 · Serie 8 · זכוכית שחורה · פירוליטי",5389,
+  "https://www.netoneto.co.il/product/תנור-בנוי-פירוליטי-60-סמ-bosch-בוש-דגם-hbg7741b1",
   "https://www.mispar1.co.il/images/itempics/18780_111120241143161_large.jpg",
   ["🥇 מקום 1","Serie 8"],
-  "🥇 מקום 1 — הממשק והעיצוב הטובים ביותר שבוש מוכרת בארץ: מסך מגע TFT צבעוני + טבעת שליטה דיגיטלית, בלי כפתורים פיזיים\n⭐ פיצ'ר מיוחד: החבילה המלאה בתנור אחד — ניקוי פירוליטי 480°, ‏4D HotAir‏, Air Fry ושליטה מהאפליקציה (Home Connect)\n😊 שביעות רצון: 4.4/5 (דגם חדש, מדגם קטן); טכנאים מדרגים את BSH ראשונה באמינות תנורים בנויים\n💡 71 ל׳ · דלת שקטה soft-close · מתאים לטור שחור עם המיקרוגל השחור"),
- ("O2","Bosch HBG578EB3 · Serie 6 · זכוכית שחורה · פירוליטי",2629,
-  "https://www.zap.co.il/model.aspx?modelid=1242052",
+  "🥇 מקום 1 — הממשק והעיצוב הטובים ביותר שבוש מוכרת בארץ: מסך מגע TFT צבעוני + טבעת שליטה דיגיטלית, בלי כפתורים פיזיים\n⭐ פיצ'ר מיוחד: החבילה המלאה בתנור אחד — ניקוי פירוליטי 480°, ‏4D HotAir‏, Air Fry ושליטה מהאפליקציה (Home Connect)\n😊 שביעות רצון: 4.4/5 (דגם חדש, מדגם קטן); טכנאים מדרגים את BSH ראשונה באמינות תנורים בנויים\n💡 71 ל׳ · דלת soft-close · טור שחור עם מיקרוגל BFL554MB0\n💰 ₪5,389 בחשמל נטו = יבוא רשמי BSH (9 סניפים, 4.5/5). זהירות: המחירים של ~₪4,100–4,700 בזאפ הם יבוא מקביל עם אחריות מעבדה פרטית בלבד"),
+ ("O2","Bosch HBG578EB3 · Serie 6 · זכוכית שחורה · פירוליטי",3190,
+  "https://www.bettershop.co.il/product/bosch-hbg578eb3/",
   "https://www.mispar1.co.il/images/itempics/19761_090220251255581_large.jpg",
   ["🥈 מקום 2","הכי נמכר"],
   "🥈 מקום 2 — היחס הטוב ביותר של איכות/מחיר, עם בסיס המשתמשים המאומת הגדול בישראל\n⭐ פיצ'ר מיוחד: Air Fry + ניקוי פירוליטי יחד במחיר ביניים — שילוב שכמעט לא קיים אצל מתחרים\n😊 שביעות רצון: 4.4/5 מ-615~ ביקורות בזאפ — שיא בקטגוריה. שבחים: דיוק אפייה, שקט, פאנל בעברית\n💡 ממשק: תצוגת LCD + כפתורים נשלפים — מודרני אבל מוכר · 71 ל׳ · 30 תוכניות AutoPilot"),
@@ -140,13 +140,13 @@ COOKTOPS=[
   "https://storage.googleapis.com/hashmal-price-bucket/2025/07/PXE875BB1E.jpg",
   ["🥇 מקום 1","80 ס״מ · תלת-פאזי!"],
   "🥇 מקום 1 — ספינת הדגל: הרחבות, הבנויות והמפוארות ביותר (זכוכית HighSpeed עם מסגרת נירוסטה)\n⭐ פיצ'ר מיוחד: FlexInduction — כל החצי השמאלי מתאחד לאזור בישול רציף אחד 40×24 ס״מ (3,700W בבוסט) לפלנצ'ה/מחבת דגים\n😊 שביעות רצון: דגם פרימיום בנפח קטן בארץ (אין עדיין ביקורות בזאפ); הקו ותיק ומוערך באירופה\n⚠️ דורש חיבור תלת-פאזי — לוודא לפני קנייה! · ממשק TouchSelect‏, 17 עוצמות"),
- ("P2","Bosch PVS631HC1E · Serie 6 · אינדוקציה 60 ס״מ",2099,
-  "https://www.zap.co.il/model.aspx?modelid=1229103",
+ ("P2","Bosch PVS631HC1E · Serie 6 · אינדוקציה 60 ס״מ",2377,
+  "https://www.electroclick.co.il/product/‏כיריים-אינדוקציה-bosch-pvs631hc1e-בוש",
   "https://www.electroclick.co.il/images/itempics/7727_101020241505111_large.jpg",
   ["🥈 מקום 2","הממשק הטוב ביותר"],
   "🥈 מקום 2 — הממשק הכי טוב ליום-יום: DirectSelect — פס ספרות לכל להבה, נוגעים ישר בעוצמה הרצויה (1–9) במקום ללחוץ +/- \n⭐ פיצ'ר מיוחד: חיישן טיגון PerfectFry Plus — שומר על טמפרטורת המחבת ב-5 רמות כך שהשמן לא נשרף · וגם Home Connect\n😊 שביעות רצון: דגם חדש (הקודם בסדרה מעל 90% שביעות רצון במדרג) · 23 חנויות, יבואן רשמי\n💡 CombiZone לאיחוד שני אזורים · לוודא גרסת חיבור (חד/תלת-פאזי) בקנייה"),
- ("P3","Bosch PUE611BB5Y · Serie 4 · אינדוקציה 60 ס״מ · חד-פאזי",1574,
-  "https://www.zap.co.il/model.aspx?modelid=1225327",
+ ("P3","Bosch PUE611BB5Y · Serie 4 · אינדוקציה 60 ס״מ · חד-פאזי",1796,
+  "https://www.mispar1.co.il/product/כיריים-אינדוקציה-bosch-בוש-דגם--pue611bb5y-חד-פאזי",
   "https://www.mispar1.co.il/images/itempics/17035_260120231315531_large.jpg",
   ["🥉 מקום 3","מלך שביעות הרצון"],
   "🥉 מקום 3 — הנמכר והמדורג ביותר בישראל: 4.68/5 מ-592 ביקורות (והדגם הקודם: 4.51 מ-3,006!)\n⭐ פיצ'ר מיוחד: עובד על חשמל רגיל חד-פאזי 16A — בלי שדרוג לוח חשמל, ולכן שולט במטבחים בארץ\n😊 שבחים נפוצים: חימום מהיר, בוסט חזק, ניקוי קל · תלונות: רעש מאוורר קל בבוסט, טביעות אצבע\n💡 ממשק TouchSelect‏, טיימר כפול (התראה + כיבוי אזור) · זיהוי סיר אוטומטי"),
@@ -157,13 +157,13 @@ for p in COOKTOPS:
 
 # --- Bosch dishwashers (built-in) — top 3, verified 19.8.2026 ---
 DISH=[
- ("D1","Bosch SMV6ZCX00E · Serie 6 · אינטגרלי מלא · Zeolith",3243,
-  "https://www.zap.co.il/model.aspx?modelid=1103314",
+ ("D1","Bosch SMV6ZCX00E · Serie 6 · אינטגרלי מלא · Zeolith",4000,
+  "https://www.electroclick.co.il/product/מדיח-כלים-‏רחב-bosch-smv6zcx00e-בוש-1",
   "https://www.electroclick.co.il/images/itempics/5860_190520221331231.jpg",
   ["🥇 מקום 1","מייבש גם פלסטיק"],
   "🥇 מקום 1 — הפרימיום: תוצרת גרמניה, 44dB שקט (42 במצב Silence מהאפליקציה), 14 מערכות כלים\n⭐ פיצ'ר מיוחד: ייבוש Zeolith במינרלים — היחיד בארץ שמייבש באמת גם כלי פלסטיק, הסיבה לשלם יותר\n😊 שביעות רצון: 5/5 בקרב קונים מאומתים (מדגם קטן), 8/10 בסקירת מדרג; קונצנזוס בפורומים שה-Zeolith שווה את הפער\n💡 ממשק: פאנל נסתר + InfoLight (נקודת אור על הרצפה כשעובד) + שליטה מלאה מאפליקציית Home Connect"),
- ("D2","Bosch SMV4HCX19E · Serie 4 · אינטגרלי מלא",2690,
-  "https://www.zap.co.il/model.aspx?modelid=1242403",
+ ("D2","Bosch SMV4HCX19E · Serie 4 · אינטגרלי מלא",2990,
+  "https://www.pisga-shop.co.il/product/מדיח-כלים-רחב-אינטגרלי-מלא-bosch-בוש-דגם-smv4hcx19e",
   "https://www.pisga-shop.co.il/images/itempics/6210_140420252331301.jpg",
   ["🥈 מקום 2","אלוף שביעות הרצון"],
   "🥈 מקום 2 — בחירת העם: בסיס הביקורות הגדול בישראל למדיח בוש — 4.5/5 מ-488 ביקורות בזאפ\n⭐ פיצ'ר מיוחד: Home Connect + מגירת סכו״ם שלישית (VarioDrawer) במחיר של ~₪3,000 — פינוקי Serie 6 בלי ה-Zeolith\n😊 שבחים: שקט מאוד (42dB), ניקוי מצוין, אמינות · תלונה נפוצה: פלסטיק יוצא לח (פותרים עם ExtraDry)\n💡 ממשק: פאנל נסתר + InfoLight + אפליקציה · 13 מערכות · סל עליון מתכוונן 3 גבהים"),
@@ -176,6 +176,28 @@ DISH=[
 for d in DISH:
     DATA.append({"id":d[0],"cat":"מדיח","type":"product","name":d[1],
                  "price":d[2],"link":d[3],"img":d[4],"tags":d[5],"desc":d[6]})
+
+# zap price-comparison link per appliance (link = recommended store, zap = comparison)
+ZAP={
+ "K1":"https://www.zap.co.il/model.aspx?modelid=1068710",
+ "K2":"https://www.zap.co.il/model.aspx?modelid=1196729",
+ "K3":"https://www.zap.co.il/model.aspx?modelid=1224102",
+ "M1":"https://www.zap.co.il/model.aspx?modelid=1000658",
+ "M2":"https://www.zap.co.il/model.aspx?modelid=1252542",
+ "M3":"https://www.zap.co.il/model.aspx?modelid=1242484",
+ "M4":"https://www.zap.co.il/model.aspx?modelid=1185804",
+ "O1":"https://www.zap.co.il/model.aspx?modelid=1227208",
+ "O2":"https://www.zap.co.il/model.aspx?modelid=1242052",
+ "O3":"https://www.zap.co.il/search.aspx?keyword=HQA574BB3",
+ "P1":"https://www.zap.co.il/model.aspx?modelid=978731",
+ "P2":"https://www.zap.co.il/model.aspx?modelid=1229103",
+ "P3":"https://www.zap.co.il/model.aspx?modelid=1225327",
+ "D1":"https://www.zap.co.il/model.aspx?modelid=1103314",
+ "D2":"https://www.zap.co.il/model.aspx?modelid=1242403",
+ "D3":"https://www.zap.co.il/model.aspx?modelid=1218166",
+}
+for it in DATA:
+    if it["id"] in ZAP: it["zap"]=ZAP[it["id"]]
 CATS=[{"key":"all","label":"הכול","icon":"✦","slug":"all"},
       {"key":"תאורה","label":"תאורה","icon":"💡","slug":"lighting"},
       {"key":"צבעים","label":"צבעים","icon":"🎨","slug":"colors"},
@@ -316,6 +338,9 @@ select:hover,.tbtn:hover{border-color:var(--faint)}
 .name:hover{color:var(--brass-d)}
 .price{font-weight:700;font-size:18px;color:var(--brass-d)}
 .desc{font-size:12.5px;line-height:1.45;color:var(--ink-soft);background:var(--brass-soft);border-radius:9px;padding:7px 9px;white-space:pre-line}
+.shoprow{display:flex;gap:6px;flex-wrap:wrap}
+.shopbtn{font-size:12px;padding:5px 10px;border:1.5px solid var(--line-2);border-radius:9px;text-decoration:none;color:var(--ink-soft);font-weight:650;background:var(--paper)}
+.shopbtn:hover{border-color:var(--brass);color:var(--brass-d)}
 .price.muted{color:var(--muted);font-weight:500;font-size:13px}
 .thumb.swatch{cursor:zoom-in;box-shadow:inset 0 0 0 1px rgba(0,0,0,.06)}
 .thumb.swatch img{display:none}
@@ -510,6 +535,7 @@ dialog::backdrop{background:rgba(50,38,24,.42);backdrop-filter:blur(3px)}
         <label>תגית לסינון (לא חובה)<input id="a_tag" placeholder="למשל: תלוי"></label>
       </div>
       <label>קישור לתמונה (לא חובה)<input id="a_img" placeholder="https://…/image.jpg" dir="ltr"></label>
+      <label>קישור להשוואת מחירים בזאפ (לא חובה)<input id="a_zap" type="url" placeholder="https://www.zap.co.il/model.aspx?…" dir="ltr"></label>
     </div>
     <div id="a_colorFields" style="display:none">
       <div class="row2">
@@ -650,6 +676,7 @@ function cardEl(it){
       ${nameEl}
       ${sub}
       ${it.desc?`<div class="desc">${it.desc}</div>`:''}
+      ${it.type==='product'&&(it.link||it.zap)?`<div class="shoprow">${it.link?`<a class="shopbtn" href="${it.link}" target="_blank" rel="noopener">🏪 לחנות המומלצת</a>`:''}${it.zap?`<a class="shopbtn" href="${it.zap}" target="_blank" rel="noopener">⇄ השוואה בזאפ</a>`:''}</div>`:''}
       <div class="people" style="display:none"></div>
       ${qty}
       <div class="seg">
@@ -789,7 +816,7 @@ function openAdd(){
   CATS.filter(c=>c.key!=='all').forEach(c=>{const o=document.createElement('option');o.value=c.key;o.textContent=c.icon+' '+c.label;sel.appendChild(o);});
   const o=document.createElement('option');o.value='__new__';o.textContent='➕ קטגוריה חדשה…';sel.appendChild(o);
   if(cat!=='all')sel.value=cat;
-  ['a_name','a_price','a_img','a_url','a_tag','a_code','a_secNew'].forEach(id=>document.getElementById(id).value='');
+  ['a_name','a_price','a_img','a_url','a_zap','a_tag','a_code','a_secNew'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('a_type').value='product'; document.getElementById('a_hex').value='#c8bdae';
   document.getElementById('a_secIcon').value='📌'; setFetchStatus('');
   addToggle(); document.getElementById('addDlg').showModal();
@@ -800,7 +827,7 @@ function editItem(id){ const it=byId[id]; if(!it)return; openAdd();
   const sec=document.getElementById('a_sec'); if([...sec.options].some(o=>o.value===it.cat)) sec.value=it.cat;
   document.getElementById('a_name').value=it.name||'';
   if(it.type==='color'){ if(it.hex)document.getElementById('a_hex').value=it.hex; document.getElementById('a_code').value=it.code||''; }
-  else{ document.getElementById('a_price').value=(it.price!=null?it.price:''); document.getElementById('a_img').value=it.img||''; document.getElementById('a_tag').value=(it.tags&&it.tags[0])||''; document.getElementById('a_url').value=it.link||''; }
+  else{ document.getElementById('a_price').value=(it.price!=null?it.price:''); document.getElementById('a_img').value=it.img||''; document.getElementById('a_tag').value=(it.tags&&it.tags[0])||''; document.getElementById('a_url').value=it.link||''; document.getElementById('a_zap').value=it.zap||''; }
   addToggle();
 }
 function submitAdd(){
@@ -817,7 +844,7 @@ function submitAdd(){
   const base=editId?{...(byId[editId]||{}),id:editId}:{id:'ui'+Date.now().toString(36)+Math.random().toString(16).slice(2,5),custom:true};
   const it={...base,cat:secKey,type:type,name:name,link:type==='product'?gv('a_url'):(base.link||'')};
   if(type==='color'){it.hex=document.getElementById('a_hex').value;const cd=gv('a_code');it.code=cd||undefined;it.price=null;if(!it.tags)it.tags=[];}
-  else{const p=gv('a_price');it.price=p?Number(p):null;it.img=gv('a_img')||'';const tg=gv('a_tag');it.tags=tg?[tg]:[];}
+  else{const p=gv('a_price');it.price=p?Number(p):null;it.img=gv('a_img')||'';const tg=gv('a_tag');it.tags=tg?[tg]:[];it.zap=gv('a_zap')||'';}
   const idx=st.custom.items.findIndex(x=>x.id===it.id);
   if(idx>=0) st.custom.items[idx]=it; else st.custom.items.push(it);
   save(); if(newCat) fbPushCatalogCat(newCat); fbPushCatalogItem(it);
