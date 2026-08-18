@@ -154,6 +154,28 @@ COOKTOPS=[
 for p in COOKTOPS:
     DATA.append({"id":p[0],"cat":"כיריים","type":"product","name":p[1],
                  "price":p[2],"link":p[3],"img":p[4],"tags":p[5],"desc":p[6]})
+
+# --- Bosch dishwashers (built-in) — top 3, verified 19.8.2026 ---
+DISH=[
+ ("D1","Bosch SMV6ZCX00E · Serie 6 · אינטגרלי מלא · Zeolith",3243,
+  "https://www.zap.co.il/model.aspx?modelid=1103314",
+  "https://www.electroclick.co.il/images/itempics/5860_190520221331231.jpg",
+  ["🥇 מקום 1","מייבש גם פלסטיק"],
+  "🥇 מקום 1 — הפרימיום: תוצרת גרמניה, 44dB שקט (42 במצב Silence מהאפליקציה), 14 מערכות כלים\n⭐ פיצ'ר מיוחד: ייבוש Zeolith במינרלים — היחיד בארץ שמייבש באמת גם כלי פלסטיק, הסיבה לשלם יותר\n😊 שביעות רצון: 5/5 בקרב קונים מאומתים (מדגם קטן), 8/10 בסקירת מדרג; קונצנזוס בפורומים שה-Zeolith שווה את הפער\n💡 ממשק: פאנל נסתר + InfoLight (נקודת אור על הרצפה כשעובד) + שליטה מלאה מאפליקציית Home Connect"),
+ ("D2","Bosch SMV4HCX19E · Serie 4 · אינטגרלי מלא",2690,
+  "https://www.zap.co.il/model.aspx?modelid=1242403",
+  "https://www.pisga-shop.co.il/images/itempics/6210_140420252331301.jpg",
+  ["🥈 מקום 2","אלוף שביעות הרצון"],
+  "🥈 מקום 2 — בחירת העם: בסיס הביקורות הגדול בישראל למדיח בוש — 4.5/5 מ-488 ביקורות בזאפ\n⭐ פיצ'ר מיוחד: Home Connect + מגירת סכו״ם שלישית (VarioDrawer) במחיר של ~₪3,000 — פינוקי Serie 6 בלי ה-Zeolith\n😊 שבחים: שקט מאוד (42dB), ניקוי מצוין, אמינות · תלונה נפוצה: פלסטיק יוצא לח (פותרים עם ExtraDry)\n💡 ממשק: פאנל נסתר + InfoLight + אפליקציה · 13 מערכות · סל עליון מתכוונן 3 גבהים"),
+ ("D3","Bosch SMI4HCS19E · Serie 4 · חצי אינטגרלי · נירוסטה",2849,
+  "https://www.zap.co.il/model.aspx?modelid=1218166",
+  "https://ecdn.speedsize.com/566103a2-53f1-4a19-905b-45d84f5c6ca2/www.bettershop.co.il/wp-content/uploads/2025/02/SMI4HCS19E.jpg",
+  ["🥉 מקום 3","תצוגה גלויה"],
+  "🥉 מקום 3 — לחצי-אינטגרלי: אותם קרביים של מקום 2, עם פס בקרה ותצוגה גלויים בנירוסטה\n⭐ פיצ'ר מיוחד: היחיד שרואים עליו זמן נותר ותוכנית מכל המטבח, בלי לפתוח דלת ובלי אור על הרצפה\n😊 שביעות רצון: רוכב על אותה פלטפורמת Serie 4 מוכחת (4.5/5) · תוצרת גרמניה, 42dB\n💡 ‏14 מערכות · ‏EcoSilence Drive · ‏Home Connect · 6 תוכניות"),
+]
+for d in DISH:
+    DATA.append({"id":d[0],"cat":"מדיח","type":"product","name":d[1],
+                 "price":d[2],"link":d[3],"img":d[4],"tags":d[5],"desc":d[6]})
 CATS=[{"key":"all","label":"הכול","icon":"✦","slug":"all"},
       {"key":"תאורה","label":"תאורה","icon":"💡","slug":"lighting"},
       {"key":"צבעים","label":"צבעים","icon":"🎨","slug":"colors"},
@@ -161,7 +183,8 @@ CATS=[{"key":"all","label":"הכול","icon":"✦","slug":"all"},
       {"key":"מכונות קפה","label":"מכונות קפה","icon":"☕","slug":"coffee"},
       {"key":"מיקרוגל","label":"מיקרוגל","icon":"♨️","slug":"microwave"},
       {"key":"תנור","label":"תנור","icon":"🔥","slug":"oven"},
-      {"key":"כיריים","label":"כיריים","icon":"🍳","slug":"cooktop"}]
+      {"key":"כיריים","label":"כיריים","icon":"🍳","slug":"cooktop"},
+      {"key":"מדיח","label":"מדיח","icon":"🫧","slug":"dishwasher"}]
 
 tpl=r'''<!doctype html>
 <html lang="he" dir="rtl">
