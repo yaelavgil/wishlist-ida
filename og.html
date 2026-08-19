@@ -10,26 +10,28 @@ body{font-family:"Heebo","Arial Hebrew","Arial",sans-serif;
 .kick::before{content:"";width:36px;height:3px;border-radius:3px;background:#b08a54}
 h1{font-size:64px;font-weight:800;color:#332c25;line-height:1.0;letter-spacing:-.02em;margin:20px 0 16px}
 .lead{font-size:21px;color:#645a4f;font-weight:500;line-height:1.35}
-.cats{flex:1;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);gap:16px;height:466px}
-.tile{background:#fff;border:1px solid #efe7d9;border-radius:20px;box-shadow:0 16px 36px -18px rgba(70,50,20,.4);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px}
-.tile .e{font-size:40px;line-height:1}
-.tile .l{font-size:19px;font-weight:700;color:#332c25}
+.cnt{margin-top:22px;font-size:17px;color:#946f3c;font-weight:700}
+.cats{flex:1;display:flex;flex-wrap:wrap;align-content:center;justify-content:center;gap:20px;height:466px}
+.chip{background:#fff;border:1px solid #efe7d9;border-radius:18px;box-shadow:0 12px 28px -16px rgba(70,50,20,.4);
+  padding:20px 28px;display:flex;align-items:center;gap:14px}
+.chip .e{font-size:34px;line-height:1}
+.chip .l{font-size:22px;font-weight:700;color:#332c25;white-space:nowrap}
 </style></head><body>
 <div class="txt">
   <div class="kick">הבית שלנו</div>
   <h1>לוח החלטות</h1>
-  <div class="lead">מה בוחרים לבית — תאורה, צבעים, מכשירי חשמל ועוד. הכול במקום אחד, נוח לבחירה ולשיתוף.</div>
+  <div class="lead">מה בוחרים לבית — הכול במקום אחד, נוח לבחירה ולשיתוף.</div>
+  <div class="cnt">9 קטגוריות בחירה</div>
 </div>
 <div class="cats">
-  <div class="tile"><span class="e">💡</span><span class="l">תאורה</span></div>
-  <div class="tile"><span class="e">🎨</span><span class="l">צבעים</span></div>
-  <div class="tile"><span class="e">🔩</span><span class="l">ידיות</span></div>
-  <div class="tile"><span class="e">☕</span><span class="l">מכונות קפה</span></div>
-  <div class="tile"><span class="e">♨️</span><span class="l">מיקרוגל</span></div>
-  <div class="tile"><span class="e">🔥</span><span class="l">תנור</span></div>
-  <div class="tile"><span class="e">🍳</span><span class="l">כיריים</span></div>
-  <div class="tile"><span class="e">🫧</span><span class="l">מדיח</span></div>
-  <div class="tile"><span class="e">🧊</span><span class="l">מקרר</span></div>
+  <div class="chip"><span class="e">💡</span><span class="l">תאורה</span></div>
+  <div class="chip"><span class="e">🎨</span><span class="l">צבעים</span></div>
+  <div class="chip"><span class="e">🔩</span><span class="l">ידיות</span></div>
+  <div class="chip"><span class="e">☕</span><span class="l">מכונות קפה</span></div>
+  <div class="chip"><span class="e">♨️</span><span class="l">מיקרוגל</span></div>
+  <div class="chip"><span class="e">🔥</span><span class="l">תנור</span></div>
+  <div class="chip"><span class="e">🍳</span><span class="l">כיריים</span></div>
+  <div class="chip"><span class="e">🫧</span><span class="l">מדיח</span></div>
+  <div class="chip"><span class="e">🧊</span><span class="l">מקרר</span></div>
 </div>
 </body></html>

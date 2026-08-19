@@ -1079,4 +1079,48 @@ picks=out.replace('<meta property="og:url" content="'+BASE+'">',
 picks=picks.replace('<head>\n','<head>\n<base href="'+BASE+'">\n',1)
 os.makedirs(os.path.join(REPO,"picks"),exist_ok=True)
 open(os.path.join(REPO,"picks","index.html"),"w",encoding="utf-8").write(picks)
-print("board built | items",len(DATA),"| bytes",len(out),"| + /picks/ fresh copy")
+
+# --- Social-preview card (og.html → screenshot to og.png/og.jpg) ---
+# Scalable by design: chips are generated FROM the live CATS list and wrap onto
+# as many rows as needed, so adding/removing a category never requires a manual
+# redesign. After editing CATS, just rerun this script, then regenerate the images:
+#   python3 build.py && "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" \
+#     --headless --disable-gpu --screenshot=og.png --window-size=1200,630 \
+#     --hide-scrollbars "file://$(pwd)/og.html" && \
+#   python3 -c "from PIL import Image; Image.open('og.png').convert('RGB').save('og.jpg', quality=88)"
+og_cats=[c for c in CATS if c["key"]!="all"]
+og_chips="\n  ".join(f'<div class="chip"><span class="e">{c["icon"]}</span><span class="l">{c["label"]}</span></div>' for c in og_cats)
+og_tpl=r'''<!doctype html><html lang="he" dir="rtl"><head><meta charset="utf-8">
+<style>
+*{margin:0;box-sizing:border-box}
+html,body{width:1200px;height:630px;overflow:hidden}
+body{font-family:"Heebo","Arial Hebrew","Arial",sans-serif;
+  background:radial-gradient(900px 500px at 88% -10%,#fbf5e9,rgba(0,0,0,0) 60%),linear-gradient(135deg,#f5f0e8,#ece2d2);
+  display:flex;align-items:center;gap:44px;padding:56px 70px}
+.txt{width:300px;flex-shrink:0}
+.kick{font-size:20px;font-weight:700;letter-spacing:.14em;color:#946f3c;text-transform:uppercase;display:flex;align-items:center;gap:12px}
+.kick::before{content:"";width:36px;height:3px;border-radius:3px;background:#b08a54}
+h1{font-size:64px;font-weight:800;color:#332c25;line-height:1.0;letter-spacing:-.02em;margin:20px 0 16px}
+.lead{font-size:21px;color:#645a4f;font-weight:500;line-height:1.35}
+.cnt{margin-top:22px;font-size:17px;color:#946f3c;font-weight:700}
+.cats{flex:1;display:flex;flex-wrap:wrap;align-content:center;justify-content:center;gap:20px;height:466px}
+.chip{background:#fff;border:1px solid #efe7d9;border-radius:18px;box-shadow:0 12px 28px -16px rgba(70,50,20,.4);
+  padding:20px 28px;display:flex;align-items:center;gap:14px}
+.chip .e{font-size:34px;line-height:1}
+.chip .l{font-size:22px;font-weight:700;color:#332c25;white-space:nowrap}
+</style></head><body>
+<div class="txt">
+  <div class="kick">הבית שלנו</div>
+  <h1>לוח החלטות</h1>
+  <div class="lead">מה בוחרים לבית — הכול במקום אחד, נוח לבחירה ולשיתוף.</div>
+  <div class="cnt">__COUNT__ קטגוריות בחירה</div>
+</div>
+<div class="cats">
+  __CHIPS__
+</div>
+</body></html>
+'''
+og_html=og_tpl.replace("__CHIPS__",og_chips).replace("__COUNT__",str(len(og_cats)))
+open(os.path.join(REPO,"og.html"),"w",encoding="utf-8").write(og_html)
+
+print("board built | items",len(DATA),"| bytes",len(out),"| + /picks/ fresh copy | og.html:",len(og_cats),"cats")
