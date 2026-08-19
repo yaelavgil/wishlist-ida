@@ -5,39 +5,31 @@ html,body{width:1200px;height:630px;overflow:hidden}
 body{font-family:"Heebo","Arial Hebrew","Arial",sans-serif;
   background:radial-gradient(900px 500px at 88% -10%,#fbf5e9,rgba(0,0,0,0) 60%),linear-gradient(135deg,#f5f0e8,#ece2d2);
   display:flex;align-items:center;gap:44px;padding:56px 70px}
-.txt{width:340px;flex-shrink:0}
+.txt{width:300px;flex-shrink:0}
 .kick{font-size:20px;font-weight:700;letter-spacing:.14em;color:#946f3c;text-transform:uppercase;display:flex;align-items:center;gap:12px}
 .kick::before{content:"";width:36px;height:3px;border-radius:3px;background:#b08a54}
-h1{font-size:70px;font-weight:800;color:#332c25;line-height:1.0;letter-spacing:-.02em;margin:20px 0 16px}
-.lead{font-size:24px;color:#645a4f;font-weight:500;line-height:1.3}
-.cats{flex:1;display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;height:466px}
-.tile{background:#fff;border:1px solid #efe7d9;border-radius:22px;box-shadow:0 20px 45px -20px rgba(70,50,20,.45);
-  padding:16px;display:flex;flex-direction:column}
-.tile .h{display:flex;align-items:center;gap:8px;font-size:19px;font-weight:700;color:#332c25;margin-bottom:12px}
-.tile .h .e{font-size:22px}
-.vis{flex:1;border-radius:14px;overflow:hidden;background:#faf6ee;display:flex;align-items:center;justify-content:center;position:relative}
-.vis img{width:100%;height:100%;object-fit:contain;padding:8px}
-/* swatches */
-.sw{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%;height:100%;padding:14px}
-.sw span{border-radius:12px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.05)}
-/* handles */
-.handles{display:flex;flex-direction:column;gap:26px;align-items:center;justify-content:center;width:100%}
-.bar{width:120px;height:16px;border-radius:10px;background:linear-gradient(180deg,#c69a5f,#9a7038);position:relative}
-.bar::before,.bar::after{content:"";position:absolute;top:14px;width:10px;height:16px;border-radius:0 0 4px 4px;background:#9a7038}
-.bar::before{left:14px}.bar::after{right:14px}
-.knob{width:34px;height:34px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#e3c08a,#8a6230)}
+h1{font-size:64px;font-weight:800;color:#332c25;line-height:1.0;letter-spacing:-.02em;margin:20px 0 16px}
+.lead{font-size:21px;color:#645a4f;font-weight:500;line-height:1.35}
+.cats{flex:1;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:repeat(3,1fr);gap:16px;height:466px}
+.tile{background:#fff;border:1px solid #efe7d9;border-radius:20px;box-shadow:0 16px 36px -18px rgba(70,50,20,.4);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px}
+.tile .e{font-size:40px;line-height:1}
+.tile .l{font-size:19px;font-weight:700;color:#332c25}
 </style></head><body>
 <div class="txt">
   <div class="kick">הבית שלנו</div>
   <h1>לוח החלטות</h1>
-  <div class="lead">מה בוחרים לבית — הכול במקום אחד, נוח לבחירה ולשיתוף.</div>
+  <div class="lead">מה בוחרים לבית — תאורה, צבעים, מכשירי חשמל ועוד. הכול במקום אחד, נוח לבחירה ולשיתוף.</div>
 </div>
 <div class="cats">
-  <div class="tile"><div class="h"><span class="e">💡</span>תאורה</div>
-    <div class="vis"><img src="img/k2.webp"></div></div>
-  <div class="tile"><div class="h"><span class="e">🎨</span>צבעים</div>
-    <div class="vis"><div class="sw"><span style="background:#efe7d6"></span><span style="background:#cdbca3"></span><span style="background:#9fae97"></span><span style="background:#c58f6e"></span><span style="background:#6f6a63"></span><span style="background:#3f3b36"></span></div></div></div>
-  <div class="tile"><div class="h"><span class="e">🔩</span>ידיות מטבח</div>
-    <div class="vis"><div class="handles"><div class="bar"></div><div class="knob"></div><div class="bar" style="width:90px"></div></div></div></div>
+  <div class="tile"><span class="e">💡</span><span class="l">תאורה</span></div>
+  <div class="tile"><span class="e">🎨</span><span class="l">צבעים</span></div>
+  <div class="tile"><span class="e">🔩</span><span class="l">ידיות</span></div>
+  <div class="tile"><span class="e">☕</span><span class="l">מכונות קפה</span></div>
+  <div class="tile"><span class="e">♨️</span><span class="l">מיקרוגל</span></div>
+  <div class="tile"><span class="e">🔥</span><span class="l">תנור</span></div>
+  <div class="tile"><span class="e">🍳</span><span class="l">כיריים</span></div>
+  <div class="tile"><span class="e">🫧</span><span class="l">מדיח</span></div>
+  <div class="tile"><span class="e">🧊</span><span class="l">מקרר</span></div>
 </div>
 </body></html>
