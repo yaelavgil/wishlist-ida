@@ -3,35 +3,45 @@
 *{margin:0;box-sizing:border-box}
 html,body{width:1200px;height:630px;overflow:hidden}
 body{font-family:"Heebo","Arial Hebrew","Arial",sans-serif;
-  background:radial-gradient(900px 500px at 88% -10%,#fbf5e9,rgba(0,0,0,0) 60%),linear-gradient(135deg,#f5f0e8,#ece2d2);
-  display:flex;align-items:center;gap:44px;padding:56px 70px}
-.txt{width:300px;flex-shrink:0}
+  background:linear-gradient(135deg,#f5f0e8,#ece2d2);
+  display:flex;align-items:stretch}
+.txt{width:420px;flex-shrink:0;display:flex;flex-direction:column;justify-content:center;padding:56px 60px;position:relative;z-index:2;
+  background:radial-gradient(700px 500px at 10% 30%,#fbf5e9,rgba(0,0,0,0) 65%)}
 .kick{font-size:20px;font-weight:700;letter-spacing:.14em;color:#946f3c;text-transform:uppercase;display:flex;align-items:center;gap:12px}
 .kick::before{content:"";width:36px;height:3px;border-radius:3px;background:#b08a54}
-h1{font-size:64px;font-weight:800;color:#332c25;line-height:1.0;letter-spacing:-.02em;margin:20px 0 16px}
-.lead{font-size:21px;color:#645a4f;font-weight:500;line-height:1.35}
-.cnt{margin-top:22px;font-size:17px;color:#946f3c;font-weight:700}
-.cats{flex:1;display:flex;flex-wrap:wrap;align-content:center;justify-content:center;gap:20px;height:466px}
-.chip{background:#fff;border:1px solid #efe7d9;border-radius:18px;box-shadow:0 12px 28px -16px rgba(70,50,20,.4);
-  padding:20px 28px;display:flex;align-items:center;gap:14px}
-.chip .e{font-size:34px;line-height:1}
-.chip .l{font-size:22px;font-weight:700;color:#332c25;white-space:nowrap}
+h1{font-size:66px;font-weight:800;color:#332c25;line-height:1.0;letter-spacing:-.02em;margin:20px 0 16px}
+.lead{font-size:22px;color:#645a4f;font-weight:500;line-height:1.4}
+.cnt{margin-top:26px;font-size:18px;color:#946f3c;font-weight:700}
+.mosaic{flex:1;display:grid;grid-template-columns:repeat(6,1fr);grid-auto-rows:1fr;gap:6px;padding:6px;height:630px}
+.tile{background:#e9ddc8;overflow:hidden}
+.tile img{width:100%;height:100%;object-fit:cover;display:block}
+.fade{position:absolute;inset:0;width:420px;background:linear-gradient(90deg,#f5f0e8 60%,rgba(245,240,232,0));pointer-events:none;z-index:1}
 </style></head><body>
+<div class="fade"></div>
 <div class="txt">
   <div class="kick">הבית שלנו</div>
   <h1>לוח החלטות</h1>
   <div class="lead">מה בוחרים לבית — הכול במקום אחד, נוח לבחירה ולשיתוף.</div>
-  <div class="cnt">9 קטגוריות בחירה</div>
+  <div class="cnt">9 קטגוריות · 63 מוצרים לבחירה</div>
 </div>
-<div class="cats">
-  <div class="chip"><span class="e">💡</span><span class="l">תאורה</span></div>
-  <div class="chip"><span class="e">🎨</span><span class="l">צבעים</span></div>
-  <div class="chip"><span class="e">🔩</span><span class="l">ידיות</span></div>
-  <div class="chip"><span class="e">☕</span><span class="l">מכונות קפה</span></div>
-  <div class="chip"><span class="e">♨️</span><span class="l">מיקרוגל</span></div>
-  <div class="chip"><span class="e">🔥</span><span class="l">תנור</span></div>
-  <div class="chip"><span class="e">🍳</span><span class="l">כיריים</span></div>
-  <div class="chip"><span class="e">🫧</span><span class="l">מדיח</span></div>
-  <div class="chip"><span class="e">🧊</span><span class="l">מקרר</span></div>
+<div class="mosaic">
+  <div class="tile"><img src="img/product-2419.jpg" loading="eager" onerror="this.style.display='none'"></div>
+  <div class="tile" style="background:#dfdedb"></div>
+  <div class="tile"><img src="img/handle01.jpg" loading="eager" onerror="this.style.display='none'"></div>
+  <div class="tile"><img src="https://www.citydeal.co.il/images/itempics/19331_23092024112145.jpg" loading="eager" onerror="this.style.display='none'"></div>
+  <div class="tile"><img src="https://ecdn.speedsize.com/566103a2-53f1-4a19-905b-45d84f5c6ca2/www.bettershop.co.il/wp-content/uploads/2019/07/BEL523MS01.jpg" loading="eager" onerror="this.style.display='none'"></div>
+  <div class="tile"><img src="https://www.mispar1.co.il/images/itempics/18780_111120241143161_large.jpg" loading="eager" onerror="this.style.display='none'"></div>
+  <div class="tile"><img src="https://storage.googleapis.com/hashmal-price-bucket/2025/07/PXE875BB1E.jpg" loading="eager" onerror="this.style.display='none'"></div>
+  <div class="tile"><img src="https://www.electroclick.co.il/images/itempics/5860_190520221331231.jpg" loading="eager" onerror="this.style.display='none'"></div>
+  <div class="tile"><img src="https://www.electricland.co.il/images/itempics/GMZ765_280520251555060_large.jpg" loading="eager" onerror="this.style.display='none'"></div>
+  <div class="tile"><img src="img/k2.webp" loading="eager" onerror="this.style.display='none'"></div>
+  <div class="tile" style="background:#e1dbc6"></div>
+  <div class="tile"><img src="img/handle02.jpg" loading="eager" onerror="this.style.display='none'"></div>
+  <div class="tile"><img src="https://www.citydeal.co.il/images/itempics/19328-2_23092024104925.jpg" loading="eager" onerror="this.style.display='none'"></div>
+  <div class="tile"><img src="https://img.zap.co.il/pics/3/9/4/4/95094493c.gif" loading="eager" onerror="this.style.display='none'"></div>
+  <div class="tile"><img src="https://www.mispar1.co.il/images/itempics/19761_090220251255581_large.jpg" loading="eager" onerror="this.style.display='none'"></div>
+  <div class="tile"><img src="https://www.electroclick.co.il/images/itempics/7727_101020241505111_large.jpg" loading="eager" onerror="this.style.display='none'"></div>
+  <div class="tile"><img src="https://www.pisga-shop.co.il/images/itempics/6210_140420252331301.jpg" loading="eager" onerror="this.style.display='none'"></div>
+  <div class="tile"><img src="https://www.mahsanyvoan.co.il/images/itempics/R-3D288BINS_2703202615232514061_large.jpg" loading="eager" onerror="this.style.display='none'"></div>
 </div>
 </body></html>
