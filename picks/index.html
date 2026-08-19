@@ -362,10 +362,17 @@ let _psig="";
 let selCats=new Set(), stf=new Set(), tagf=new Set(), personf="all", viewMode="all";
 let ITEMS=[],CATS=[],byId={};
 let shared={items:{},cats:{}}; // shared catalog from Firebase (/picks/_catalog)
+function modelKey(s){ if(!s)return''; const m=String(s).toUpperCase().match(/[A-Z]{2,4}-? ?\d{3}[A-Z0-9]*/); return m?m[0].replace(/[- ]/g,''):''; }
 function rebuild(){
   const im={}; BITEMS.forEach(i=>im[i.id]={...i});
-  st.custom.items.forEach(i=>{if(i&&i.id)im[i.id]={...(im[i.id]||{}),...i};});
-  Object.values(shared.items||{}).forEach(i=>{if(i&&i.id)im[i.id]={...(im[i.id]||{}),...i};});
+  const bkeys=new Set(), keyToBid={};
+  BITEMS.forEach(i=>{const k=modelKey(i.name); if(k){bkeys.add(k); if(!keyToBid[k])keyToBid[k]=i.id;}});
+  const dupOfBuiltin=i=>{ if(i.id in im) return false; const k=modelKey(i.name); if(!k||!bkeys.has(k)) return false;
+    const tid=keyToBid[k]; // migrate this user's mark from the duplicate to the built-in item
+    if(tid&&st.s[i.id]&&st.s[i.id].status&&st.s[i.id].status!=='none'&&!(st.s[tid]&&st.s[tid].status&&st.s[tid].status!=='none')){ st.s[tid]=st.s[i.id]; delete st.s[i.id]; save(); }
+    return true; };
+  st.custom.items.forEach(i=>{if(i&&i.id&&!dupOfBuiltin(i))im[i.id]={...(im[i.id]||{}),...i};});
+  Object.values(shared.items||{}).forEach(i=>{if(i&&i.id&&!dupOfBuiltin(i))im[i.id]={...(im[i.id]||{}),...i};});
   const cm={}; BCATS.forEach(c=>cm[c.key]={...c});
   st.custom.cats.forEach(c=>{if(c&&c.key)cm[c.key]={...(cm[c.key]||{}),...c};});
   Object.values(shared.cats||{}).forEach(c=>{if(c&&c.key)cm[c.key]={...(cm[c.key]||{}),...c};});
@@ -653,6 +660,11 @@ function submitAdd(){
     newCat={key:secKey,label:lab,icon:gv('a_secIcon')||'📌'}; st.custom.cats.push(newCat);
   }
   const type=document.getElementById('a_type').value;
+  if(!editId&&type==='product'){
+    const k=modelKey(name+' '+gv('a_url'));
+    if(k){ const dup=ITEMS.find(x=>modelKey(x.name)===k)||ITEMS.find(x=>modelKey(x.link)===k);
+      if(dup){ alert('⚠️ הדגם '+k+' כבר קיים בלוח: "'+dup.name+'".\nכדי לשנות מחיר/קישור — לחצו ✎ על הכרטיס הקיים במקום להוסיף כפול.'); return; } }
+  }
   const base=editId?{...(byId[editId]||{}),id:editId}:{id:'ui'+Date.now().toString(36)+Math.random().toString(16).slice(2,5),custom:true};
   const it={...base,cat:secKey,type:type,name:name,link:type==='product'?gv('a_url'):(base.link||'')};
   if(type==='color'){it.hex=document.getElementById('a_hex').value;const cd=gv('a_code');it.code=cd||undefined;it.price=null;if(!it.tags)it.tags=[];}
