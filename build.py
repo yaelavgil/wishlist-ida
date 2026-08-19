@@ -204,11 +204,11 @@ FRIDGE=[
   "https://img.zap.co.il/pics/8/2/8/4/66834828c.gif",
   ["מחוץ לדירוג — אלוף הקרח","לא LG"],
   "האמת המלאה לצרכני קרח כבדים: זה ה-3 דלתות היחיד בישראל עם קיוסק קרח אמיתי בדלת — קוביות וגם קרח כתוש, בלי לפתוח כלום\n⭐ בדיוק הפיצ'ר שב-LG קיים רק בדגמי 4 דלתות (כמו GR930BDIS שבדקתם) — כאן בפורמט 3 הדלתות שרציתם\n✔ 790 ל׳ · מכין קרח אוטומטי בחיבור לקו מים · SpaceMax · אינוורטר 10 שנות אחריות · מצב שבת\n💰 מ-₪9,270 (שחור) עד ₪11,990 (פלטינה) · אם מוכנים לוותר על מותג LG — זו המכונה הנכונה לקרח"),
- ("R5","LG GR930BDIS · 830 ל׳ · 4 דלתות · קיוסק מים+קרח כתוש",12296,
-  "https://www.hameir.co.il/product/מקרר-4-דלתות-lg-אל-גי-gr930bdis-0",
-  "https://www.hameir.co.il/images/itempics/GR-930BDIS_06032025195323.jpg",
+ ("R5","LG GR930BDIS · 830 ל׳ · 4 דלתות · קיוסק מים+קרח כתוש",12690,
+  "https://www.superelectric.co.il/product/מקרר-lg-gr-930bdis",
+  "https://www.superelectric.co.il/images/itempics/GR-930BDIS_100220251713540.jpg",
   ["דרך ב׳ — אם מוותרים על 3 דלתות","92×92 · קיוסק"],
-  "הבחירה של יעל ורועי לבדיקה — ה-LG בגודל המלא: 830 ל׳ (469 מקרר/361 מקפיא) בפורמט 4 דלתות\n⭐ פיצ'ר מיוחד: קיוסק מים + קרח + קרח כתוש בדלת עם חיטוי UVnano — הקרח הרציני של LG (דורש חיבור לקו המים שלכם ✓)\n😊 שביעות רצון: 3.0/5 אבל מ-2 ביקורות בלבד — אין מדגם אמיתי · מדחס ליניארי אינוורטר · ThinQ · מצב שבת\n📐 ‏91.4 רוחב × 91.8 עומק × 179.2 גובה — בדיוק ה-92×92 שלכם · דירוג אנרגיה E\n💰 בזאפ מ-₪12,296 · במלאי בהמאיר ב-₪15,690 — פער גדול, שווה מיקוח"),
+  "הבחירה של יעל ורועי לבדיקה — ה-LG בגודל המלא: 830 ל׳ (469 מקרר/361 מקפיא) בפורמט 4 דלתות\n⭐ פיצ'ר מיוחד: קיוסק מים + קרח + קרח כתוש בדלת עם חיטוי UVnano — הקרח הרציני של LG (דורש חיבור לקו המים שלכם ✓)\n😊 שביעות רצון: 3.0/5 אבל מ-2 ביקורות בלבד — אין מדגם אמיתי · מדחס ליניארי אינוורטר · ThinQ · מצב שבת\n📐 ‏91.4 רוחב × 91.8 עומק × 179.2 גובה — בדיוק ה-92×92 שלכם · דירוג אנרגיה E\n💰 ₪12,690 בסופר אלקטריק (במלאי, 4.54/5 בזאפ, 5 סניפים) · בזאפ מ-₪12,296"),
 ]
 for r in FRIDGE:
     DATA.append({"id":r[0],"cat":"מקרר","type":"product","name":r[1],
@@ -385,6 +385,17 @@ select:hover,.tbtn:hover{border-color:var(--faint)}
 .shoprow{display:flex;gap:6px;flex-wrap:wrap}
 .shopbtn{font-size:12px;padding:5px 10px;border:1.5px solid var(--line-2);border-radius:9px;text-decoration:none;color:var(--ink-soft);font-weight:650;background:var(--paper)}
 .shopbtn:hover{border-color:var(--brass);color:var(--brass-d)}
+.ordersheet{max-width:760px;margin:0 auto;padding:32px 16px 60px}
+.ordersheet h1{font-size:26px;margin:0 0 4px}
+.osub{color:var(--ink-soft);margin:0 0 24px;font-size:14px}
+.orow{display:flex;gap:14px;align-items:center;background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:12px 16px;margin-bottom:10px}
+.orow img{width:72px;height:72px;object-fit:contain;background:#fff;border-radius:10px;flex:none}
+.oi{flex:1;min-width:0}
+.on2{font-weight:700;margin-bottom:2px}
+.oi a{color:var(--brass-d);font-size:13px}
+.op{font-weight:800;font-size:17px;color:var(--brass-d);white-space:nowrap;font-variant-numeric:tabular-nums}
+.ototal{text-align:left;font-size:19px;font-weight:800;margin:18px 4px;color:var(--ink)}
+@media print{.ordersheet button{display:none}}
 .price.muted{color:var(--muted);font-weight:500;font-size:13px}
 .thumb.swatch{cursor:zoom-in;box-shadow:inset 0 0 0 1px rgba(0,0,0,.06)}
 .thumb.swatch img{display:none}
@@ -538,7 +549,7 @@ dialog::backdrop{background:rgba(50,38,24,.42);backdrop-filter:blur(3px)}
 
 <dialog id="cartDlg"><div class="dh" id="cartTitle">🛒 עגלה</div>
   <div class="db cartbody" id="cartBody"></div>
-  <div class="df"><button class="tbtn primary" onclick="document.getElementById('cartDlg').close();openSummary()">📋 העתק הזמנה</button><button class="tbtn" onclick="document.getElementById('cartDlg').close()">סגור</button></div>
+  <div class="df"><button class="tbtn primary" onclick="document.getElementById('cartDlg').close();openSummary()">📋 העתק הזמנה</button><button class="tbtn" onclick="copyOrderLink()">🔗 קישור להזמנה</button><button class="tbtn" onclick="document.getElementById('cartDlg').close()">סגור</button></div>
 </dialog>
 <dialog id="dlg"><div class="dh">🛒 רשימת הזמנה</div>
   <div class="db"><textarea id="out"></textarea></div>
@@ -601,7 +612,7 @@ let st=JSON.parse(localStorage.getItem(KEY)||"{}"); st.s=st.s||{}; st.custom=st.
 let me=JSON.parse(localStorage.getItem('ida-me')||'null'); // {pk,name}
 let remote={}; // {pk:{name,items:{id:{s,n,q}}}}
 let _psig="";
-let cat="all", stf=new Set(), tagf=new Set(), personf="all", viewMode="all";
+let selCats=new Set(), stf=new Set(), tagf=new Set(), personf="all", viewMode="all";
 let ITEMS=[],CATS=[],byId={};
 let shared={items:{},cats:{}}; // shared catalog from Firebase (/picks/_catalog)
 function rebuild(){
@@ -623,24 +634,34 @@ const STL={yes:'נבחר',maybe:'אולי',no:'לא',none:''};
 
 /* deep-linkable tabs: each category has a slug, reflected in the URL hash (#coffee) */
 const slugOf=c=>c.slug||c.key;
+const inCats=i=>selCats.size===0||selCats.has(i.cat);
 function syncHash(){
-  const c=CATS.find(x=>x.key===cat);
-  if(!c||c.key==='all') history.replaceState(null,'',location.pathname+location.search);
-  else history.replaceState(null,'','#'+encodeURIComponent(slugOf(c)));
+  if(selCats.size===0){ history.replaceState(null,'',location.pathname+location.search); return; }
+  const slugs=CATS.filter(c=>selCats.has(c.key)).map(c=>encodeURIComponent(slugOf(c)));
+  history.replaceState(null,'','#'+slugs.join('+'));
 }
 function applyHash(){
-  const raw=location.hash.slice(1); if(!raw) return;
-  let h; try{h=decodeURIComponent(raw);}catch(e){h=raw;}
-  const c=CATS.find(x=>slugOf(x)===h||x.key===h);
-  if(c){cat=c.key;tagf.clear();}
+  const raw=location.hash.slice(1); if(!raw||raw.startsWith('order=')) return;
+  const found=new Set();
+  raw.split('+').forEach(part=>{
+    let h; try{h=decodeURIComponent(part);}catch(e){h=part;}
+    const c=CATS.find(x=>slugOf(x)===h||x.key===h);
+    if(c&&c.key!=='all') found.add(c.key);
+  });
+  if(found.size){selCats=found;tagf.clear();}
 }
-function setCat(k){cat=k;tagf.clear();syncHash();buildChips();tabsHTML();RE(true);}
+function setCat(k){
+  if(k==='all') selCats.clear();
+  else if(selCats.has(k)) selCats.delete(k);
+  else selCats.add(k);
+  tagf.clear();syncHash();buildChips();tabsHTML();RE(true);
+}
 window.addEventListener('hashchange',()=>{applyHash();buildChips();tabsHTML();RE(true);});
 function tabsHTML(){
   const t=document.getElementById('tabs'); t.innerHTML="";
   CATS.forEach(c=>{
     const n=c.key==='all'?ITEMS.length:ITEMS.filter(i=>i.cat===c.key).length;
-    const b=document.createElement('button'); b.className="tab"+(cat===c.key?" on":"");
+    const b=document.createElement('button'); b.className="tab"+((c.key==='all'?selCats.size===0:selCats.has(c.key))?" on":"");
     b.innerHTML=`<span>${c.icon}</span>${c.label}<span class="c">${n}</span>`;
     b.onclick=()=>setCat(c.key);
     t.appendChild(b);
@@ -659,7 +680,7 @@ function buildChips(){
     const c=document.createElement('button'); c.className="chip "+cls+(stf.has(k)?" on":""); c.textContent=lab;
     c.onclick=()=>{stf.has(k)?stf.delete(k):stf.add(k);buildChips();RE();}; sc.appendChild(c);
   });
-  const pool=ITEMS.filter(i=>cat==='all'||i.cat===cat).flatMap(i=>i.tags||[]);
+  const pool=ITEMS.filter(inCats).flatMap(i=>i.tags||[]);
   const uniq=[...new Set(pool)];
   const tc=document.getElementById('tagchips'); tc.innerHTML="";
   uniq.forEach(tg=>{const c=document.createElement('button'); c.className="chip"+(tagf.has(tg)?" on":""); c.textContent=tg;
@@ -688,7 +709,7 @@ function passPerson(i){
 }
 function visible(){
   const q=(document.getElementById('q').value||"").trim();
-  let a=ITEMS.filter(i=>(cat==='all'||i.cat===cat)
+  let a=ITEMS.filter(i=>inCats(i)
     &&(!q||i.name.includes(q))
     &&(tagf.size===0||(i.tags||[]).some(t=>tagf.has(t)))
     &&passView(i)&&passPerson(i));
@@ -762,7 +783,7 @@ function RE(animate){
   // empty state
   let e=grid.querySelector('.empty'); if(e)e.remove();
   if(vis.length===0){const d=document.createElement('div'); d.className="empty";
-    const isEmptyCat=ITEMS.filter(i=>cat===i.cat).length===0 && cat!=='all';
+    const isEmptyCat=selCats.size>0 && ITEMS.filter(inCats).length===0;
     d.innerHTML=isEmptyCat
       ?`<div class="big">${(CATS.find(c=>c.key===cat)||{}).icon||'✦'}</div><h3>הקטגוריה הזו עדיין ריקה</h3><p>שלחי לי את המקור (לינקים/תמונות/טבלה) ואמלא אותה כאן — עם אותם כלי בחירה, מיון וסינון.</p>`
       :`<div class="big">🔍</div><h3>אין תוצאות לסינון הנוכחי</h3><p>נסי לנקות חלק מהמסננים או החיפוש.</p>`;
@@ -828,7 +849,7 @@ function openCart(){
   const body=document.getElementById('cartBody'); const title=document.getElementById('cartTitle');
   if(!who){ body.innerHTML='<div class="cempty">בחרו שם קודם.</div>'; title.textContent='🛒 עגלה'; document.getElementById('cartDlg').showModal(); return; }
   const editable = !!(me && who===me.name);
-  const cats=CATS.filter(c=>c.key!=='all'); const inView=i=>(cat==='all'||i.cat===cat);
+  const cats=CATS.filter(c=>c.key!=='all'); const inView=inCats;
   let chosenHtml='', total=0, anyChosen=false, cnt=0;
   cats.forEach(c=>{ const chosen=ITEMS.filter(i=>i.cat===c.key&&inView(i)&&statusOfName(who,i.id)==='yes');
     if(!chosen.length)return; anyChosen=true; chosenHtml+=`<div class="csec">${c.icon} ${c.label}</div>`;
@@ -859,7 +880,7 @@ function openAdd(){
   const sel=document.getElementById('a_sec'); sel.innerHTML="";
   CATS.filter(c=>c.key!=='all').forEach(c=>{const o=document.createElement('option');o.value=c.key;o.textContent=c.icon+' '+c.label;sel.appendChild(o);});
   const o=document.createElement('option');o.value='__new__';o.textContent='➕ קטגוריה חדשה…';sel.appendChild(o);
-  if(cat!=='all')sel.value=cat;
+  if(selCats.size===1)sel.value=[...selCats][0];
   ['a_name','a_price','a_img','a_url','a_zap','a_tag','a_code','a_secNew'].forEach(id=>document.getElementById(id).value='');
   document.getElementById('a_type').value='product'; document.getElementById('a_hex').value='#c8bdae';
   document.getElementById('a_secIcon').value='📌'; setFetchStatus('');
@@ -892,7 +913,7 @@ function submitAdd(){
   const idx=st.custom.items.findIndex(x=>x.id===it.id);
   if(idx>=0) st.custom.items[idx]=it; else st.custom.items.push(it);
   save(); if(newCat) fbPushCatalogCat(newCat); fbPushCatalogItem(it);
-  rebuild(); cat=secKey; stf.clear(); tagf.clear(); syncHash();
+  rebuild(); selCats=new Set([secKey]); stf.clear(); tagf.clear(); syncHash();
   const el=els.get(it.id); if(el){el.remove();els.delete(it.id);}
   document.getElementById('addDlg').close(); buildChips(); tabsHTML(); RE(true);
 }
@@ -1006,9 +1027,29 @@ function checkIncomingAdd(){
 document.getElementById('a_url').addEventListener('paste',()=>{ setTimeout(()=>{ if(!document.getElementById('a_name').value.trim()) fetchMeta(); },150); });
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)fbPoll();});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeLB();}});
+function orderIdsFromHash(){ const h=location.hash.slice(1); if(!h.startsWith('order=')) return null; let s=h.slice(6); try{s=decodeURIComponent(s);}catch(e){} return s.split(',').filter(Boolean); }
+function copyOrderLink(){
+  const who=personf==='all'?(me&&me.name):personf; if(!who)return;
+  const ids=ITEMS.filter(i=>i.type==='product'&&statusOfName(who,i.id)==='yes').map(i=>i.id);
+  if(!ids.length){alert('סמנו ✓ על מוצרים קודם — הקישור נבנה מהבחירות.');return;}
+  const url=location.origin+location.pathname+'#order='+ids.join(',');
+  const done=()=>{const t=document.getElementById('toast');t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2000);};
+  navigator.clipboard?navigator.clipboard.writeText(url).then(done,done):done();
+}
+function renderOrder(ids){
+  const items=ids.map(id=>byId[id]).filter(Boolean);
+  let total=0, missing=0;
+  const rows=items.map(i=>{ if(i.price!=null)total+=i.price; else missing++;
+    return `<div class="orow">${i.img?`<img loading="lazy" src="${i.img}" alt="">`:''}<div class="oi"><div class="on2">${i.name}</div>${i.link?`<a href="${i.link}" target="_blank" rel="noopener">לעמוד המוצר בחנות</a>`:''}${i.zap?` · <a href="${i.zap}" target="_blank" rel="noopener">השוואת מחירים בזאפ</a>`:''}</div><div class="op">${i.price!=null?nis(i.price):''}</div></div>`; }).join('');
+  document.body.innerHTML=`<div class="ordersheet"><h1>🧾 מכשירי חשמל להזמנה · הבית שלנו</h1><p class="osub">רשימת הדגמים שנבחרו — מחירים לפי החנות המומלצת לכל מוצר (אוגוסט 2026, עשויים להשתנות)</p>${rows}<div class="ototal">סה״כ משוער: ${nis(total)}${missing?` (+${missing} פריטים ללא מחיר)`:''}</div><button class="tbtn" onclick="window.print()">🖨 הדפסה / שמירה כ-PDF</button></div>`;
+}
+const _oids=orderIdsFromHash();
+if(_oids){ rebuild(); renderOrder(_oids); }
+else{
 rebuild(); applyHash(); tabsHTML(); buildChips(); RE(true);
 if(me){ me.pk=pkFromName(me.name); localStorage.setItem('ida-me',JSON.stringify(me)); fbPushName(); startSync(); } else openMe();
 checkIncomingAdd();
+}
 </script>
 </body>
 </html>'''
