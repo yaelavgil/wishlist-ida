@@ -1095,7 +1095,7 @@ og_cats=[c for c in CATS if c["key"]!="all"]
 by_cat={}
 for it in DATA:
     if it.get("img") or it.get("hex"): by_cat.setdefault(it["cat"],[]).append(it)
-TILE_CAP=18
+TILE_CAP=24
 og_tiles=[]
 i=0
 while len(og_tiles)<TILE_CAP:
@@ -1112,33 +1112,48 @@ def og_tile_html(it):
     return f'<div class="tile"><img src="{it["img"]}" loading="eager" onerror="this.style.display=\'none\'"></div>'
 og_mosaic="\n  ".join(og_tile_html(t) for t in og_tiles)
 og_tpl=r'''<!doctype html><html lang="he" dir="rtl"><head><meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
 *{margin:0;box-sizing:border-box}
 html,body{width:1200px;height:630px;overflow:hidden}
-body{font-family:"Heebo","Arial Hebrew","Arial",sans-serif;
-  background:linear-gradient(135deg,#f5f0e8,#ece2d2);
-  display:flex;align-items:stretch}
-.txt{width:420px;flex-shrink:0;display:flex;flex-direction:column;justify-content:center;padding:56px 60px;position:relative;z-index:2;
-  background:radial-gradient(700px 500px at 10% 30%,#fbf5e9,rgba(0,0,0,0) 65%)}
-.kick{font-size:20px;font-weight:700;letter-spacing:.14em;color:#946f3c;text-transform:uppercase;display:flex;align-items:center;gap:12px}
-.kick::before{content:"";width:36px;height:3px;border-radius:3px;background:#b08a54}
-h1{font-size:66px;font-weight:800;color:#332c25;line-height:1.0;letter-spacing:-.02em;margin:20px 0 16px}
-.lead{font-size:22px;color:#645a4f;font-weight:500;line-height:1.4}
-.cnt{margin-top:26px;font-size:18px;color:#946f3c;font-weight:700}
-.mosaic{flex:1;display:grid;grid-template-columns:repeat(6,1fr);grid-auto-rows:1fr;gap:6px;padding:6px;height:630px}
-.tile{background:#e9ddc8;overflow:hidden}
-.tile img{width:100%;height:100%;object-fit:cover;display:block}
-.fade{position:absolute;inset:0;width:420px;background:linear-gradient(90deg,#f5f0e8 60%,rgba(245,240,232,0));pointer-events:none;z-index:1}
+body{font-family:"Rubik","Heebo","Arial Hebrew","Arial",sans-serif;background:#f5f0e8;position:relative}
+
+/* full-bleed photo mosaic, color-graded to sit under the brand palette */
+.mosaic{position:absolute;inset:0;display:grid;grid-template-columns:repeat(6,1fr);grid-template-rows:repeat(4,1fr);gap:9px;padding:9px;background:#f5f0e8}
+.tile{background:#e9ddc8;overflow:hidden;border-radius:11px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.5)}
+.tile img{width:100%;height:100%;object-fit:cover;display:block;filter:sepia(7%) saturate(112%) contrast(102%) brightness(101%)}
+
+/* legend scrim — photos dissolve into brand cream instead of a hard column split */
+.scrim{position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(620px 460px at 100% -6%, rgba(176,138,84,.24), rgba(176,138,84,0) 62%),
+    linear-gradient(90deg, rgba(245,240,232,0) 0%, rgba(245,240,232,.5) 34%, rgba(245,240,232,.92) 50%, #f5f0e8 64%),
+    linear-gradient(0deg, rgba(51,44,37,.14), rgba(51,44,37,0) 22%)}
+
+/* fine film grain for a printed, designed feel rather than a flat render */
+.grain{position:absolute;inset:0;pointer-events:none;opacity:.05;mix-blend-mode:overlay;
+  background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="140" height="140"><filter id="n"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/></filter><rect width="100%25" height="100%25" filter="url(%23n)"/></svg>')}
+
+.txt{position:relative;z-index:2;width:470px;height:630px;margin-inline-end:auto;display:flex;flex-direction:column;justify-content:center;padding:56px 64px}
+.kick{font-size:19px;font-weight:700;letter-spacing:.16em;color:#946f3c;text-transform:uppercase;display:flex;align-items:center;gap:12px}
+.kick::before{content:"";width:34px;height:3px;border-radius:3px;background:#b08a54}
+h1{font-size:68px;font-weight:900;color:#2c241c;line-height:.98;letter-spacing:-.025em;margin:22px 0 18px;text-wrap:balance}
+.lead{font-size:21px;color:#5c5148;font-weight:500;line-height:1.45;max-width:340px}
+.badge{margin-top:28px;display:inline-flex;align-self:flex-start;align-items:center;gap:10px;background:#332c25;color:#f5ecd9;
+  font-size:16px;font-weight:700;letter-spacing:.01em;padding:11px 20px;border-radius:99px;box-shadow:0 10px 24px -10px rgba(51,44,37,.55)}
+.badge .dot{width:7px;height:7px;border-radius:50%;background:#d6a75e}
 </style></head><body>
-<div class="fade"></div>
+<div class="mosaic">
+  __TILES__
+</div>
+<div class="scrim"></div>
+<div class="grain"></div>
 <div class="txt">
   <div class="kick">הבית שלנו</div>
   <h1>לוח החלטות</h1>
   <div class="lead">מה בוחרים לבית — הכול במקום אחד, נוח לבחירה ולשיתוף.</div>
-  <div class="cnt">__COUNT__</div>
-</div>
-<div class="mosaic">
-  __TILES__
+  <div class="badge"><span class="dot"></span>__COUNT__</div>
 </div>
 </body></html>
 '''
